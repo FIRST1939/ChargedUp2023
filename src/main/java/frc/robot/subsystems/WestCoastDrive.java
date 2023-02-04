@@ -43,8 +43,8 @@ public class WestCoastDrive extends SubsystemBase {
     this.differentialDrive = new DifferentialDrive(this.lefMotorGroup, this.rightMotorGroup);
 
     this.differentialDriveKinematics = new DifferentialDriveKinematics(Constants.WestCoastConstants.TRACK_WIDTH);
-    this.differentialDriveOdometry = new DifferentialDriveOdometry(this.navX.getRotation2d());
-    this.differentialDriveOdometry.resetPosition(new Pose2d(), this.navX.getRotation2d());
+    this.differentialDriveOdometry = new DifferentialDriveOdometry(this.navX.getRotation2d(), this.getLeftDistance(), this.getRightDistance());
+    this.differentialDriveOdometry.resetPosition(this.navX.getRotation2d(), this.getLeftDistance(), this.getRightDistance(), new Pose2d());
     this.leftNeoEncoder = this.lefMotorGroup.backMotor.getEncoder();
     this.rightNeoEncoder = this.rightMotorGroup.backMotor.getEncoder();
   }
@@ -112,6 +112,9 @@ public class WestCoastDrive extends SubsystemBase {
     this.rightNeoEncoder.setPosition(0.0);
   }
 
+  public double getLeftDistance () { return Utils.motorRotationsToMeters(-this.leftNeoEncoder.getPosition()); }
+  public double getRightDistance () { return Utils.motorRotationsToMeters(this.rightNeoEncoder.getPosition()); }
+
   /**
    * Note that the returned meters are the average of the left and right side
    * sensors.
@@ -122,8 +125,8 @@ public class WestCoastDrive extends SubsystemBase {
   public double getAverageDistance () {
 
     double distance = 0.0;
-    distance += Utils.motorRotationsToMeters(this.rightNeoEncoder.getPosition());
-    distance -= Utils.motorRotationsToMeters(this.leftNeoEncoder.getPosition());
+    distance += this.getLeftDistance();
+    distance += this.getRightDistance();
     return (distance / 2.0);
   }
 
@@ -152,6 +155,6 @@ public class WestCoastDrive extends SubsystemBase {
   public void resetOdometry (Pose2d pose2d) {
 
     this.resetDistance();
-    this.differentialDriveOdometry.resetPosition(pose2d, this.navX.getRotation2d());
+    this.differentialDriveOdometry.resetPosition(this.navX.getRotation2d(), this.getLeftDistance(), this.getRightDistance(), pose2d);
   }
 }
