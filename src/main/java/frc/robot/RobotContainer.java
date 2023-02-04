@@ -8,6 +8,8 @@ import java.util.function.Supplier;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
@@ -18,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
+import frc.robot.subsystems.Photonvision;
 import frc.robot.subsystems.WestCoastDrive;
 
 /**
@@ -33,6 +36,7 @@ public class RobotContainer {
   private final XboxController driverTwo = new XboxController(Constants.ControllerConstants.DRIVER_TWO);
 
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
+  private final Photonvision photonvision = new Photonvision(new PhotonCamera("photonvision"));
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
 
   private final SendableChooser<Supplier<Command>> autonomousChooser = new SendableChooser<>();
