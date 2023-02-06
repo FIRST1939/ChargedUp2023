@@ -8,6 +8,8 @@ import java.util.function.Supplier;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
@@ -18,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.WestCoastDrive;
 
 /**
@@ -34,6 +37,8 @@ public class RobotContainer {
 
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
+
+  private final LEDs leds = new LEDs(new AddressableLED(Constants.ElectronicConstants.LED_PWM), new AddressableLEDBuffer(Constants.ElectronicConstants.LED_LENGTH));
 
   private final SendableChooser<Supplier<Command>> autonomousChooser = new SendableChooser<>();
 

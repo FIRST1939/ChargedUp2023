@@ -53,4 +53,11 @@ public class Constants {
         public static final int CENTER_RIGHT_MOTOR = 5;
         public static final int FRONT_RIGHT_MOTOR = 6;
     }
+
+    // Electronic Constants.
+    public static final class ElectronicConstants {
+
+        public static final int LED_PWM = 0; // TODO
+        public static final int LED_LENGTH = 60; // TODO
+    }
 }
