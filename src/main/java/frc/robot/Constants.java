@@ -57,7 +57,7 @@ public class Constants {
     // Electronic Constants.
     public static final class ElectronicConstants {
 
-        public static final int LED_PWM = 0; // TODO
-        public static final int LED_LENGTH = 60; // TODO
+        public static final int LED_PWM = 5; // TODO
+        public static final int LED_LENGTH = 37; // TODO
     }
 }
