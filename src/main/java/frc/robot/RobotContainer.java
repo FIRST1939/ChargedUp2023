@@ -48,7 +48,7 @@ public class RobotContainer {
       new Drive(
         this.westCoastDrive, 
         () -> (-this.leftJoystick.getY()),
-        () -> (this.rightJoystick.getX())
+        () -> (-this.rightJoystick.getX())
       )
     );
 
