@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
   public void disabledInit () {}
 
   @Override
-  public void disabledPeriodic () { this.m_robotContainer.leds.rainbow(); }
+  public void disabledPeriodic () { this.m_robotContainer.leds.animateHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW); }
 
   @Override
   public void autonomousInit () {

@@ -17,7 +17,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AnimateLEDs;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
 import frc.robot.subsystems.LEDs;
@@ -65,6 +69,10 @@ public class RobotContainer {
   private void configureButtonBindings () {
 
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
+
+    // TODO Joystick Button IDs
+    new JoystickButton(this.leftJoystick, 0).whileTrue(new AnimateLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CONE));
+    new JoystickButton(this.rightJoystick, 0).whileTrue(new AnimateLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CUBE));
   }
 
   private void configureAutonomousChooser () {

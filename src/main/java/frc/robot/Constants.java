@@ -59,5 +59,20 @@ public class Constants {
 
         public static final int LED_PWM = 5; // TODO
         public static final int LED_LENGTH = 37; // TODO
+
+        public enum LED_COLORS {
+            CONE(27, 14),
+            CUBE(128, 2),
+            RAINBOW(90, 90);
+
+            public final int absoluteHue;
+            public final int hueDeviation;
+
+            private LED_COLORS (int absoluteHue, int hueDeviation) {
+
+                this.absoluteHue = absoluteHue;
+                this.hueDeviation = hueDeviation;
+            }
+        }
     }
 }
