@@ -10,8 +10,8 @@ public class LEDs extends SubsystemBase {
     private final AddressableLED addressableLED;
     private final AddressableLEDBuffer addressableLEDBuffer;
 
-    private Constants.ElectronicConstants.LED_COLORS lastLEDColor;;
-    private int firstPixelHue;
+    private Constants.ElectronicConstants.LED_COLORS lastLEDColor;
+    private int hueIncrement = 0;
 
     public LEDs (AddressableLED addressableLED, AddressableLEDBuffer addressableLEDBuffer) {
 
@@ -24,22 +24,21 @@ public class LEDs extends SubsystemBase {
     }
 
     public void animateHue (Constants.ElectronicConstants.LED_COLORS ledColor) {
-
+        
         if (this.lastLEDColor != ledColor) {
 
-            this.firstPixelHue = (ledColor.absoluteHue - ledColor.hueDeviation) % 180;
+            this.hueIncrement = 0;
             this.lastLEDColor = ledColor;
         }
 
         for (int i = 0; i < this.addressableLEDBuffer.getLength(); i++) {
 
-            int hue = (this.firstPixelHue + ((ledColor.absoluteHue - ledColor.hueDeviation) + ((i * (ledColor.hueDeviation * 2) / this.addressableLEDBuffer.getLength()) % (ledColor.hueDeviation * 2)))) % 180;
+            int hueIncrease = (this.hueIncrement + (i * (ledColor.hueDeviation * 2) / 10)) % (ledColor.hueDeviation * 2);
+            int hue = (((ledColor.absoluteHue - ledColor.hueDeviation) % 180) + hueIncrease) % 180;
             this.addressableLEDBuffer.setHSV(i, hue, 255, 128);
         }
 
-        this.firstPixelHue += 3;
-        this.firstPixelHue %= 180;
-
+        this.hueIncrement += ((ledColor.hueDeviation * 2) / 60);
         this.addressableLED.setData(this.addressableLEDBuffer);
     }
 }
