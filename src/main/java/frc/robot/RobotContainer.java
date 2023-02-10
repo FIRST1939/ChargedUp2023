@@ -40,7 +40,7 @@ public class RobotContainer {
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
 
-  public final LEDs leds = new LEDs(new AddressableLED(Constants.ElectronicConstants.LED_PWM), new AddressableLEDBuffer(Constants.ElectronicConstants.LED_LENGTH));
+  public final LEDs leds = new LEDs(new AddressableLEDBuffer(Constants.ElectronicConstants.LED_LENGTH));
 
   private final SendableChooser<Supplier<Command>> autonomousChooser = new SendableChooser<>();
 

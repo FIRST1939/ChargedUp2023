@@ -1,5 +1,8 @@
 package frc.robot;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Constants {
     
     // Controller Constants.
@@ -57,8 +60,8 @@ public class Constants {
     // Electronic Constants.
     public static final class ElectronicConstants {
 
-        public static final int LED_PWM = 5; // TODO
-        public static final int LED_LENGTH = 37; // TODO
+        public static final List<Integer> LED_PWMS = Arrays.asList(5);
+        public static final int LED_LENGTH = 37;
 
         public enum LED_COLORS {
             CONE(27, 14),

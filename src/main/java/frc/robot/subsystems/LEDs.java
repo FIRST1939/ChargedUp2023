@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -7,20 +10,23 @@ import frc.robot.Constants;
 
 public class LEDs extends SubsystemBase {
     
-    private final AddressableLED addressableLED;
+    private final List<AddressableLED> addressableLEDs = new ArrayList<AddressableLED>();
     private final AddressableLEDBuffer addressableLEDBuffer;
 
     private Constants.ElectronicConstants.LED_COLORS lastLEDColor;
     private int hueIncrement = 0;
 
-    public LEDs (AddressableLED addressableLED, AddressableLEDBuffer addressableLEDBuffer) {
+    public LEDs (AddressableLEDBuffer addressableLEDBuffer) {
 
-        this.addressableLED = addressableLED;
+        for (int ledPortID : Constants.ElectronicConstants.LED_PWMS) { this.addressableLEDs.add(new AddressableLED(ledPortID)); }
         this.addressableLEDBuffer = addressableLEDBuffer;
 
-        this.addressableLED.setLength(this.addressableLEDBuffer.getLength());
-        this.addressableLED.setData(this.addressableLEDBuffer);
-        this.addressableLED.start();
+        for (AddressableLED addressableLED : this.addressableLEDs) {
+
+            addressableLED.setLength(this.addressableLEDBuffer.getLength());
+            addressableLED.setData(this.addressableLEDBuffer);
+            addressableLED.start();
+        }
     }
 
     public void animateHue (Constants.ElectronicConstants.LED_COLORS ledColor) {
@@ -39,6 +45,6 @@ public class LEDs extends SubsystemBase {
         }
 
         this.hueIncrement += ((ledColor.hueDeviation * 2) / 60);
-        this.addressableLED.setData(this.addressableLEDBuffer);
+        for (AddressableLED addressableLED : this.addressableLEDs) { addressableLED.setData(this.addressableLEDBuffer); }
     }
 }
