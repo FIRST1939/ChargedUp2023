@@ -34,8 +34,8 @@ public class Photonvision extends SubsystemBase {
             this.currentTargets = this.photonTrackedTargets.size();
         }
 
-        SmartDashboard.putNumber("Charging Station X", this.triangulatePosition().getX());
-        SmartDashboard.putNumber("Charging Station Y", this.triangulatePosition().getY());
+        SmartDashboard.putNumber("Charging Station X", this.getBestPosition().getX());
+        SmartDashboard.putNumber("Charging Station Y", this.getBestPosition().getY());
         SmartDashboard.putNumber("Current Targets", this.currentTargets);
     }
 
