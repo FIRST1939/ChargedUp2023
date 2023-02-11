@@ -70,7 +70,8 @@ public class RobotContainer {
   private void configureAutonomousChooser () {
 
     this.autonomousChooser.setDefaultOption("Do Nothing", () -> new WaitCommand(1.0));
-    this.autonomousChooser.addOption("Center Charging Station", () -> new DriveAprilTagDistance(this.westCoastDrive, this.photonvision, 0.0, 0.35));
+    this.autonomousChooser.addOption("Center Charging Station 1", () -> new DriveAprilTagDistance(this.westCoastDrive, this.photonvision, 1.25, 0.5));
+    this.autonomousChooser.addOption("Center Charging Station 2", () -> new DriveAprilTagDistance(this.westCoastDrive, this.photonvision, 1.25, 0.35));
 
     SmartDashboard.putData("Autonomous Chooser", this.autonomousChooser);
   }

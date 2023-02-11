@@ -9,8 +9,8 @@ public class DriveAprilTagDistance extends CommandBase {
     
     final private WestCoastDrive westCoastDrive;
     final private Photonvision photonvision;
-    final private double meters;
-    final private double power;
+    private double meters;
+    private double power;
 
     public DriveAprilTagDistance (WestCoastDrive westCoastDrive, Photonvision photonvision, double meters, double power) {
 
@@ -23,17 +23,22 @@ public class DriveAprilTagDistance extends CommandBase {
     }
 
     @Override
-    public void initialize () { this.westCoastDrive.resetHeading(); }
+    public void initialize () { 
+        
+        this.power *= Math.signum(-this.photonvision.getBestPosition().getX() - this.meters);
+        this.westCoastDrive.resetHeading();
+    }
 
     @Override
     public void execute () {
 
+        System.out.println(-this.photonvision.getBestPosition().getX());
         double turningValue = this.westCoastDrive.getHeading() * Constants.AutonomousConstants.GYRO_STRAIGHT_KP;
-        this.westCoastDrive.drive(this.power, turningValue);
+        this.westCoastDrive.drive(this.power, 0.0);
     }
 
     @Override
-    public boolean isFinished () { return -this.photonvision.getBestPosition().getX() <= this.meters; }
+    public boolean isFinished () { return Math.signum(this.power) * (-this.photonvision.getBestPosition().getX() - this.meters) <= 0; }
 
     @Override
     public void end (boolean interrupted) { this.westCoastDrive.stop(); }
