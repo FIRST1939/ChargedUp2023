@@ -36,7 +36,7 @@ public class RobotContainer {
   private final XboxController driverTwo = new XboxController(Constants.ControllerConstants.DRIVER_TWO);
 
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
-  private final Photonvision photonvision = new Photonvision(new PhotonCamera("photonvision"));
+  private final Photonvision photonvision = new Photonvision(new PhotonCamera("OV5647"));
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
 
   private final SendableChooser<Supplier<Command>> autonomousChooser = new SendableChooser<>();
@@ -47,7 +47,7 @@ public class RobotContainer {
       new Drive(
         this.westCoastDrive, 
         () -> (-this.leftJoystick.getY()),
-        () -> (this.rightJoystick.getX())
+        () -> (-this.rightJoystick.getX())
       )
     );
 

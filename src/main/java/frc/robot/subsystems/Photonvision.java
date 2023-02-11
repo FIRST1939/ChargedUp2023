@@ -16,7 +16,7 @@ import frc.robot.Constants;
 public class Photonvision extends SubsystemBase {
 
     private final PhotonCamera photonCamera;
-    private List<PhotonTrackedTarget> photonTrackedTargets;
+    private List<PhotonTrackedTarget> photonTrackedTargets = new ArrayList<PhotonTrackedTarget>();
     private int currentTargets = 0;
 
     public Photonvision (PhotonCamera photonCamera) {
@@ -39,6 +39,7 @@ public class Photonvision extends SubsystemBase {
 
         SmartDashboard.putNumber("Charging Station X", this.triangulatePosition().getX());
         SmartDashboard.putNumber("Charging Station Y", this.triangulatePosition().getY());
+        SmartDashboard.putNumber("Current Targets", this.currentTargets);
     }
 
     public Pose2d triangulatePosition () {
