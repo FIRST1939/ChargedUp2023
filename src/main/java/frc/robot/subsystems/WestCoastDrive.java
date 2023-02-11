@@ -18,11 +18,11 @@ public class WestCoastDrive extends SubsystemBase {
   private final MotorGroup lefMotorGroup;
   private final MotorGroup rightMotorGroup;
   private final DifferentialDrive differentialDrive;
+  private final RelativeEncoder leftNeoEncoder;
+  private final RelativeEncoder rightNeoEncoder;
 
   public final DifferentialDriveKinematics differentialDriveKinematics;
   public final DifferentialDriveOdometry differentialDriveOdometry;
-  private final RelativeEncoder leftNeoEncoder;
-  private final RelativeEncoder rightNeoEncoder;
 
   public WestCoastDrive (AHRS navX) {
     
@@ -41,12 +41,12 @@ public class WestCoastDrive extends SubsystemBase {
     );
 
     this.differentialDrive = new DifferentialDrive(this.lefMotorGroup, this.rightMotorGroup);
+    this.leftNeoEncoder = this.lefMotorGroup.backMotor.getEncoder();
+    this.rightNeoEncoder = this.rightMotorGroup.backMotor.getEncoder();
 
     this.differentialDriveKinematics = new DifferentialDriveKinematics(Constants.WestCoastConstants.TRACK_WIDTH);
     this.differentialDriveOdometry = new DifferentialDriveOdometry(this.navX.getRotation2d(), this.getLeftDistance(), this.getRightDistance());
     this.differentialDriveOdometry.resetPosition(this.navX.getRotation2d(), this.getLeftDistance(), this.getRightDistance(), new Pose2d());
-    this.leftNeoEncoder = this.lefMotorGroup.backMotor.getEncoder();
-    this.rightNeoEncoder = this.rightMotorGroup.backMotor.getEncoder();
   }
 
   public void periodic () {
