@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.autonomous.DriveAprilTagDistance;
 import frc.robot.subsystems.Photonvision;
 import frc.robot.subsystems.WestCoastDrive;
 
@@ -69,6 +70,7 @@ public class RobotContainer {
   private void configureAutonomousChooser () {
 
     this.autonomousChooser.setDefaultOption("Do Nothing", () -> new WaitCommand(1.0));
+    this.autonomousChooser.addOption("Center Charging Station", () -> new DriveAprilTagDistance(this.westCoastDrive, this.photonvision, 0.0, 0.35));
 
     SmartDashboard.putData("Autonomous Chooser", this.autonomousChooser);
   }
