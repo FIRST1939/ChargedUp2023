@@ -19,10 +19,7 @@ public class Photonvision extends SubsystemBase {
     private List<PhotonTrackedTarget> photonTrackedTargets = new ArrayList<PhotonTrackedTarget>();
     private int currentTargets = 0;
 
-    public Photonvision (PhotonCamera photonCamera) {
-
-        this.photonCamera = photonCamera;
-    }
+    public Photonvision (PhotonCamera photonCamera) { this.photonCamera = photonCamera; }
 
     public void periodic () {
 
@@ -42,17 +39,30 @@ public class Photonvision extends SubsystemBase {
         SmartDashboard.putNumber("Current Targets", this.currentTargets);
     }
 
-    public Pose2d triangulatePosition () {
+    public Pose2d getBestPosition () {
 
         List<Pose2d> positions = new ArrayList<Pose2d>();
         List<Double> errors = new ArrayList<Double>();
 
+        Pose2d inlinePosition = null;
+        double inlineError = 0.0;
+
         for (PhotonTrackedTarget photonTrackedTarget : this.photonTrackedTargets) {
 
-            positions.add(this.getRelativePosition(photonTrackedTarget));
-            errors.add(photonTrackedTarget.getPoseAmbiguity());
+            Pose2d trackedPosition = this.getRelativePosition(photonTrackedTarget);
+            double trackedError = photonTrackedTarget.getPoseAmbiguity();
+
+            positions.add(trackedPosition);
+            errors.add(trackedError);
+
+            if (photonTrackedTarget.getFiducialId() == 2) {
+
+                inlinePosition = trackedPosition;
+                inlineError = trackedError;
+            }
         }
 
+        if (inlinePosition != null) { return inlinePosition; }
         return this.combinePositions(positions, errors);
     }
 
