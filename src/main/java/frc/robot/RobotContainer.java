@@ -8,7 +8,6 @@ import java.util.function.Supplier;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -19,9 +18,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AnimateLEDs;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.SetLEDs;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.WestCoastDrive;
 
@@ -69,8 +68,8 @@ public class RobotContainer {
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
 
     // TODO Joystick Button IDs
-    new JoystickButton(this.leftJoystick, 0).whileTrue(new AnimateLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CONE));
-    new JoystickButton(this.rightJoystick, 0).whileTrue(new AnimateLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CUBE));
+    new JoystickButton(this.leftJoystick, 0).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CONE));
+    new JoystickButton(this.rightJoystick, 0).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CUBE));
   }
 
   private void configureAutonomousChooser () {

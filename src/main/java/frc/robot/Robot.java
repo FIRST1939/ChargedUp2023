@@ -39,10 +39,10 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit () {}
+  public void disabledInit () { this.m_robotContainer.leds.setHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW); }
 
   @Override
-  public void disabledPeriodic () { this.m_robotContainer.leds.animateHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW); }
+  public void disabledPeriodic () {}
 
   @Override
   public void autonomousInit () {
