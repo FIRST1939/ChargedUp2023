@@ -53,4 +53,14 @@ public class Constants {
         public static final int CENTER_RIGHT_MOTOR = 5;
         public static final int FRONT_RIGHT_MOTOR = 6;
     }
+
+    // Manipulator Constants.
+    public static final class ManipulatorConstants {
+
+        public static final int ARM_MINIMUM_EXTENSION = 0; // TODO
+        public static final int ARM_MAXIMUM_EXTENSION = 0; // TODO
+
+        public static final int ARM_MOTOR = 0; // TODO
+        public static final int SCORE_MOTOR = 0; // TODO
+    }
 }

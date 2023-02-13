@@ -17,7 +17,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Drive;
+import frc.robot.commands.Manipulate;
 import frc.robot.commands.ResetGyro;
+import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.WestCoastDrive;
 
 /**
@@ -34,6 +36,7 @@ public class RobotContainer {
 
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
+  private final Manipulator manipulator = new Manipulator();
 
   private final SendableChooser<Supplier<Command>> autonomousChooser = new SendableChooser<>();
 
@@ -44,6 +47,14 @@ public class RobotContainer {
         this.westCoastDrive, 
         () -> (-this.leftJoystick.getY()),
         () -> (this.rightJoystick.getX())
+      )
+    );
+
+    this.manipulator.setDefaultCommand(
+      new Manipulate(
+        this.manipulator, 
+        () -> (this.driverTwo.getRightY()), 
+        () -> (this.driverTwo.getLeftY())
       )
     );
 
