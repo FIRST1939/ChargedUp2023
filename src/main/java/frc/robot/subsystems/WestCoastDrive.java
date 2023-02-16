@@ -9,8 +9,10 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.drivetrain.DifferentialDrive;
+import frc.lib.drivetrain.MotorGroup;
+import frc.lib.drivetrain.Utils;
 import frc.robot.Constants;
-import frc.robot.Utils;
 
 public class WestCoastDrive extends SubsystemBase {
     

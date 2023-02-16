@@ -60,6 +60,17 @@ public class Constants {
         public static final int ARM_MINIMUM_EXTENSION = 0; // TODO
         public static final int ARM_MAXIMUM_EXTENSION = 0; // TODO
 
+        public enum ARM_POSITIONS {
+            TEST(0); // TODO
+
+            public final int position;
+            private ARM_POSITIONS (int position) { this.position = position; }
+        }
+
+        public static final double ARM_KP = 0.0; // TODO
+        public static final double ARM_KI = 0.0; // TODO
+        public static final double ARM_KD = 0.0; // TODO
+
         public static final int ARM_MOTOR = 0; // TODO
         public static final int SCORE_MOTOR = 0; // TODO
     }

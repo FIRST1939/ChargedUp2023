@@ -16,9 +16,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Drive;
-import frc.robot.commands.Manipulate;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.manipulator.HoldArmPosition;
+import frc.robot.commands.manipulator.Manipulate;
+import frc.robot.commands.manipulator.ResetArmPosition;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.WestCoastDrive;
 
@@ -32,7 +35,7 @@ public class RobotContainer {
 
   private final Joystick leftJoystick = new Joystick(Constants.ControllerConstants.LEFT_JOYSTICK);
   private final Joystick rightJoystick = new Joystick(Constants.ControllerConstants.RIGHT_JOYSTICK);
-  private final XboxController driverTwo = new XboxController(Constants.ControllerConstants.DRIVER_TWO);
+  private final CommandXboxController driverTwo = new CommandXboxController(Constants.ControllerConstants.DRIVER_TWO);
 
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
@@ -71,6 +74,9 @@ public class RobotContainer {
   private void configureButtonBindings () {
 
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
+
+    this.driverTwo.a().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TEST));
+    this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.25));
   }
 
   private void configureAutonomousChooser () {
