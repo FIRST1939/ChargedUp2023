@@ -1,16 +1,11 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.RelativeEncoder;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Utils;
 
 public class WestCoastDrive extends SubsystemBase {
     
@@ -18,11 +13,7 @@ public class WestCoastDrive extends SubsystemBase {
   private final MotorGroup lefMotorGroup;
   private final MotorGroup rightMotorGroup;
   private final DifferentialDrive differentialDrive;
-  private final RelativeEncoder leftNeoEncoder;
-  private final RelativeEncoder rightNeoEncoder;
-
   public final DifferentialDriveKinematics differentialDriveKinematics;
-  public final DifferentialDriveOdometry differentialDriveOdometry;
 
   public WestCoastDrive (AHRS navX) {
     
@@ -41,12 +32,7 @@ public class WestCoastDrive extends SubsystemBase {
     );
 
     this.differentialDrive = new DifferentialDrive(this.lefMotorGroup, this.rightMotorGroup);
-    this.leftNeoEncoder = this.lefMotorGroup.backMotor.getEncoder();
-    this.rightNeoEncoder = this.rightMotorGroup.backMotor.getEncoder();
-
     this.differentialDriveKinematics = new DifferentialDriveKinematics(Constants.WestCoastConstants.TRACK_WIDTH);
-    this.differentialDriveOdometry = new DifferentialDriveOdometry(this.navX.getRotation2d(), this.getLeftDistance(), this.getRightDistance());
-    this.differentialDriveOdometry.resetPosition(this.navX.getRotation2d(), this.getLeftDistance(), this.getRightDistance(), new Pose2d());
   }
 
   public void periodic () {
@@ -54,8 +40,6 @@ public class WestCoastDrive extends SubsystemBase {
     // NavX's getAngle method is inverted from the generally agrred upon standard Rotation2d.
     SmartDashboard.putNumber("NavX Raw Angle", this.navX.getAngle());
     SmartDashboard.putNumber("NavX Processed Rotation", this.navX.getRotation2d().getDegrees());
-
-    this.differentialDriveOdometry.update(this.navX.getRotation2d(), this.leftNeoEncoder.getPosition(), this.rightNeoEncoder.getPosition());
     }
 
   /**
@@ -102,59 +86,4 @@ public class WestCoastDrive extends SubsystemBase {
    * getHeading.
    */
   public void resetYaw() { this.navX.reset(); }
-
-  /**
-   * Resets the distance sensors (aka encoders) of the drive train.
-   */
-  public void resetDistance () {
-
-    this.leftNeoEncoder.setPosition(0.0);
-    this.rightNeoEncoder.setPosition(0.0);
-  }
-
-  public double getLeftDistance () { return Utils.motorRotationsToMeters(-this.leftNeoEncoder.getPosition()); }
-  public double getRightDistance () { return Utils.motorRotationsToMeters(this.rightNeoEncoder.getPosition()); }
-
-  /**
-   * Note that the returned meters are the average of the left and right side
-   * sensors.
-   * 
-   * @return the distance traveled in inches since the last 
-   * {@link #resetDistance()} call.
-   */
-  public double getAverageDistance () {
-
-    double distance = 0.0;
-    distance += this.getLeftDistance();
-    distance += this.getRightDistance();
-    return (distance / 2.0);
-  }
-
-  /**
-   * @return the wheel speeds in meters per second.
-   */
-  public DifferentialDriveWheelSpeeds getWheelSpeeds () { 
-
-    double leftVelocity = Utils.motorRotationsToMeters(this.leftNeoEncoder.getVelocity() / 60.0);
-    double rightVelocity = Utils.motorRotationsToMeters(this.rightNeoEncoder.getVelocity() / 60.0);  
-    return new DifferentialDriveWheelSpeeds(leftVelocity, rightVelocity);
-  }
-
-  /**
-   * @return the average motor rotations/minute of the left and right sides.
-   */
-  public double getAverageVelocity () {
-    
-    double velocity = 0.0;
-    velocity += this.leftNeoEncoder.getVelocity();
-    velocity -= this.rightNeoEncoder.getVelocity();
-    return (velocity / 2.0);
-  }
-
-  public Pose2d getPose () { return this.differentialDriveOdometry.getPoseMeters(); }
-  public void resetOdometry (Pose2d pose2d) {
-
-    this.resetDistance();
-    this.differentialDriveOdometry.resetPosition(this.navX.getRotation2d(), this.getLeftDistance(), this.getRightDistance(), pose2d);
-  }
 }

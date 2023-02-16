@@ -65,7 +65,6 @@ public class RobotContainer {
   private void configureAutonomousChooser () {
 
     this.autonomousChooser.setDefaultOption("Do Nothing", () -> new WaitCommand(1.0));
-
     SmartDashboard.putData("Autonomous Chooser", this.autonomousChooser);
   }
 

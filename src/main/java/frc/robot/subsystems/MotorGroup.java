@@ -1,31 +1,23 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class MotorGroup {
     
-    public final CANSparkMax backMotor;
-    public final CANSparkMax centerMotor;
-    public final CANSparkMax frontMotor;
+    public final WPI_TalonSRX backMotor;
+    public final WPI_TalonSRX centerMotor;
+    public final WPI_TalonSRX frontMotor;
 
     public MotorGroup (int backMotorID, int centerMotorID, int frontMotorID) {
 
-        this.backMotor = new CANSparkMax(backMotorID, MotorType.kBrushless);
-        this.backMotor.restoreFactoryDefaults();
-        this.backMotor.setIdleMode(IdleMode.kBrake);
-        this.backMotor.setOpenLoopRampRate(0.25);
+        this.backMotor = new WPI_TalonSRX(backMotorID);
+        this.backMotor.configFactoryDefault();
 
-        this.centerMotor = new CANSparkMax(centerMotorID, MotorType.kBrushless);
-        this.centerMotor.restoreFactoryDefaults();
-        this.centerMotor.setIdleMode(IdleMode.kBrake);
-        this.centerMotor.setOpenLoopRampRate(0.25);
+        this.centerMotor = new WPI_TalonSRX(centerMotorID);
+        this.centerMotor.configFactoryDefault();
 
-        this.frontMotor = new CANSparkMax(frontMotorID, MotorType.kBrushless);
-        this.frontMotor.restoreFactoryDefaults();
-        this.frontMotor.setIdleMode(IdleMode.kBrake);
-        this.frontMotor.setOpenLoopRampRate(0.25);
+        this.frontMotor = new WPI_TalonSRX(frontMotorID);
+        this.frontMotor.configFactoryDefault();
     }
 
     public void set (double speed) {
