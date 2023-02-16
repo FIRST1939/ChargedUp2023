@@ -49,8 +49,8 @@ public class Constants {
         public static final int CENTER_LEFT_MOTOR = 2;
         public static final int FRONT_LEFT_MOTOR = 3;
 
-        public static final int FRONT_RIGHT_MOTOR = 4;
+        public static final int BACK_RIGHT_MOTOR = 4;
         public static final int CENTER_RIGHT_MOTOR = 5;
-        public static final int BACK_RIGHT_MOTOR = 6;
+        public static final int FRONT_RIGHT_MOTOR = 6;
     }
 }
