@@ -22,6 +22,7 @@ import frc.robot.commands.ResetGyro;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ResetArmPosition;
+import frc.robot.commands.ZeroArm;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.WestCoastDrive;
 
@@ -49,14 +50,14 @@ public class RobotContainer {
       new Drive(
         this.westCoastDrive, 
         () -> (-this.leftJoystick.getY()),
-        () -> (this.rightJoystick.getX())
+        () -> (-this.rightJoystick.getX())
       )
     );
 
     this.manipulator.setDefaultCommand(
       new Manipulate(
         this.manipulator, 
-        () -> (this.driverTwo.getRightY()), 
+        () -> (-this.driverTwo.getRawAxis(4)), 
         () -> (this.driverTwo.getRightTriggerAxis() - this.driverTwo.getLeftTriggerAxis())
       )
     );
@@ -74,6 +75,7 @@ public class RobotContainer {
   private void configureButtonBindings () {
 
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
+    SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
 
     this.driverTwo.a().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TEST));
     this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.25));

@@ -57,8 +57,8 @@ public class Constants {
     // Manipulator Constants.
     public static final class ManipulatorConstants {
 
-        public static final int ARM_MINIMUM_EXTENSION = 0; // TODO
-        public static final int ARM_MAXIMUM_EXTENSION = 0; // TODO
+        public static final int ARM_MINIMUM_EXTENSION = -5000; // TODO
+        public static final int ARM_MAXIMUM_EXTENSION = 7500; // TODO
 
         public enum ARM_POSITIONS {
             TEST(0); // TODO

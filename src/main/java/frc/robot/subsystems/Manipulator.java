@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -8,6 +7,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -22,7 +22,7 @@ public class Manipulator extends SubsystemBase {
         this.scoreMotor = new CANSparkMax(Constants.ManipulatorConstants.SCORE_MOTOR, MotorType.kBrushless);
 
         this.armMotor.configFactoryDefault();
-        this.armMotor.setNeutralMode(NeutralMode.Brake);
+        this.armMotor.setNeutralMode(NeutralMode.Coast);
         this.armMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
         this.armMotor.configNominalOutputForward(0,30);
         this.armMotor.configNominalOutputReverse(0,30);
@@ -33,14 +33,24 @@ public class Manipulator extends SubsystemBase {
         this.scoreMotor.setIdleMode(IdleMode.kCoast);
     }
 
+    public void periodic () {
+
+        SmartDashboard.putNumber("Arm Position", this.getArmPosition());
+    }
+
     /**
-     * @param velocity encoder clicks per 100ms 
+     * @param velocity -1 to 1
      */
     public void setArm (double velocity) { 
         
         if (Constants.ManipulatorConstants.ARM_MINIMUM_EXTENSION < this.getArmPosition() && Constants.ManipulatorConstants.ARM_MAXIMUM_EXTENSION > this.getArmPosition()) {
 
-            this.armMotor.set(ControlMode.Velocity, velocity); 
+            System.out.println(velocity);
+            this.armMotor.set(velocity); 
+        } else { 
+            
+            System.out.println("Nope. " + this.getArmPosition()); 
+            this.armMotor.set(0.0);
         }
     }
 
@@ -50,4 +60,5 @@ public class Manipulator extends SubsystemBase {
     public void setRollers (double velocity) { this.scoreMotor.set(velocity); }
 
     public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
+    public void zeroArm () { this.armMotor.setSelectedSensorPosition(0.0); }
 }
