@@ -53,4 +53,25 @@ public class Constants {
         public static final int CENTER_RIGHT_MOTOR = 5;
         public static final int FRONT_RIGHT_MOTOR = 6;
     }
+
+    // Manipulator Constants.
+    public static final class ManipulatorConstants {
+
+        public static final int ARM_MINIMUM_EXTENSION = 0; // TODO
+        public static final int ARM_MAXIMUM_EXTENSION = 66000; // TODO
+
+        public enum ARM_POSITIONS {
+            TEST(0); // TODO
+
+            public final int position;
+            private ARM_POSITIONS (int position) { this.position = position; }
+        }
+
+        public static final double ARM_KP = 0.0; // TODO
+        public static final double ARM_KI = 0.0; // TODO
+        public static final double ARM_KD = 0.0; // TODO
+
+        public static final int ARM_MOTOR = 30; // TODO
+        public static final int SCORE_MOTOR = 10; // TODO
+    }
 }
