@@ -8,6 +8,8 @@ import java.util.function.Supplier;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
@@ -19,11 +21,13 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.autonomous.DriveAprilTagDistance;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ResetArmPosition;
 import frc.robot.commands.ZeroArm;
 import frc.robot.subsystems.Manipulator;
+import frc.robot.subsystems.Photonvision;
 import frc.robot.subsystems.WestCoastDrive;
 
 /**
@@ -39,6 +43,7 @@ public class RobotContainer {
   private final CommandXboxController driverTwo = new CommandXboxController(Constants.ControllerConstants.DRIVER_TWO);
 
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
+  private final Photonvision photonvision = new Photonvision(new PhotonCamera("OV5647"));
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
   private final Manipulator manipulator = new Manipulator();
 
@@ -84,6 +89,8 @@ public class RobotContainer {
   private void configureAutonomousChooser () {
 
     this.autonomousChooser.setDefaultOption("Do Nothing", () -> new WaitCommand(1.0));
+    this.autonomousChooser.addOption("Center Charging Station 1", () -> new DriveAprilTagDistance(this.westCoastDrive, this.photonvision, 1.25, 0.5));
+    this.autonomousChooser.addOption("Center Charging Station 2", () -> new DriveAprilTagDistance(this.westCoastDrive, this.photonvision, 1.25, 0.35));
 
     SmartDashboard.putData("Autonomous Chooser", this.autonomousChooser);
   }
