@@ -1,5 +1,8 @@
 package frc.robot;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Constants {
     
     // Controller Constants.
@@ -53,7 +56,7 @@ public class Constants {
         public static final int CENTER_RIGHT_MOTOR = 5;
         public static final int FRONT_RIGHT_MOTOR = 6;
     }
-
+    
     // Manipulator Constants.
     public static final class ManipulatorConstants {
 
@@ -73,5 +76,27 @@ public class Constants {
 
         public static final int ARM_MOTOR = 30; // TODO
         public static final int SCORE_MOTOR = 10; // TODO
+    }
+    
+    // Electronic Constants.
+    public static final class ElectronicConstants {
+
+        public static final List<Integer> LED_PWMS = Arrays.asList(5);
+        public static final int LED_LENGTH = 37;
+
+        public enum LED_COLORS {
+            CONE(27, 14),
+            CUBE(128, 2),
+            RAINBOW(90, 90);
+
+            public final int absoluteHue;
+            public final int hueDeviation;
+
+            private LED_COLORS (int absoluteHue, int hueDeviation) {
+
+                this.absoluteHue = absoluteHue;
+                this.hueDeviation = hueDeviation;
+            }
+        }
     }
 }
