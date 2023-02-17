@@ -24,7 +24,7 @@ public class Manipulate extends CommandBase {
     public void execute () {
 
         this.manipulator.setArm(this.armSupplier.getAsDouble());
-        //this.manipulator.setRollers(this.rollerSupplier.getAsDouble());
+        this.manipulator.setRollers(this.rollerSupplier.getAsDouble());
     }
 
     @Override

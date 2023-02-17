@@ -22,7 +22,7 @@ public class Manipulator extends SubsystemBase {
         this.scoreMotor = new CANSparkMax(Constants.ManipulatorConstants.SCORE_MOTOR, MotorType.kBrushless);
 
         this.armMotor.configFactoryDefault();
-        this.armMotor.setNeutralMode(NeutralMode.Coast);
+        this.armMotor.setNeutralMode(NeutralMode.Brake);
         this.armMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
         this.armMotor.configNominalOutputForward(0,30);
         this.armMotor.configNominalOutputReverse(0,30);
@@ -30,7 +30,7 @@ public class Manipulator extends SubsystemBase {
         this.armMotor.configPeakOutputReverse(-1,30);
 
         this.scoreMotor.restoreFactoryDefaults();
-        this.scoreMotor.setIdleMode(IdleMode.kCoast);
+        this.scoreMotor.setIdleMode(IdleMode.kBrake);
     }
 
     public void periodic () {
@@ -43,21 +43,22 @@ public class Manipulator extends SubsystemBase {
      */
     public void setArm (double velocity) { 
         
-        if (Constants.ManipulatorConstants.ARM_MINIMUM_EXTENSION < this.getArmPosition() && Constants.ManipulatorConstants.ARM_MAXIMUM_EXTENSION > this.getArmPosition()) {
+        boolean beyondLimit = false;
 
-            System.out.println(velocity);
-            this.armMotor.set(velocity); 
-        } else { 
-            
-            System.out.println("Nope. " + this.getArmPosition()); 
-            this.armMotor.set(0.0);
-        }
+        if (velocity < 0 && Constants.ManipulatorConstants.ARM_MINIMUM_EXTENSION >= this.getArmPosition()) { beyondLimit = true; }
+        if (velocity > 0 && Constants.ManipulatorConstants.ARM_MAXIMUM_EXTENSION <= this.getArmPosition()) { beyondLimit = true; }
+
+        if (!beyondLimit) { this.armMotor.set(velocity); } 
+        else { this.armMotor.set(0.0); }
     }
 
     /**
      * @param velocity -1 to 1
      */
-    public void setRollers (double velocity) { this.scoreMotor.set(velocity); }
+    public void setRollers (double velocity) { 
+        
+        //this.scoreMotor.set(velocity / 1.4); 
+    }
 
     public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
     public void zeroArm () { this.armMotor.setSelectedSensorPosition(0.0); }

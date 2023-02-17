@@ -58,7 +58,7 @@ public class RobotContainer {
       new Manipulate(
         this.manipulator, 
         () -> (-this.driverTwo.getRawAxis(4)), 
-        () -> (this.driverTwo.getRightTriggerAxis() - this.driverTwo.getLeftTriggerAxis())
+        () -> (this.driverTwo.getRawAxis(2) - this.driverTwo.getRawAxis(3))
       )
     );
 
