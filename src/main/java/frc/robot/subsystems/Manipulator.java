@@ -57,7 +57,7 @@ public class Manipulator extends SubsystemBase {
      */
     public void setRollers (double velocity) { 
         
-        //this.scoreMotor.set(velocity / 1.4); 
+        this.scoreMotor.set(velocity / 1.4); 
     }
 
     public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
