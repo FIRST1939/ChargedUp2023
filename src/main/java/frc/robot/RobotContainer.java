@@ -18,7 +18,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.autonomous.TestAuto;
 import frc.robot.subsystems.WestCoastDrive;
+//import frc.robot.commands.autonomous.TestAuto;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -64,7 +66,10 @@ public class RobotContainer {
 
   private void configureAutonomousChooser () {
 
-    this.autonomousChooser.setDefaultOption("Do Nothing", () -> new WaitCommand(1.0));
+    //this.autonomousChooser.setDefaultOption("Do Nothing", () -> new WaitCommand(1.0));
+    this.autonomousChooser.setDefaultOption("Test Auto", () -> new TestAuto(this.westCoastDrive));
+
+
     SmartDashboard.putData("Autonomous Chooser", this.autonomousChooser);
   }
 

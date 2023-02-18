@@ -39,6 +39,7 @@ public class WestCoastDrive extends SubsystemBase {
 
     // NavX's getAngle method is inverted from the generally agrred upon standard Rotation2d.
     SmartDashboard.putNumber("NavX Raw Angle", this.navX.getAngle());
+   
     SmartDashboard.putNumber("NavX Processed Rotation", this.navX.getRotation2d().getDegrees());
     }
 
@@ -76,7 +77,12 @@ public class WestCoastDrive extends SubsystemBase {
    * @return the current yaw value in degrees (-180 to 180).
    */
   public float getYaw () { return this.navX.getYaw(); }
-
+  public float getAverageDistance () {
+    float results=0;
+    results = (float)this.lefMotorGroup.centerMotor.getSelectedSensorPosition();
+    System.out.println("Get Average Disnace Results" + results);
+    return results;
+  }
   /**
    * Resets the robot's yaw to 0.
    * 

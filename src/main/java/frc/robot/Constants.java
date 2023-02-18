@@ -18,8 +18,8 @@ public class Constants {
         public static final double GYRO_STRAIGHT_KP = 0.005;
         public static final double GYRO_TURNING_KP = 0.02;
 
-        public static final double TURNING_ANGLE_TOLERANCE = 5.0;
-        public static final double TURNUNG_ANGLE_TURN_RATE_TOLERANCE = 10.0;
+        public static final double TURNING_ANGLE_TOLERANCE = 15.0;
+        public static final double TURNUNG_ANGLE_TURN_RATE_TOLERANCE = 5.0;
         public static final double TURNING_ANGLE_KF = 0.2;
 
         public enum APRILTAG_POSITIONS {
