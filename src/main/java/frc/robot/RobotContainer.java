@@ -68,8 +68,8 @@ public class RobotContainer {
     this.manipulator.setDefaultCommand(
       new Manipulate(
         this.manipulator, 
-        () -> (-this.driverTwo.getRawAxis(5)), 
-        () -> (this.driverTwo.getRawAxis(2) - this.driverTwo.getRawAxis(3))
+        () -> (-this.driverTwo.getRawAxis(4)), 
+        () -> (this.driverTwo.getRawAxis(2))
       )
     );
 
