@@ -61,16 +61,16 @@ public class Constants {
     public static final class ManipulatorConstants {
 
         public static final int ARM_MINIMUM_EXTENSION = 0; // TODO
-        public static final int ARM_MAXIMUM_EXTENSION = 66000; // TODO
+        public static final int ARM_MAXIMUM_EXTENSION = 78000; // TODO
 
         public enum ARM_POSITIONS {
-            TEST(0); // TODO
+            TEST(50000); // TODO
 
             public final int position;
             private ARM_POSITIONS (int position) { this.position = position; }
         }
 
-        public static final double ARM_KP = 0.0; // TODO
+        public static final double ARM_KP = 0.00001; // TODO
         public static final double ARM_KI = 0.0; // TODO
         public static final double ARM_KD = 0.0; // TODO
 
@@ -81,7 +81,7 @@ public class Constants {
     // Electronic Constants.
     public static final class ElectronicConstants {
 
-        public static final List<Integer> LED_PWMS = Arrays.asList(5);
+        public static final List<Integer> LED_PWMS = Arrays.asList(9);
         public static final int LED_LENGTH = 37;
 
         public enum LED_COLORS {

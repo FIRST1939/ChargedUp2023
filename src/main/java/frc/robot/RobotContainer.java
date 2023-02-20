@@ -69,7 +69,7 @@ public class RobotContainer {
       new Manipulate(
         this.manipulator, 
         () -> (-this.driverTwo.getRawAxis(4)), 
-        () -> (this.driverTwo.getRawAxis(2) - this.driverTwo.getRawAxis(3))
+        () -> (this.driverTwo.getRawAxis(2))
       )
     );
 
@@ -89,7 +89,9 @@ public class RobotContainer {
     SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
     
     //this.driverTwo.a().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TEST));
-    //this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.25));
+    this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.5));
+    this.driverTwo.x().onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.RAINBOW));
+    this.driverTwo.b().whileTrue(new DriveAprilTagDistance(this.westCoastDrive, this.photonvision, 0.1, 0.35));
 
     // TODO Joystick Button IDs
     new JoystickButton(this.leftJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CONE));
