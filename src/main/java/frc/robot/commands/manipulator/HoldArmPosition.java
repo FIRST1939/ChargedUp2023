@@ -27,6 +27,7 @@ public class HoldArmPosition extends CommandBase {
     public void execute () {
 
         double error = this.position - this.manipulator.getArmPosition();
-        this.manipulator.setArm(this.armPID.calculate(error));
+        double armPower = this.armPID.calculate(error);
+        this.manipulator.setArm(armPower);
     }
 }
