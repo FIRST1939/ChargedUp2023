@@ -34,16 +34,26 @@ public class Photonvision extends SubsystemBase {
             this.currentTargets = this.photonTrackedTargets.size();
         }
 
-        SmartDashboard.putNumber("Charging Station X", this.getBestPosition().getX());
-        SmartDashboard.putNumber("Charging Station Y", this.getBestPosition().getY());
+        SmartDashboard.putNumber("X Distance", this.getXDistance());
+        SmartDashboard.putNumber("Charging Station X", this.getBestRelativeX());
         SmartDashboard.putNumber("Current Targets", this.currentTargets);
     }
 
     public double getXDistance () {
 
         PhotonPipelineResult photonPipelineResult = this.photonCamera.getLatestResult();
+        if (!photonPipelineResult.hasTargets()) { return 0.0; }
+
         PhotonTrackedTarget photonTrackedTarget = photonPipelineResult.getBestTarget();
         return photonTrackedTarget.getBestCameraToTarget().getX();
+    }
+
+    public double getBestRelativeX () {
+
+        PhotonPipelineResult photonPipelineResult = this.photonCamera.getLatestResult();
+        if (!photonPipelineResult.hasTargets()) { return 0.0; }
+
+        return this.getRelativeX(photonPipelineResult.getBestTarget());
     }
 
     public double getRelativeX (PhotonTrackedTarget photonTrackedTarget) {
