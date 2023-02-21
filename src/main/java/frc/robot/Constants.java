@@ -64,20 +64,20 @@ public class Constants {
         public static final int ARM_MAXIMUM_EXTENSION = 78000; // TODO
 
         public enum ARM_POSITIONS {
-            MIDDLE(38000), // TODO
+            MIDDLE(38000),
             STATION(58000), // TODO
-            TOP(62000); // TODO
+            TOP(62000);
 
             public final int position;
             private ARM_POSITIONS (int position) { this.position = position; }
         }
 
-        public static final double ARM_KP = 0.00006; // TODO
-        public static final double ARM_KI = 0.0000000444; // TODO
-        public static final double ARM_KD = 0.0; // TODO
+        public static final double ARM_KP = 0.00006;
+        public static final double ARM_KI = 0.0000000444;
+        public static final double ARM_KD = 0.0;
 
-        public static final int ARM_MOTOR = 12; // TODO
-        public static final int SCORE_MOTOR = 21; // TODO
+        public static final int ARM_MOTOR = 12;
+        public static final int ROLLER_MOTOR = 21;
     }
     
     // Electronic Constants.

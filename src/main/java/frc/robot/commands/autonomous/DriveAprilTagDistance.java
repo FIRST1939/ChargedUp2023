@@ -33,7 +33,7 @@ public class DriveAprilTagDistance extends CommandBase {
     public void execute () {
 
         System.out.println(-this.photonvision.getBestPosition().getX());
-        double turningValue = this.westCoastDrive.getHeading() * Constants.AutonomousConstants.GYRO_STRAIGHT_KP;
+        double turningValue = -Math.signum(this.meters) * this.westCoastDrive.getHeading() * Constants.AutonomousConstants.GYRO_STRAIGHT_KP;
         this.westCoastDrive.drive(this.power, 0.0);
     }
 

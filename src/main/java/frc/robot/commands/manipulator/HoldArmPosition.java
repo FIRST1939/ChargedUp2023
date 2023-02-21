@@ -13,10 +13,18 @@ public class HoldArmPosition extends CommandBase {
     private final PID armPID;
     private final int position;
 
+    public HoldArmPosition (Manipulator manipulator, int armPosition) {
+
+        this.manipulator = manipulator;
+        this.armPID = new PID(Constants.ManipulatorConstants.ARM_KP, Constants.ManipulatorConstants.ARM_KI, Constants.ManipulatorConstants.ARM_KD);
+        this.position = armPosition;
+
+        this.addRequirements(this.manipulator);
+    }
+
     public HoldArmPosition (Manipulator manipulator, ARM_POSITIONS armPosition) {
 
         this.manipulator = manipulator;
-
         this.armPID = new PID(Constants.ManipulatorConstants.ARM_KP, Constants.ManipulatorConstants.ARM_KI, Constants.ManipulatorConstants.ARM_KD);
         this.position = armPosition.position;
     

@@ -14,12 +14,12 @@ import frc.robot.Constants;
 public class Manipulator extends SubsystemBase {
     
     private final WPI_TalonFX armMotor;
-    private final CANSparkMax scoreMotor;
+    private final CANSparkMax rollerMotor;
 
     public Manipulator () {
 
         this.armMotor = new WPI_TalonFX(Constants.ManipulatorConstants.ARM_MOTOR);
-        this.scoreMotor = new CANSparkMax(Constants.ManipulatorConstants.SCORE_MOTOR, MotorType.kBrushless);
+        this.rollerMotor = new CANSparkMax(Constants.ManipulatorConstants.ROLLER_MOTOR, MotorType.kBrushless);
 
         this.armMotor.configFactoryDefault();
         this.armMotor.setNeutralMode(NeutralMode.Brake);
@@ -29,8 +29,8 @@ public class Manipulator extends SubsystemBase {
         this.armMotor.configPeakOutputForward(1,30);
         this.armMotor.configPeakOutputReverse(-1,30);
 
-        this.scoreMotor.restoreFactoryDefaults();
-        this.scoreMotor.setIdleMode(IdleMode.kBrake);
+        this.rollerMotor.restoreFactoryDefaults();
+        this.rollerMotor.setIdleMode(IdleMode.kBrake);
     }
 
     public void periodic () {
@@ -39,7 +39,8 @@ public class Manipulator extends SubsystemBase {
     }
 
     /**
-     * @param velocity -1 to 1
+     * Sets the arm motor to the given velocity, based upon input from the XBox Controller.
+     * All inputs are capped at ~20% power for safety reasons.
      */
     public void setArm (double velocity) { 
         
@@ -53,12 +54,10 @@ public class Manipulator extends SubsystemBase {
     }
 
     /**
-     * @param velocity -1 to 1
+     * Sets the roller motor to the given velocity, based upon input from the XBox Controller.
+     * All inputs are capped at ~70% power for safety reasons.
      */
-    public void setRollers (double velocity) { 
-        
-        this.scoreMotor.set(velocity / 1.4); 
-    }
+    public void setRollers (double velocity) { this.rollerMotor.set(velocity / 1.4); }
 
     public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
     public void zeroArm () { this.armMotor.setSelectedSensorPosition(0.0); }

@@ -16,8 +16,5 @@ public class SetLEDs extends InstantCommand {
     }
 
     @Override
-    public void execute () { this.leds.setHue(this.ledColor); }
-
-    @Override
-    public boolean isFinished () { return true; }
+    public void initialize () { this.leds.setHue(this.ledColor); }
 }

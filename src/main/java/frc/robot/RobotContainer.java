@@ -74,7 +74,7 @@ public class RobotContainer {
       )
     );
 
-    configureButtonBindings();
+    configureTriggers();
     configureAutonomousChooser();
   }
 
@@ -84,19 +84,18 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings () {
+  private void configureTriggers () {
 
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
     SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
     
-    //this.driverTwo.a().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TEST));
     this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.75));
     this.driverTwo.x().onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.RAINBOW));
+
     this.driverTwo.a().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.STATION));
     this.driverTwo.b().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.MIDDLE));
     this.driverTwo.y().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TOP));
 
-    // TODO Joystick Button IDs
     new JoystickButton(this.leftJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CONE));
     new JoystickButton(this.rightJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CUBE));
   }
@@ -114,8 +113,5 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand () {
-
-    return this.autonomousChooser.getSelected().get();
-  }
+  public Command getAutonomousCommand () { return this.autonomousChooser.getSelected().get(); }
 }
