@@ -11,29 +11,38 @@ import frc.robot.Constants;
 public class LEDs extends SubsystemBase {
     
     private final List<AddressableLED> addressableLEDs = new ArrayList<AddressableLED>();
-    private final AddressableLEDBuffer addressableLEDBuffer;
+    private final List<AddressableLEDBuffer> addressableLEDBuffers = new ArrayList<AddressableLEDBuffer>();
 
-    public LEDs (AddressableLEDBuffer addressableLEDBuffer) {
+    public LEDs () {
 
         for (int ledPortID : Constants.ElectronicConstants.LED_PWMS) { this.addressableLEDs.add(new AddressableLED(ledPortID)); }
-        this.addressableLEDBuffer = addressableLEDBuffer;
+        for (int ledLength : Constants.ElectronicConstants.LED_LENGTHS) { this.addressableLEDBuffers.add(new AddressableLEDBuffer(ledLength)); }
 
-        for (AddressableLED addressableLED : this.addressableLEDs) {
+        for (int i = 0; i < this.addressableLEDs.size(); i++) {
 
-            addressableLED.setLength(this.addressableLEDBuffer.getLength());
-            addressableLED.setData(this.addressableLEDBuffer);
+            AddressableLED addressableLED = this.addressableLEDs.get(i);
+            AddressableLEDBuffer addressableLEDBuffer = this.addressableLEDBuffers.get(i);
+
+            addressableLED.setLength(addressableLEDBuffer.getLength());
+            addressableLED.setData(addressableLEDBuffer);
             addressableLED.start();
         }
     }
 
     public void setHue (Constants.ElectronicConstants.LED_COLORS ledColor) { 
         
-        for (int i = 0; i < this.addressableLEDBuffer.getLength(); i++) { 
-            
-            int hue = ((ledColor.absoluteHue - ledColor.hueDeviation) + (i * (ledColor.hueDeviation) / this.addressableLEDBuffer.getLength())) % 180;
-            this.addressableLEDBuffer.setHSV(i, hue, 255, 128); 
-        }
+        for (int i = 0; i < this.addressableLEDs.size(); i++) {
 
-        for (AddressableLED addressableLED : this.addressableLEDs) { addressableLED.setData(this.addressableLEDBuffer); }
+            AddressableLED addressableLED = this.addressableLEDs.get(i);
+            AddressableLEDBuffer addressableLEDBuffer = this.addressableLEDBuffers.get(i);
+
+            for (int j = 0; j < addressableLEDBuffer.getLength(); j++) { 
+                
+                int hue = ((ledColor.absoluteHue - ledColor.hueDeviation) + (i * (ledColor.hueDeviation) / addressableLEDBuffer.getLength())) % 180;
+                addressableLEDBuffer.setHSV(i, hue, 255, 128); 
+            }
+
+            addressableLED.setData(addressableLEDBuffer);
+        }
     }
 }

@@ -83,8 +83,8 @@ public class Constants {
     // Electronic Constants.
     public static final class ElectronicConstants {
 
-        public static final List<Integer> LED_PWMS = Arrays.asList(9);
-        public static final int LED_LENGTH = 37;
+        public static final List<Integer> LED_PWMS = Arrays.asList(0, 0, 0, 0, 0, 0); // TODO
+        public static final List<Integer> LED_LENGTHS = Arrays.asList(66, 66, 23, 23, 0, 0); // TODO
 
         public enum LED_COLORS {
             CONE(27, 14),
