@@ -26,6 +26,7 @@ import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetLEDs;
 import frc.robot.commands.ZeroArm;
 import frc.robot.commands.autonomous.DriveAprilTagDistance;
+import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ResetArmPosition;
@@ -51,7 +52,7 @@ public class RobotContainer {
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
   private final Manipulator manipulator = new Manipulator();
 
-  public final LEDs leds = new LEDs(new AddressableLEDBuffer(Constants.ElectronicConstants.LED_LENGTH));
+  public final LEDs leds = new LEDs();
 
   private final SendableChooser<Supplier<Command>> autonomousChooser = new SendableChooser<>();
 
@@ -103,7 +104,7 @@ public class RobotContainer {
   private void configureAutonomousChooser () {
 
     this.autonomousChooser.setDefaultOption("Do Nothing", () -> new WaitCommand(1.0));
-    this.autonomousChooser.addOption("1 GP + Taxi", () -> new 1GP_Taxi(this.westCoastDrive, this.manipulator, this.photonvision));
+    this.autonomousChooser.addOption("1 GP + Taxi", () -> new Auto1GP_Taxi(this.westCoastDrive, this.manipulator, this.photonvision));
 
     SmartDashboard.putData("Autonomous Chooser", this.autonomousChooser);
   }

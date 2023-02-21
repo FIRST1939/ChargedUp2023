@@ -21,4 +21,7 @@ public class RunManipulator extends CommandBase {
     // TODO Beam Breaks
     @Override
     public boolean isFinished () { return false; }
+
+    @Override
+    public void end (boolean interrupted) { this.manipulator.setArm(0.0); }
 }

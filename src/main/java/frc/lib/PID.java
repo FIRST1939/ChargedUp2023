@@ -41,8 +41,6 @@ public class PID {
             return 0.0;
         }
 
-        System.out.println("p: " + p + ", i: " + i);
-
         this.timer.reset();
         this.lastError = error;
         return p + i + d;
