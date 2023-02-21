@@ -66,13 +66,13 @@ public class Constants {
         public enum ARM_POSITIONS {
             MIDDLE(38000), // TODO
             STATION(58000), // TODO
-            TOP(59000); // TODO
+            TOP(62000); // TODO
 
             public final int position;
             private ARM_POSITIONS (int position) { this.position = position; }
         }
 
-        public static final double ARM_KP = 0.000045; // TODO
+        public static final double ARM_KP = 0.00006; // TODO
         public static final double ARM_KI = 0.0000000444; // TODO
         public static final double ARM_KD = 0.0; // TODO
 
