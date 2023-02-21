@@ -76,8 +76,8 @@ public class Constants {
         public static final double ARM_KI = 0.0000000444; // TODO
         public static final double ARM_KD = 0.0; // TODO
 
-        public static final int ARM_MOTOR = 30; // TODO
-        public static final int SCORE_MOTOR = 10; // TODO
+        public static final int ARM_MOTOR = 12; // TODO
+        public static final int SCORE_MOTOR = 21; // TODO
     }
     
     // Electronic Constants.
