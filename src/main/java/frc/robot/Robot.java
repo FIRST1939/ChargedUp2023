@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
     if (!DriverStation.getJoystickIsXbox(Constants.ControllerConstants.DRIVER_TWO)) { 
 
       DriverStation.reportError("RESCAN USB DEVICES (F1)", false);
-      new SetLEDs(this.m_robotContainer.leds, Constants.ElectronicConstants.LED_COLORS.ERROR);
+      new SetLEDs(this.m_robotContainer.leds, Constants.ElectronicConstants.LED_COLORS.ERROR).schedule();
     }
   }
 
