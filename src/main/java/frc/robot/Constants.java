@@ -89,6 +89,7 @@ public class Constants {
         public enum LED_COLORS {
             CONE(27, 14),
             CUBE(128, 2),
+            ERROR(0, 10),
             RAINBOW(90, 90);
 
             public final int absoluteHue;

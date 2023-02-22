@@ -6,9 +6,11 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.net.PortForwarder;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.SetLEDs;
 
 public class Robot extends TimedRobot {
 
@@ -38,6 +40,12 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    if (!DriverStation.getJoystickIsXbox(Constants.ControllerConstants.DRIVER_TWO)) { 
+
+      DriverStation.reportError("RESCAN USB DEVICES (F1)", false);
+      new SetLEDs(this.m_robotContainer.leds, Constants.ElectronicConstants.LED_COLORS.ERROR);
+    }
   }
 
   @Override
