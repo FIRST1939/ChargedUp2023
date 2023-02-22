@@ -30,12 +30,12 @@ public class DriveStraightDistance extends CommandBase {
     public void execute () {
 
         double powerValue = Math.signum(this.meters) * this.power;
-        double turningValue = this.westCoastDrive.getHeading() * Constants.AutonomousConstants.GYRO_STRAIGHT_KP;
+        double turningValue = Math.signum(this.meters) * this.westCoastDrive.getHeading() * Constants.AutonomousConstants.GYRO_STRAIGHT_KP;
         this.westCoastDrive.drive(powerValue, turningValue);
     }
 
     @Override
-    public boolean isFinished () { return this.westCoastDrive.getAverageDistance() >= this.meters; }
+    public boolean isFinished () { return this.westCoastDrive.getAverageDistance() >= Math.abs(this.meters); }
 
     @Override
     public void end (boolean interrupted) { this.westCoastDrive.stop(); }

@@ -1,5 +1,8 @@
 package frc.robot;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Constants {
     
     // Controller Constants.
@@ -52,5 +55,50 @@ public class Constants {
         public static final int BACK_RIGHT_MOTOR = 4;
         public static final int CENTER_RIGHT_MOTOR = 5;
         public static final int FRONT_RIGHT_MOTOR = 6;
+    }
+    
+    // Manipulator Constants.
+    public static final class ManipulatorConstants {
+
+        public static final int ARM_MINIMUM_EXTENSION = 0; // TODO
+        public static final int ARM_MAXIMUM_EXTENSION = 78000; // TODO
+
+        public enum ARM_POSITIONS {
+            MIDDLE(38000),
+            STATION(58000), // TODO
+            TOP(62000);
+
+            public final int position;
+            private ARM_POSITIONS (int position) { this.position = position; }
+        }
+
+        public static final double ARM_KP = 0.00006;
+        public static final double ARM_KI = 0.0000000444;
+        public static final double ARM_KD = 0.0;
+
+        public static final int ARM_MOTOR = 12;
+        public static final int ROLLER_MOTOR = 21;
+    }
+    
+    // Electronic Constants.
+    public static final class ElectronicConstants {
+
+        public static final List<Integer> LED_PWMS = Arrays.asList(9); // TODO
+        public static final List<Integer> LED_LENGTHS = Arrays.asList(37); // TODO
+
+        public enum LED_COLORS {
+            CONE(27, 14),
+            CUBE(128, 2),
+            RAINBOW(90, 90);
+
+            public final int absoluteHue;
+            public final int hueDeviation;
+
+            private LED_COLORS (int absoluteHue, int hueDeviation) {
+
+                this.absoluteHue = absoluteHue;
+                this.hueDeviation = hueDeviation;
+            }
+        }
     }
 }

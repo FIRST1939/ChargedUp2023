@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.lib.drivetrain;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -14,7 +14,7 @@ public class MotorGroup {
 
         this.backMotor = new CANSparkMax(backMotorID, MotorType.kBrushless);
         this.backMotor.restoreFactoryDefaults();
-        this.backMotor.setIdleMode(IdleMode.kBrake);
+        this.backMotor.setIdleMode(IdleMode.kCoast);
         this.backMotor.setOpenLoopRampRate(0.25);
 
         this.centerMotor = new CANSparkMax(centerMotorID, MotorType.kBrushless);
@@ -30,7 +30,7 @@ public class MotorGroup {
 
     public void set (double speed) {
 
-        this.backMotor.set(speed);
+        //this.backMotor.set(speed);
         this.centerMotor.set(speed);
         this.frontMotor.set(speed);
     }
