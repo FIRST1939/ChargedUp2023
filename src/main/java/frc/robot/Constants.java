@@ -57,8 +57,8 @@ public class Constants {
         public static final int FRONT_RIGHT_MOTOR = 6;
     }
 
-    // IntakeConstants.
-    public static final class IntakeConstans {
+    // IntakerConstants.
+    public static final class IntakerConstants {
 
         public static final int SLIDER_MINIMUM_EXTENSION = 0; // TODO
         public static final int SLIDER_MAXIMUM_EXTENSION = 0; // TODO
