@@ -56,6 +56,16 @@ public class Constants {
         public static final int CENTER_RIGHT_MOTOR = 5;
         public static final int FRONT_RIGHT_MOTOR = 6;
     }
+
+    // IntakeConstants.
+    public static final class IntakeConstans {
+
+        public static final int SLIDER_MINIMUM_EXTENSION = 0; // TODO
+        public static final int SLIDER_MAXIMUM_EXTENSION = 0; // TODO
+
+        public static final int SLIDER_MOTOR = 11;
+        public static final int ROLLER_MOTOR = 20;
+    }
     
     // Manipulator Constants.
     public static final class ManipulatorConstants {

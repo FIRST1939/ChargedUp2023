@@ -24,12 +24,15 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetLEDs;
-import frc.robot.commands.ZeroArm;
 import frc.robot.commands.autonomous.DriveAprilTagDistance;
 import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
+import frc.robot.commands.intake.Intake;
+import frc.robot.commands.intake.ZeroSlider;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ResetArmPosition;
+import frc.robot.commands.manipulator.ZeroArm;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.Photonvision;
@@ -50,6 +53,8 @@ public class RobotContainer {
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final Photonvision photonvision = new Photonvision(new PhotonCamera("OV5647"));
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
+
+  private final Intake intake = new Intake();
   private final Manipulator manipulator = new Manipulator();
 
   public final LEDs leds = new LEDs();
@@ -74,6 +79,14 @@ public class RobotContainer {
       )
     );
 
+    this.intake.setDefaultCommand(
+      new Intake(
+        this.manipulator,
+        () -> (-this.driverTwo.getLeftY()), 
+        () -> ((this.driverTwo.getHID().getLeftBumper() ? 1.0 : 0.0) - (!this.driverTwo.getHID().getRightBumper() ? 1 : 0))
+      )
+    );
+
     configureTriggers();
     configureAutonomousChooser();
   }
@@ -87,6 +100,7 @@ public class RobotContainer {
   private void configureTriggers () {
 
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
+    SmartDashboard.putData("Zero Slider", new ZeroSldier(this.intake));
     SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
     
     this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.75));
