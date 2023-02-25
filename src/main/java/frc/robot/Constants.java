@@ -66,14 +66,14 @@ public class Constants {
         public enum ARM_POSITIONS {
             MIDDLE(38000),
             STATION(58000), // TODO
-            TOP(62000);
+            TOP(64000);
 
             public final int position;
             private ARM_POSITIONS (int position) { this.position = position; }
         }
 
         public static final double ARM_KP = 0.00006;
-        public static final double ARM_KI = 0.0000000444;
+        public static final double ARM_KI = 0.00008;
         public static final double ARM_KD = 0.0;
 
         public static final int ARM_MOTOR = 12;

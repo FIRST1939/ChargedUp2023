@@ -17,7 +17,7 @@ public class Auto1GP_Taxi extends SequentialCommandGroup {
 
         this.addCommands(
             new WaitCommand(SmartDashboard.getNumber("Auto Start Wait", 0.0)),
-            new HoldArmPosition(manipulator, 66000).withTimeout(2.6),
+            new HoldArmPosition(manipulator, 66000).withTimeout(3.0),
             new RunManipulator(manipulator, 0.8).withTimeout(0.8),
             new ResetArmPosition(manipulator, 0.75).withTimeout(3.0),
             new DriveStraightDistance(westCoastDrive, -2.2, 0.4)

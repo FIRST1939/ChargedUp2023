@@ -27,7 +27,8 @@ public class PID {
     public double calculate(double error) {
 
         double dt = this.timer.get();
-        this.cumulativeError += (error * dt);
+        if (error <= 30000) { this.cumulativeError += (error * dt); }
+        System.out.println(this.cumulativeError);
 
         double p = this.kP * error;
         double i = this.kI * this.cumulativeError;
