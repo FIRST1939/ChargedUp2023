@@ -11,12 +11,14 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.ZeroArm;
 
 public class Manipulator extends SubsystemBase {
     
     private final WPI_TalonFX armMotor;
     private final CANSparkMax rollerMotor;
 
+    private final DigitalInput armLimitSwitch;
     private final DigitalInput coneBeamBreak;
     private final DigitalInput cubeBeamBreak;
 
@@ -36,11 +38,16 @@ public class Manipulator extends SubsystemBase {
         this.rollerMotor.restoreFactoryDefaults();
         this.rollerMotor.setIdleMode(IdleMode.kBrake);
 
+        this.armLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.ARM_LIMIT_SWITCH);
         this.coneBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CONE_BEAM_BREAK);
         this.cubeBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CUBE_BEAM_BREAK);
     }
 
-    public void periodic () { SmartDashboard.putNumber("Arm Position", this.getArmPosition()); }
+    public void periodic () { 
+        
+        SmartDashboard.putNumber("Arm Position", this.getArmPosition());
+        if (this.armLimitSwitch.get()) { this.zeroArm(); }
+    }
 
     /**
      * Sets the arm motor to the given velocity, based upon input from the XBox Controller.
