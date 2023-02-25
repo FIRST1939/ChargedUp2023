@@ -30,6 +30,7 @@ import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ResetArmPosition;
+import frc.robot.commands.manipulator.RunManipulator;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.Photonvision;
@@ -69,8 +70,7 @@ public class RobotContainer {
     this.manipulator.setDefaultCommand(
       new Manipulate(
         this.manipulator, 
-        () -> (-this.driverTwo.getRightY()), 
-        () -> (this.driverTwo.getLeftTriggerAxis() - this.driverTwo.getRightTriggerAxis())
+        () -> (-this.driverTwo.getRightY())
       )
     );
 
@@ -89,6 +89,9 @@ public class RobotContainer {
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
     SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
     
+    this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, this.driverTwo.getLeftTriggerAxis()));
+    this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, -this.driverTwo.getRightTriggerAxis()));
+
     this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.75));
     this.driverTwo.x().onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.RAINBOW));
 
