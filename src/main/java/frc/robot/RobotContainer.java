@@ -27,9 +27,12 @@ import frc.robot.commands.SetLEDs;
 import frc.robot.commands.ZeroArm;
 import frc.robot.commands.autonomous.DriveAprilTagDistance;
 import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
+import frc.robot.commands.indexer.Index;
+import frc.robot.commands.indexer.ZeroIndexer;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ResetArmPosition;
+import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.Photonvision;
@@ -50,7 +53,9 @@ public class RobotContainer {
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final Photonvision photonvision = new Photonvision(new PhotonCamera("OV5647"));
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
+  
   private final Manipulator manipulator = new Manipulator();
+  private final Indexer indexer = new Indexer();
 
   public final LEDs leds = new LEDs();
 
@@ -63,6 +68,13 @@ public class RobotContainer {
         this.westCoastDrive, 
         () -> (-this.leftJoystick.getY()),
         () -> (-this.rightJoystick.getX())
+      )
+    );
+
+    this.indexer.setDefaultCommand(
+      new Index(
+        this.indexer,
+        () -> (-this.driverTwo.getLeftY())
       )
     );
 
@@ -87,6 +99,7 @@ public class RobotContainer {
   private void configureTriggers () {
 
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
+    SmartDashboard.putData("Zero Indexer", new ZeroIndexer(this.indexer));
     SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
     
     this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.75));

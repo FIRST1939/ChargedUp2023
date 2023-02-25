@@ -56,6 +56,15 @@ public class Constants {
         public static final int CENTER_RIGHT_MOTOR = 5;
         public static final int FRONT_RIGHT_MOTOR = 6;
     }
+
+    // Indexer Constants.
+    public static final class IndexerConstants {
+
+        public static final int INDEXER_MINIMUM_EXTENSION = 0; // TODO
+        public static final int INDEXER_MAXIMUM_EXTENSION = 0; // TODO
+
+        public static final int INDEXER_MOTOR = 11;
+    }
     
     // Manipulator Constants.
     public static final class ManipulatorConstants {
