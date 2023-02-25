@@ -19,8 +19,8 @@ public class Manipulator extends SubsystemBase {
     private final CANSparkMax rollerMotor;
 
     private final DigitalInput armLimitSwitch;
-    private final DigitalInput coneBeamBreak;
-    private final DigitalInput cubeBeamBreak;
+    //private final DigitalInput coneBeamBreak;
+    //private final DigitalInput cubeBeamBreak;
 
     public Manipulator () {
 
@@ -39,8 +39,8 @@ public class Manipulator extends SubsystemBase {
         this.rollerMotor.setIdleMode(IdleMode.kBrake);
 
         this.armLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.ARM_LIMIT_SWITCH);
-        this.coneBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CONE_BEAM_BREAK);
-        this.cubeBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CUBE_BEAM_BREAK);
+        //this.coneBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CONE_BEAM_BREAK);
+        //this.cubeBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CUBE_BEAM_BREAK);
     }
 
     public void periodic () { 
@@ -69,8 +69,8 @@ public class Manipulator extends SubsystemBase {
      * All inputs are capped at ~70% power for safety reasons.
      */
     public void setRollers (double velocity) { this.rollerMotor.set(velocity / 1.4); }
-    public boolean isHoldingCone () { return !this.coneBeamBreak.get(); }
-    public boolean isHoldingCube () { return !this.cubeBeamBreak.get(); }
+    public boolean isHoldingCone () { return false; }
+    public boolean isHoldingCube () { return false; }
 
     public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
     public void zeroArm () { this.armMotor.setSelectedSensorPosition(0.0); }
