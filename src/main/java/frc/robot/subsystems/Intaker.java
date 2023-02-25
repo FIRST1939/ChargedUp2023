@@ -19,7 +19,7 @@ public class Intaker extends SubsystemBase {
     public Intaker () {
 
         this.sliderMotor = new WPI_TalonFX(Constants.IntakerConstants.SLIDER_MOTOR);
-        this.rollerMotor = new CANSparkMax(Constants.IntakerConstants.ROLLER_MOTOR, MotorType.kBrushless);
+        this.rollerMotor = new CANSparkMax(Constants.IntakerConstants.ROLLER_MOTOR, MotorType.kBrushed);
 
         this.sliderMotor.configFactoryDefault();
         this.sliderMotor.setNeutralMode(NeutralMode.Brake);
