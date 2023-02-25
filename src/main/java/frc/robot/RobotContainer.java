@@ -53,7 +53,7 @@ public class RobotContainer {
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
   private final Manipulator manipulator = new Manipulator();
 
-  public final LEDs leds = new LEDs();
+  //public final LEDs leds = new LEDs();
 
   private final SendableChooser<Supplier<Command>> autonomousChooser = new SendableChooser<>();
 
@@ -93,14 +93,14 @@ public class RobotContainer {
     this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, -this.driverTwo.getRightTriggerAxis()));
 
     this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.75));
-    this.driverTwo.x().onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.RAINBOW));
+    //this.driverTwo.x().onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.RAINBOW));
 
     this.driverTwo.a().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.STATION));
     this.driverTwo.b().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.MIDDLE));
     this.driverTwo.y().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TOP));
 
-    new JoystickButton(this.leftJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CONE));
-    new JoystickButton(this.rightJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CUBE));
+    //new JoystickButton(this.leftJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CONE));
+    //new JoystickButton(this.rightJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CUBE));
   }
 
   private void configureAutonomousChooser () {
