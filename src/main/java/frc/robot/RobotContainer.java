@@ -82,7 +82,7 @@ public class RobotContainer {
       new Intake(
         this.intaker,
         () -> (-this.driverTwo.getLeftY()), 
-        () -> ((this.driverTwo.getHID().getLeftBumper() ? 1.0 : 0.0) - (!this.driverTwo.getHID().getRightBumper() ? 1 : 0))
+        () -> ((this.driverTwo.getHID().getLeftBumper() ? 1.0 : 0.0) - (!this.driverTwo.getHID().getRightBumper() ? 1.0 : 0.0))
       )
     );
 
