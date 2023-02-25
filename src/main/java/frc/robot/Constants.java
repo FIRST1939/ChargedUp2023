@@ -61,9 +61,9 @@ public class Constants {
     public static final class IntakerConstants {
 
         public static final int SLIDER_MINIMUM_EXTENSION = 0; // TODO
-        public static final int SLIDER_MAXIMUM_EXTENSION = 0; // TODO
+        public static final int SLIDER_MAXIMUM_EXTENSION = 60000; // TODO
 
-        public static final int SLIDER_MOTOR = 11;
+        public static final int SLIDER_MOTOR = 10;
         public static final int ROLLER_MOTOR = 20;
     }
     
@@ -93,8 +93,8 @@ public class Constants {
     // Electronic Constants.
     public static final class ElectronicConstants {
 
-        public static final List<Integer> LED_PWMS = Arrays.asList(9); // TODO
-        public static final List<Integer> LED_LENGTHS = Arrays.asList(37); // TODO
+        public static final int LED_PWM = 0;
+        public static final int LED_LENGTH = 66;
 
         public enum LED_COLORS {
             CONE(27, 14),
