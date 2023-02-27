@@ -26,6 +26,7 @@ import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetLEDs;
 import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
 import frc.robot.commands.intaker.Intake;
+import frc.robot.commands.intaker.ResetSliderPosition;
 import frc.robot.commands.intaker.ZeroSlider;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
@@ -108,6 +109,8 @@ public class RobotContainer {
     this.driverTwo.a().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.STATION));
     this.driverTwo.b().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.MIDDLE));
     this.driverTwo.y().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TOP));
+
+    this.driverTwo.povRight().onTrue(new ResetSliderPosition(this.intaker, 0.75));
 
     new JoystickButton(this.leftJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CONE));
     new JoystickButton(this.rightJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CUBE));
