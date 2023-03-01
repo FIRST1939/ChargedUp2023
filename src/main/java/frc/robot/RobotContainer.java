@@ -118,15 +118,10 @@ public class RobotContainer {
     this.driverTwo.b().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.MIDDLE));
     this.driverTwo.y().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TOP));
 
-    new JoystickButton(this.leftJoystick, 1).onTrue(new SetGamePiece(this.manipulator, -1));
-    new JoystickButton(this.rightJoystick, 1).onTrue(new SetGamePiece(this.manipulator, 1));
-    new JoystickButton(this.leftJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CONE));
-    new JoystickButton(this.rightJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CUBE));
-
-    new JoystickButton(this.leftJoystick, 2).onTrue(new SetGamePiece(this.manipulator, 0));
-    new JoystickButton(this.leftJoystick, 2).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.RAINBOW));
-    new JoystickButton(this.rightJoystick, 2).onTrue(new SetGamePiece(this.manipulator, 0));
-    new JoystickButton(this.rightJoystick, 2).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.RAINBOW));
+    new JoystickButton(this.leftJoystick, 1).onTrue(new SetGamePiece(this.manipulator, this.leds, -1));
+    new JoystickButton(this.rightJoystick, 1).onTrue(new SetGamePiece(this.manipulator, this.leds, 1));
+    new JoystickButton(this.leftJoystick, 2).onTrue(new SetGamePiece(this.manipulator, this.leds, 0));
+    new JoystickButton(this.rightJoystick, 2).onTrue(new SetGamePiece(this.manipulator, this.leds, 0));
   }
 
   private void configureAutonomousChooser () {
