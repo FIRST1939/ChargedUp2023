@@ -60,9 +60,6 @@ public class Constants {
     // Indexer Constants.
     public static final class IndexerConstants {
 
-        public static final int INDEXER_MINIMUM_EXTENSION = 0; // TODO
-        public static final int INDEXER_MAXIMUM_EXTENSION = 0; // TODO
-
         public static final int INDEXER_MOTOR = 11;
     }
     
