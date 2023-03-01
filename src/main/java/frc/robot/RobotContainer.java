@@ -10,7 +10,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 import org.photonvision.PhotonCamera;
 
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
@@ -29,7 +28,6 @@ import frc.robot.commands.indexer.Index;
 import frc.robot.commands.indexer.RunIndexer;
 import frc.robot.commands.indexer.ZeroIndexer;
 import frc.robot.commands.intaker.Intake;
-import frc.robot.commands.intaker.ResetSliderPosition;
 import frc.robot.commands.intaker.ZeroSlider;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
