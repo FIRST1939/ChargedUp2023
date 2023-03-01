@@ -24,12 +24,25 @@ public class LEDs extends SubsystemBase {
 
         int ledIndex = 0;
         
-        for (int ledLength : Constants.ElectronicConstants.LED_LENGTHS) {
+        for (int stripIndex = 0; stripIndex < Constants.ElectronicConstants.LED_LENGTHS.size(); stripIndex++) {
 
-            for (int i = 0; i < ledLength; i++) { 
-                
-                int hue = ((ledColor.absoluteHue - ledColor.hueDeviation) + (i * (ledColor.hueDeviation) / this.addressableLEDBuffer.getLength())) % 180;
-                this.addressableLEDBuffer.setHSV(ledIndex, hue, 255, 128); 
+            int ledLength = Constants.ElectronicConstants.LED_LENGTHS.get(stripIndex);
+            int ledDirection = Constants.ElectronicConstants.LED_DIRECTIONS.get(ledLength);
+
+            switch (ledDirection) {
+
+                case (-1):
+                    for (int i = 0; i < ledLength; i++) { 
+                    
+                        int hue = ((ledColor.absoluteHue - ledColor.hueDeviation) + (i * (ledColor.hueDeviation) / ledLength)) % 180;
+                        this.addressableLEDBuffer.setHSV(ledIndex, hue, 255, 128); 
+                    }
+                case (1):
+                    for (int i = ledLength; i >= 0; i++) { 
+                    
+                        int hue = ((ledColor.absoluteHue - ledColor.hueDeviation) + (i * (ledColor.hueDeviation) / ledLength)) % 180;
+                        this.addressableLEDBuffer.setHSV(ledIndex, hue, 255, 128); 
+                    }
             }
 
             ledIndex++;
