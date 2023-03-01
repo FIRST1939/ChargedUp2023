@@ -31,6 +31,7 @@ import frc.robot.commands.intaker.ZeroSlider;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ResetArmPosition;
+import frc.robot.commands.manipulator.RunManipulator;
 import frc.robot.commands.manipulator.ZeroArm;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.LEDs;
@@ -74,8 +75,7 @@ public class RobotContainer {
     this.manipulator.setDefaultCommand(
       new Manipulate(
         this.manipulator, 
-        () -> (-this.driverTwo.getRightY()), 
-        () -> (this.driverTwo.getLeftTriggerAxis() - this.driverTwo.getRightTriggerAxis())
+        () -> (-this.driverTwo.getRightY())
       )
     );
 
@@ -103,6 +103,9 @@ public class RobotContainer {
     SmartDashboard.putData("Zero Slider", new ZeroSlider(this.intaker));
     SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
     
+    this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, this.driverTwo.getLeftTriggerAxis()));
+    this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, -this.driverTwo.getRightTriggerAxis()));
+
     this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.75));
     this.driverTwo.x().onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.RAINBOW));
 

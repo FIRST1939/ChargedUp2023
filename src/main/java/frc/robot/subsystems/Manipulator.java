@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -15,6 +16,10 @@ public class Manipulator extends SubsystemBase {
     
     private final WPI_TalonFX armMotor;
     private final CANSparkMax rollerMotor;
+
+    private final DigitalInput armLimitSwitch;
+    //private final DigitalInput coneBeamBreak;
+    //private final DigitalInput cubeBeamBreak;
 
     public Manipulator () {
 
@@ -31,11 +36,16 @@ public class Manipulator extends SubsystemBase {
 
         this.rollerMotor.restoreFactoryDefaults();
         this.rollerMotor.setIdleMode(IdleMode.kBrake);
+
+        this.armLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.ARM_LIMIT_SWITCH);
+        //this.coneBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CONE_BEAM_BREAK);
+        //this.cubeBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CUBE_BEAM_BREAK);
     }
 
-    public void periodic () {
-
+    public void periodic () { 
+        
         SmartDashboard.putNumber("Arm Position", this.getArmPosition());
+        if (this.armLimitSwitch.get()) { this.zeroArm(); }
     }
 
     /**
@@ -58,6 +68,8 @@ public class Manipulator extends SubsystemBase {
      * All inputs are capped at ~70% power for safety reasons.
      */
     public void setRollers (double velocity) { this.rollerMotor.set(velocity / 1.4); }
+    public boolean isHoldingCone () { return false; }
+    public boolean isHoldingCube () { return false; }
 
     public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
     public void zeroArm () { this.armMotor.setSelectedSensorPosition(0.0); }

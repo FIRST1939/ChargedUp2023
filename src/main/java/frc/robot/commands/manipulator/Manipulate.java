@@ -9,28 +9,17 @@ public class Manipulate extends CommandBase {
     
     private final Manipulator manipulator;
     private final DoubleSupplier armSupplier;
-    private final DoubleSupplier rollerSupplier;
 
-    public Manipulate (Manipulator manipulator, DoubleSupplier armSupplier, DoubleSupplier rollerSupplier) {
+    public Manipulate (Manipulator manipulator, DoubleSupplier armSupplier) {
 
         this.manipulator = manipulator;
         this.armSupplier = armSupplier;
-        this.rollerSupplier = rollerSupplier;
-    
         this.addRequirements(this.manipulator);
     }
 
     @Override
-    public void execute () {
-
-        this.manipulator.setArm(this.armSupplier.getAsDouble());
-        this.manipulator.setRollers(this.rollerSupplier.getAsDouble());
-    }
+    public void execute () { this.manipulator.setArm(this.armSupplier.getAsDouble()); }
 
     @Override
-    public void end (boolean interrupted) { 
-
-        this.manipulator.setArm(0.0);
-        this.manipulator.setRollers(0.0);
-    }
+    public void end (boolean interrupted) { this.manipulator.setArm(0.0); }
 }
