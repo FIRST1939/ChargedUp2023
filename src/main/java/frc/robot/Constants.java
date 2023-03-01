@@ -57,6 +57,27 @@ public class Constants {
         public static final int FRONT_RIGHT_MOTOR = 6;
     }
 
+    // Intaker Constants.
+    public static final class IntakerConstants {
+
+        public static final int SLIDER_MINIMUM_EXTENSION = 0; // TODO
+        public static final int SLIDER_MAXIMUM_EXTENSION = 60000; // TODO
+
+        public static final int SLIDER_MOTOR = 10;
+        public static final int ROLLER_MOTOR = 20;
+
+        public enum SLIDER_POSITIONS {
+            CUBE(62000);
+
+            public final int position;
+            private SLIDER_POSITIONS (int position) { this.position = position; }
+        }
+
+        public static final double SLIDER_KP = 0.0;
+        public static final double SLIDER_KI = 0.0;
+        public static final double SLIDER_KD = 0.0;
+    }
+    
     // Indexer Constants.
     public static final class IndexerConstants {
 
@@ -72,25 +93,29 @@ public class Constants {
         public enum ARM_POSITIONS {
             MIDDLE(38000),
             STATION(58000), // TODO
-            TOP(62000);
+            TOP(64000);
 
             public final int position;
             private ARM_POSITIONS (int position) { this.position = position; }
         }
 
         public static final double ARM_KP = 0.00006;
-        public static final double ARM_KI = 0.0000000444;
+        public static final double ARM_KI = 0.00008;
         public static final double ARM_KD = 0.0;
 
         public static final int ARM_MOTOR = 12;
         public static final int ROLLER_MOTOR = 21;
+
+        public static final int ARM_LIMIT_SWITCH = 9; // TODO
+        public static final int CONE_BEAM_BREAK = 0; // TODO
+        public static final int CUBE_BEAM_BREAK = 0; // TODO
     }
     
     // Electronic Constants.
     public static final class ElectronicConstants {
 
-        public static final List<Integer> LED_PWMS = Arrays.asList(9); // TODO
-        public static final List<Integer> LED_LENGTHS = Arrays.asList(37); // TODO
+        public static final int LED_PWM = 0;
+        public static final int LED_LENGTH = 66;
 
         public enum LED_COLORS {
             CONE(27, 14),

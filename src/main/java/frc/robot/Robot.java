@@ -44,12 +44,13 @@ public class Robot extends TimedRobot {
     if (!DriverStation.getJoystickIsXbox(Constants.ControllerConstants.DRIVER_TWO)) { 
 
       DriverStation.reportError("RESCAN USB DEVICES (F1)", false);
-      new SetLEDs(this.m_robotContainer.leds, Constants.ElectronicConstants.LED_COLORS.ERROR).schedule();
+      //new SetLEDs(this.m_robotContainer.leds, Constants.ElectronicConstants.LED_COLORS.ERROR).schedule();
     }
   }
 
   @Override
-  public void disabledInit () { this.m_robotContainer.leds.setHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW); }
+  public void disabledInit () { //this.m_robotContainer.leds.setHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW); 
+  }
 
   @Override
   public void disabledPeriodic () {}

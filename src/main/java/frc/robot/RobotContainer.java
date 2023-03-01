@@ -24,15 +24,19 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetLEDs;
-import frc.robot.commands.ZeroArm;
-import frc.robot.commands.autonomous.DriveAprilTagDistance;
 import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
 import frc.robot.commands.indexer.Index;
 import frc.robot.commands.indexer.ZeroIndexer;
+import frc.robot.commands.intaker.Intake;
+import frc.robot.commands.intaker.ResetSliderPosition;
+import frc.robot.commands.intaker.ZeroSlider;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ResetArmPosition;
+import frc.robot.commands.manipulator.RunManipulator;
+import frc.robot.commands.manipulator.ZeroArm;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.Photonvision;
@@ -53,9 +57,10 @@ public class RobotContainer {
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final Photonvision photonvision = new Photonvision(new PhotonCamera("OV5647"));
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
-  
-  private final Manipulator manipulator = new Manipulator();
+
+  private final Intaker intaker = new Intaker();
   private final Indexer indexer = new Indexer();
+  private final Manipulator manipulator = new Manipulator();
 
   public final LEDs leds = new LEDs();
 
@@ -71,6 +76,14 @@ public class RobotContainer {
       )
     );
 
+    this.intaker.setDefaultCommand(
+      new Intake(
+        this.intaker,
+        () -> (this.driverTwo.getLeftY()), 
+        () -> ((this.driverTwo.getHID().getRightBumper() ? 1.0 : 0.0) - (this.driverTwo.getHID().getLeftBumper() ? 1.0 : 0.0))
+      )
+    );
+
     this.indexer.setDefaultCommand(
       new Index(
         this.indexer,
@@ -81,8 +94,7 @@ public class RobotContainer {
     this.manipulator.setDefaultCommand(
       new Manipulate(
         this.manipulator, 
-        () -> (-this.driverTwo.getRightY()), 
-        () -> (this.driverTwo.getLeftTriggerAxis() - this.driverTwo.getRightTriggerAxis())
+        () -> (-this.driverTwo.getRightY())
       )
     );
 
@@ -99,15 +111,21 @@ public class RobotContainer {
   private void configureTriggers () {
 
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
+    SmartDashboard.putData("Zero Slider", new ZeroSlider(this.intaker));
     SmartDashboard.putData("Zero Indexer", new ZeroIndexer(this.indexer));
     SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
     
+    this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, this.driverTwo.getLeftTriggerAxis()));
+    this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, -this.driverTwo.getRightTriggerAxis()));
+
     this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.75));
     this.driverTwo.x().onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.RAINBOW));
 
     this.driverTwo.a().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.STATION));
     this.driverTwo.b().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.MIDDLE));
     this.driverTwo.y().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TOP));
+
+    this.driverTwo.povRight().onTrue(new ResetSliderPosition(this.intaker, 0.75));
 
     new JoystickButton(this.leftJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CONE));
     new JoystickButton(this.rightJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CUBE));
