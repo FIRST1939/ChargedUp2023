@@ -8,17 +8,17 @@ import frc.robot.subsystems.Manipulator;
 public class RunManipulator extends CommandBase {
     
     private final Manipulator manipulator;
-    private final DoubleSupplier directionSupplier;
+    private final DoubleSupplier powerSupplier;
 
-    public RunManipulator (Manipulator manipulator, DoubleSupplier directionSupplier) {
+    public RunManipulator (Manipulator manipulator, DoubleSupplier powerSupplier) {
 
         this.manipulator = manipulator;
-        this.directionSupplier = directionSupplier;
+        this.powerSupplier = powerSupplier;
         this.addRequirements(this.manipulator);
     }
     
     @Override
-    public void execute () { this.manipulator.setRollers(this.directionSupplier.getAsDouble() * 0.8); }
+    public void execute () { this.manipulator.setRollers(this.powerSupplier.getAsDouble() * 0.8); }
 
     @Override
     public boolean isFinished () { return false; }
