@@ -18,8 +18,7 @@ public class Manipulator extends SubsystemBase {
     private final CANSparkMax rollerMotor;
 
     private final DigitalInput armLimitSwitch;
-    //private final DigitalInput coneBeamBreak;
-    //private final DigitalInput cubeBeamBreak;
+    private int gamePiece = 0;
 
     public Manipulator () {
 
@@ -45,6 +44,7 @@ public class Manipulator extends SubsystemBase {
     public void periodic () { 
         
         SmartDashboard.putNumber("Arm Position", this.getArmPosition());
+        SmartDashboard.putBoolean("Arm Limit Switch", this.armLimitSwitch.get());
         if (this.armLimitSwitch.get()) { this.zeroArm(); }
     }
 
@@ -73,4 +73,7 @@ public class Manipulator extends SubsystemBase {
 
     public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
     public void zeroArm () { this.armMotor.setSelectedSensorPosition(0.0); }
+
+    public void setGamePiece (int gamePiece) { this.gamePiece = gamePiece; }
+    public int getGamePiece () { return this.gamePiece; }
 }

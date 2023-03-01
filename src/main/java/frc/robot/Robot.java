@@ -21,7 +21,10 @@ public class Robot extends TimedRobot {
   public void robotInit () {
 
     m_robotContainer = new RobotContainer();
-    CameraServer.startAutomaticCapture();
+
+    CameraServer.startAutomaticCapture(0);
+    CameraServer.startAutomaticCapture(1);
+
     PortForwarder.add(5800, "photonvision.local", 5800);
   }
 
@@ -44,7 +47,7 @@ public class Robot extends TimedRobot {
     if (!DriverStation.getJoystickIsXbox(Constants.ControllerConstants.DRIVER_TWO)) { 
 
       DriverStation.reportError("RESCAN USB DEVICES (F1)", false);
-      //new SetLEDs(this.m_robotContainer.leds, Constants.ElectronicConstants.LED_COLORS.ERROR).schedule();
+      new SetLEDs(this.m_robotContainer.leds, Constants.ElectronicConstants.LED_COLORS.ERROR).schedule();
     }
   }
 

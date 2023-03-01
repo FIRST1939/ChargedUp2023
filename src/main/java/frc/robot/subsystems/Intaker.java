@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -15,6 +16,8 @@ public class Intaker extends SubsystemBase {
 
     private final WPI_TalonFX sliderMotor;
     private final CANSparkMax rollerMotor;
+
+    private final DigitalInput sliderLimitSwitch;
 
     public Intaker () {
 
@@ -31,9 +34,16 @@ public class Intaker extends SubsystemBase {
 
         this.rollerMotor.restoreFactoryDefaults();
         this.rollerMotor.setIdleMode(IdleMode.kBrake);
+
+        this.sliderLimitSwitch = new DigitalInput(Constants.IntakerConstants.SLIDER_LIMIT_SWITCH);
     }
 
-    public void periodic () { SmartDashboard.putNumber("Slider Position", this.getSliderPosition()); }
+    public void periodic () { 
+        
+        SmartDashboard.putNumber("Slider Position", this.getSliderPosition()); 
+        SmartDashboard.putBoolean("Slider Limit Switch", this.sliderLimitSwitch.get());
+        if (this.sliderLimitSwitch.get()) { this.zeroSlider(); }
+    }
 
     /**
      * Sets the slider motor to the given velocity, based upon input from the XBox Controller.

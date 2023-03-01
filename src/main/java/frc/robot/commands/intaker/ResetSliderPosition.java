@@ -24,7 +24,7 @@ public class ResetSliderPosition extends CommandBase {
     public void execute () { this.intaker.setSlider(this.direction * this.power); }
 
     @Override
-    public boolean isFinished () { return this.intaker.getSliderPosition() * this.direction >= 0; }
+    public boolean isFinished () { return this.intaker.getSliderPosition() <= 500; }
 
     @Override
     public void end (boolean interrupted) { this.intaker.setSlider(0.0); }

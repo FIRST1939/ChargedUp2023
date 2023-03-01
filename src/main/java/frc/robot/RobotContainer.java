@@ -26,6 +26,7 @@ import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetLEDs;
 import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
 import frc.robot.commands.indexer.Index;
+import frc.robot.commands.indexer.RunIndexer;
 import frc.robot.commands.indexer.ZeroIndexer;
 import frc.robot.commands.intaker.Intake;
 import frc.robot.commands.intaker.ResetSliderPosition;
@@ -34,6 +35,7 @@ import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ResetArmPosition;
 import frc.robot.commands.manipulator.RunManipulator;
+import frc.robot.commands.manipulator.SetGamePiece;
 import frc.robot.commands.manipulator.ZeroArm;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intaker;
@@ -87,7 +89,7 @@ public class RobotContainer {
     this.indexer.setDefaultCommand(
       new Index(
         this.indexer,
-        () -> (-this.driverTwo.getLeftY())
+        () -> (0.0)
       )
     );
 
@@ -115,20 +117,27 @@ public class RobotContainer {
     SmartDashboard.putData("Zero Indexer", new ZeroIndexer(this.indexer));
     SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
     
-    this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, this.driverTwo.getLeftTriggerAxis()));
-    this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, -this.driverTwo.getRightTriggerAxis()));
+    this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> this.driverTwo.getLeftTriggerAxis()));
+    this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.driverTwo.getRightTriggerAxis()));
+
+    this.driverTwo.povLeft().whileTrue(new RunIndexer(this.indexer, () -> -0.8));
+    this.driverTwo.povRight().whileTrue(new RunIndexer(this.indexer, () -> 0.8));
+    this.driverTwo.povRight().whileTrue(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece()));
 
     this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.75));
-    this.driverTwo.x().onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.RAINBOW));
-
     this.driverTwo.a().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.STATION));
     this.driverTwo.b().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.MIDDLE));
     this.driverTwo.y().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TOP));
 
-    this.driverTwo.povRight().onTrue(new ResetSliderPosition(this.intaker, 0.75));
-
+    new JoystickButton(this.leftJoystick, 1).onTrue(new SetGamePiece(this.manipulator, -1));
+    new JoystickButton(this.rightJoystick, 1).onTrue(new SetGamePiece(this.manipulator, 1));
     new JoystickButton(this.leftJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CONE));
     new JoystickButton(this.rightJoystick, 1).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.CUBE));
+
+    new JoystickButton(this.leftJoystick, 2).onTrue(new SetGamePiece(this.manipulator, 0));
+    new JoystickButton(this.leftJoystick, 2).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.RAINBOW));
+    new JoystickButton(this.rightJoystick, 2).onTrue(new SetGamePiece(this.manipulator, 0));
+    new JoystickButton(this.rightJoystick, 2).onTrue(new SetLEDs(this.leds, Constants.ElectronicConstants.LED_COLORS.RAINBOW));
   }
 
   private void configureAutonomousChooser () {

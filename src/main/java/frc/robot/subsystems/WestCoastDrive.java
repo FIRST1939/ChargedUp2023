@@ -55,7 +55,6 @@ public class WestCoastDrive extends SubsystemBase {
 
     // NavX's getAngle method is inverted from the generally agrred upon standard Rotation2d.
     SmartDashboard.putNumber("NavX Raw Angle", this.navX.getAngle());
-    SmartDashboard.putNumber("NavX Processed Rotation", this.navX.getRotation2d().getDegrees());
 
     this.differentialDriveOdometry.update(this.navX.getRotation2d(), this.leftNeoEncoder.getPosition(), this.rightNeoEncoder.getPosition());
     }

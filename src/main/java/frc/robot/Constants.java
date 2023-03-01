@@ -60,7 +60,7 @@ public class Constants {
     // Intaker Constants.
     public static final class IntakerConstants {
 
-        public static final int SLIDER_MINIMUM_EXTENSION = 0; // TODO
+        public static final int SLIDER_MINIMUM_EXTENSION = -40000; // TODO
         public static final int SLIDER_MAXIMUM_EXTENSION = 60000; // TODO
 
         public static final int SLIDER_MOTOR = 10;
@@ -76,6 +76,8 @@ public class Constants {
         public static final double SLIDER_KP = 0.0;
         public static final double SLIDER_KI = 0.0;
         public static final double SLIDER_KD = 0.0;
+
+        public static final int SLIDER_LIMIT_SWITCH = 7;
     }
     
     // Indexer Constants.
