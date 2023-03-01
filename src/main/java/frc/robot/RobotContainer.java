@@ -98,8 +98,8 @@ public class RobotContainer {
     this.driverTwo.leftBumper().whileTrue(new RunIntaker(this.intaker, () -> -1.0));
     this.driverTwo.rightBumper().whileTrue(new RunIntaker(this.intaker, () -> 1.0));
 
-    this.driverTwo.povLeft().whileTrue(new RunIndexer(this.indexer, this.manipulator, () -> -0.8, () -> 0.0));
-    this.driverTwo.povRight().whileTrue(new RunIndexer(this.indexer, this.manipulator, () -> 0.8, () -> this.manipulator.getGamePiece()));
+    this.driverTwo.povLeft().whileTrue(new RunIndexer(this.indexer, this.manipulator, () -> -1.0, () -> 0.0));
+    this.driverTwo.povRight().whileTrue(new RunIndexer(this.indexer, this.manipulator, () -> 1.0, () -> this.manipulator.getGamePiece()));
 
     this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> this.driverTwo.getLeftTriggerAxis()));
     this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.driverTwo.getRightTriggerAxis()));

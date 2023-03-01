@@ -28,8 +28,8 @@ public class RunIndexer extends CommandBase {
     @Override
     public void execute () { 
         
-        this.indexer.setIndexer(this.indexerSupplier.getAsDouble());
-        this.manipulator.setRollers(this.manipulatorSupplier.getAsDouble());
+        this.indexer.setIndexer(this.indexerSupplier.getAsDouble() * 0.8);
+        this.manipulator.setRollers(this.manipulatorSupplier.getAsDouble()* 0.8);
     }
 
     @Override
