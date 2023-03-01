@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
-import frc.robot.commands.SetLEDs;
 import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
 import frc.robot.commands.indexer.RunIndexer;
 import frc.robot.commands.indexer.ZeroIndexer;

@@ -52,8 +52,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit () { //this.m_robotContainer.leds.setHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW); 
-  }
+  public void disabledInit () { this.m_robotContainer.leds.setHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW); }
 
   @Override
   public void disabledPeriodic () {}
@@ -62,11 +61,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit () {
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    if (m_autonomousCommand != null) {
-
-      m_autonomousCommand.schedule();
-    }
+    if (m_autonomousCommand != null) { m_autonomousCommand.schedule(); }
   }
 
   @Override
