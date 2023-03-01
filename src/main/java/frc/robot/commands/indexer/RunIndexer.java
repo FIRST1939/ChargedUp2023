@@ -4,25 +4,41 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Manipulator;
 
 public class RunIndexer extends CommandBase {
     
     private final Indexer indexer;
-    private final DoubleSupplier directionSupplier;
+    private final Manipulator manipulator;
 
-    public RunIndexer (Indexer indexer, DoubleSupplier directionSupplier) {
+    private final DoubleSupplier indexerSupplier;
+    private final DoubleSupplier manipulatorSupplier;
+
+    public RunIndexer (Indexer indexer, Manipulator manipulator, DoubleSupplier indexerSupplier, DoubleSupplier manipulatorSupplier) {
 
         this.indexer = indexer;
-        this.directionSupplier = directionSupplier;
-        this.addRequirements(this.indexer);
+        this.manipulator = manipulator;
+
+        this.indexerSupplier = indexerSupplier;
+        this.manipulatorSupplier = manipulatorSupplier;
+
+        this.addRequirements(this.indexer, this.manipulator);
     }
     
     @Override
-    public void execute () { this.indexer.setIndexer(this.directionSupplier.getAsDouble() * 0.8); }
+    public void execute () { 
+        
+        this.indexer.setIndexer(this.indexerSupplier.getAsDouble());
+        this.manipulator.setRollers(this.manipulatorSupplier.getAsDouble());
+    }
 
     @Override
     public boolean isFinished () { return false; }
 
     @Override
-    public void end (boolean interrupted) { this.indexer.setIndexer(0.0); }
+    public void end (boolean interrupted) { 
+        
+        this.indexer.setIndexer(0.0);
+        this.manipulator.setRollers(0.0);
+    }
 }

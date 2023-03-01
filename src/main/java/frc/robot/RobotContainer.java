@@ -24,7 +24,6 @@ import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetLEDs;
 import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
-import frc.robot.commands.indexer.Index;
 import frc.robot.commands.indexer.RunIndexer;
 import frc.robot.commands.indexer.ZeroIndexer;
 import frc.robot.commands.intaker.Intake;
@@ -84,13 +83,6 @@ public class RobotContainer {
       )
     );
 
-    this.indexer.setDefaultCommand(
-      new Index(
-        this.indexer,
-        () -> (0.0)
-      )
-    );
-
     this.manipulator.setDefaultCommand(
       new Manipulate(
         this.manipulator, 
@@ -118,9 +110,8 @@ public class RobotContainer {
     this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> this.driverTwo.getLeftTriggerAxis()));
     this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.driverTwo.getRightTriggerAxis()));
 
-    this.driverTwo.povLeft().whileTrue(new RunIndexer(this.indexer, () -> -0.8));
-    this.driverTwo.povRight().whileTrue(new RunIndexer(this.indexer, () -> 0.8));
-    this.driverTwo.povRight().whileTrue(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece()));
+    this.driverTwo.povLeft().whileTrue(new RunIndexer(this.indexer, this.manipulator, () -> -0.8, () -> 0.0));
+    this.driverTwo.povRight().whileTrue(new RunIndexer(this.indexer, this.manipulator, () -> 0.8, () -> this.manipulator.getGamePiece()));
 
     this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.75));
     this.driverTwo.a().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.STATION));
