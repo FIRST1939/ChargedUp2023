@@ -65,6 +65,17 @@ public class Constants {
 
         public static final int SLIDER_MOTOR = 10;
         public static final int ROLLER_MOTOR = 20;
+
+        public enum SLIDER_POSITIONS {
+            CUBE(62000);
+
+            public final int position;
+            private SLIDER_POSITIONS (int position) { this.position = position; }
+        }
+
+        public static final double SLIDER_KP = 0.0;
+        public static final double SLIDER_KI = 0.0;
+        public static final double SLIDER_KD = 0.0;
     }
     
     // Manipulator Constants.

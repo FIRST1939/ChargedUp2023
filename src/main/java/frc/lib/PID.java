@@ -9,15 +9,17 @@ public class PID {
 
     private double lastError = 0;
     private double cumulativeError = 0;
+    private final int integralActivation;
 
     public final double kP;
     public final double kI;
     public final double kD;
 
-    public PID (double kP, double kI, double kD) {
+    public PID (double kP, double kI, double kD, int integralActivation) {
 
         this.timer = new Timer();
         this.timer.start();
+        this.integralActivation = integralActivation;
 
         this.kP = kP;
         this.kI = kI;
@@ -33,7 +35,7 @@ public class PID {
         double i = this.kI * this.cumulativeError;
         double d = this.kD * (error - this.lastError) / dt;
 
-        if (error > 30000 || p < 0) { i = 0.0; }
+        if (error > this.integralActivation || p < 0) { i = 0.0; }
 
         if (!this.hasRun) { 
             
