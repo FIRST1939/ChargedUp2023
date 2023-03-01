@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.autonomous.BalanceChargingStation;
+import frc.robot.commands.autonomous.modes.Auto1GP_Balance;
 import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
 import frc.robot.commands.indexer.RunIndexer;
 import frc.robot.commands.indexer.ZeroIndexer;
@@ -123,9 +124,10 @@ public class RobotContainer {
   private void configureAutonomousChooser () {
 
     this.autonomousChooser.setDefaultOption("Do Nothing", () -> new WaitCommand(1.0));
+    this.autonomousChooser.addOption("Balance", () -> new BalanceChargingStation(this.westCoastDrive, this.navX));
     this.autonomousChooser.addOption("1 GP + Taxi", () -> new Auto1GP_Taxi(this.westCoastDrive, this.manipulator));
-    this.autonomousChooser.addOption("Balance Charging Station", () -> new BalanceChargingStation(this.westCoastDrive, this.navX));
-
+    this.autonomousChooser.addOption("1 GP + Balance", () -> new Auto1GP_Balance(this.westCoastDrive, this.manipulator, this.navX));
+    
     SmartDashboard.putData("Autonomous Chooser", this.autonomousChooser);
   }
 
