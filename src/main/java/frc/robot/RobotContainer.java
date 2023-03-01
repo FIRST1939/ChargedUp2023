@@ -25,6 +25,8 @@ import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetLEDs;
 import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
+import frc.robot.commands.indexer.Index;
+import frc.robot.commands.indexer.ZeroIndexer;
 import frc.robot.commands.intaker.Intake;
 import frc.robot.commands.intaker.ResetSliderPosition;
 import frc.robot.commands.intaker.ZeroSlider;
@@ -33,6 +35,7 @@ import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ResetArmPosition;
 import frc.robot.commands.manipulator.RunManipulator;
 import frc.robot.commands.manipulator.ZeroArm;
+import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Manipulator;
@@ -56,6 +59,7 @@ public class RobotContainer {
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
 
   private final Intaker intaker = new Intaker();
+  private final Indexer indexer = new Indexer();
   private final Manipulator manipulator = new Manipulator();
 
   public final LEDs leds = new LEDs();
@@ -72,18 +76,25 @@ public class RobotContainer {
       )
     );
 
-    this.manipulator.setDefaultCommand(
-      new Manipulate(
-        this.manipulator, 
-        () -> (-this.driverTwo.getRightY())
-      )
-    );
-
     this.intaker.setDefaultCommand(
       new Intake(
         this.intaker,
         () -> (this.driverTwo.getLeftY()), 
         () -> ((this.driverTwo.getHID().getRightBumper() ? 1.0 : 0.0) - (this.driverTwo.getHID().getLeftBumper() ? 1.0 : 0.0))
+      )
+    );
+
+    this.indexer.setDefaultCommand(
+      new Index(
+        this.indexer,
+        () -> (-this.driverTwo.getLeftY())
+      )
+    );
+
+    this.manipulator.setDefaultCommand(
+      new Manipulate(
+        this.manipulator, 
+        () -> (-this.driverTwo.getRightY())
       )
     );
 
@@ -101,6 +112,7 @@ public class RobotContainer {
 
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
     SmartDashboard.putData("Zero Slider", new ZeroSlider(this.intaker));
+    SmartDashboard.putData("Zero Indexer", new ZeroIndexer(this.indexer));
     SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
     
     this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, this.driverTwo.getLeftTriggerAxis()));

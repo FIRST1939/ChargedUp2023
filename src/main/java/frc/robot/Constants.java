@@ -57,7 +57,7 @@ public class Constants {
         public static final int FRONT_RIGHT_MOTOR = 6;
     }
 
-    // IntakerConstants.
+    // Intaker Constants.
     public static final class IntakerConstants {
 
         public static final int SLIDER_MINIMUM_EXTENSION = 0; // TODO
@@ -76,6 +76,12 @@ public class Constants {
         public static final double SLIDER_KP = 0.0;
         public static final double SLIDER_KI = 0.0;
         public static final double SLIDER_KD = 0.0;
+    }
+    
+    // Indexer Constants.
+    public static final class IndexerConstants {
+
+        public static final int INDEXER_MOTOR = 11;
     }
     
     // Manipulator Constants.
