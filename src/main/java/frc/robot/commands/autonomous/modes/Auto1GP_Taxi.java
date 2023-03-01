@@ -8,12 +8,11 @@ import frc.robot.commands.autonomous.RunManipulator;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.ResetArmPosition;
 import frc.robot.subsystems.Manipulator;
-import frc.robot.subsystems.Photonvision;
 import frc.robot.subsystems.WestCoastDrive;
 
 public class Auto1GP_Taxi extends SequentialCommandGroup {
     
-    public Auto1GP_Taxi (WestCoastDrive westCoastDrive, Manipulator manipulator, Photonvision photonvision) {
+    public Auto1GP_Taxi (WestCoastDrive westCoastDrive, Manipulator manipulator) {
 
         this.addCommands(
             new WaitCommand(SmartDashboard.getNumber("Auto Start Wait", 0.0)),
