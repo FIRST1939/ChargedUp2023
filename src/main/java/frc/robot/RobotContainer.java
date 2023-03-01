@@ -26,6 +26,7 @@ import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
 import frc.robot.commands.indexer.RunIndexer;
 import frc.robot.commands.indexer.ZeroIndexer;
 import frc.robot.commands.intaker.Intake;
+import frc.robot.commands.intaker.RunIntaker;
 import frc.robot.commands.intaker.ZeroSlider;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
@@ -74,20 +75,8 @@ public class RobotContainer {
       )
     );
 
-    this.intaker.setDefaultCommand(
-      new Intake(
-        this.intaker,
-        () -> (this.driverTwo.getLeftY()), 
-        () -> ((this.driverTwo.getHID().getRightBumper() ? 1.0 : 0.0) - (this.driverTwo.getHID().getLeftBumper() ? 1.0 : 0.0))
-      )
-    );
-
-    this.manipulator.setDefaultCommand(
-      new Manipulate(
-        this.manipulator, 
-        () -> (-this.driverTwo.getRightY())
-      )
-    );
+    this.intaker.setDefaultCommand(new Intake(this.intaker, () -> (this.driverTwo.getLeftY())));
+    this.manipulator.setDefaultCommand(new Manipulate(this.manipulator, () -> (-this.driverTwo.getRightY())));
 
     configureTriggers();
     configureAutonomousChooser();
@@ -106,11 +95,14 @@ public class RobotContainer {
     SmartDashboard.putData("Zero Indexer", new ZeroIndexer(this.indexer));
     SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
     
-    this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> this.driverTwo.getLeftTriggerAxis()));
-    this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.driverTwo.getRightTriggerAxis()));
+    this.driverTwo.leftBumper().whileTrue(new RunIntaker(this.intaker, () -> -1.0));
+    this.driverTwo.rightBumper().whileTrue(new RunIntaker(this.intaker, () -> 1.0));
 
     this.driverTwo.povLeft().whileTrue(new RunIndexer(this.indexer, this.manipulator, () -> -0.8, () -> 0.0));
     this.driverTwo.povRight().whileTrue(new RunIndexer(this.indexer, this.manipulator, () -> 0.8, () -> this.manipulator.getGamePiece()));
+
+    this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> this.driverTwo.getLeftTriggerAxis()));
+    this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.driverTwo.getRightTriggerAxis()));
 
     this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.75));
     this.driverTwo.a().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.STATION));

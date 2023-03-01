@@ -9,28 +9,18 @@ public class Intake extends CommandBase {
     
     private final Intaker intaker;
     private final DoubleSupplier sliderSupplier;
-    private final DoubleSupplier rollerSupplier;
 
-    public Intake (Intaker intaker, DoubleSupplier sliderSupplier, DoubleSupplier rollerSupplier) {
+    public Intake (Intaker intaker, DoubleSupplier sliderSupplier) {
 
         this.intaker = intaker;
         this.sliderSupplier = sliderSupplier;
-        this.rollerSupplier = rollerSupplier;
     
         this.addRequirements(this.intaker);
     }
 
     @Override
-    public void execute () {
-
-        this.intaker.setSlider(this.sliderSupplier.getAsDouble());
-        this.intaker.setRollers(this.rollerSupplier.getAsDouble());
-    }
+    public void execute () { this.intaker.setSlider(this.sliderSupplier.getAsDouble()); }
 
     @Override
-    public void end (boolean interrupted) { 
-
-        this.intaker.setSlider(0.0);
-        this.intaker.setRollers(0.0);
-    }
+    public void end (boolean interrupted) { this.intaker.setSlider(0.0); }
 }
