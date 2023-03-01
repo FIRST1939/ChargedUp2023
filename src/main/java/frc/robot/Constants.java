@@ -86,12 +86,12 @@ public class Constants {
     // Manipulator Constants.
     public static final class ManipulatorConstants {
 
-        public static final int ARM_MINIMUM_EXTENSION = 0; // TODO
-        public static final int ARM_MAXIMUM_EXTENSION = 78000; // TODO
+        public static final int ARM_MINIMUM_EXTENSION = 0;
+        public static final int ARM_MAXIMUM_EXTENSION = 78000;
 
         public enum ARM_POSITIONS {
             MIDDLE(38000),
-            STATION(58000), // TODO
+            STATION(58000),
             TOP(64000);
 
             public final int position;
@@ -105,7 +105,7 @@ public class Constants {
         public static final int ARM_MOTOR = 12;
         public static final int ROLLER_MOTOR = 21;
 
-        public static final int ARM_LIMIT_SWITCH = 9; // TODO
+        public static final int ARM_LIMIT_SWITCH = 9;
         public static final int CONE_BEAM_BREAK = 0; // TODO
         public static final int CUBE_BEAM_BREAK = 0; // TODO
     }
