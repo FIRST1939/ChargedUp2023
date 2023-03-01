@@ -22,8 +22,8 @@ public class Robot extends TimedRobot {
 
     m_robotContainer = new RobotContainer();
 
-    CameraServer.startAutomaticCapture(0);
-    CameraServer.startAutomaticCapture(1);
+    CameraServer.startAutomaticCapture("Intaker Camera", 0);
+    CameraServer.startAutomaticCapture("Manipulator Camera", 1);
 
     PortForwarder.add(5800, "photonvision.local", 5800);
   }
