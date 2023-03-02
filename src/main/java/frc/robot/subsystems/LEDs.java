@@ -27,7 +27,7 @@ public class LEDs extends SubsystemBase {
         for (int stripIndex = 0; stripIndex < Constants.ElectronicConstants.LED_LENGTHS.size(); stripIndex++) {
 
             int ledLength = Constants.ElectronicConstants.LED_LENGTHS.get(stripIndex);
-            int ledDirection = Constants.ElectronicConstants.LED_DIRECTIONS.get(ledLength);
+            int ledDirection = Constants.ElectronicConstants.LED_DIRECTIONS.get(stripIndex);
 
             switch (ledDirection) {
 
