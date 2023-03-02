@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.autonomous.BalanceChargingStation;
-import frc.robot.commands.autonomous.RunManipulator;
+import frc.robot.commands.manipulator.RunManipulator;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.ResetArmPosition;
 import frc.robot.subsystems.Manipulator;
@@ -19,7 +19,7 @@ public class Auto1GP_Balance extends SequentialCommandGroup {
         this.addCommands(
             new WaitCommand(SmartDashboard.getNumber("Auto Start Wait", 0.0)),
             new HoldArmPosition(manipulator, 66000).withTimeout(3.0),
-            new RunManipulator(manipulator, 0.8).withTimeout(0.8),
+            new RunManipulator(manipulator, () -> 0.8).withTimeout(0.8),
             new ResetArmPosition(manipulator, 0.75).withTimeout(3.0),
             new BalanceChargingStation(westCoastDrive, navX)
         );
