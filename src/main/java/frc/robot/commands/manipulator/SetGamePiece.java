@@ -31,9 +31,17 @@ public class SetGamePiece extends InstantCommand {
 
         switch (this.gamePiece) {
 
-            case -1: ledColor = Constants.ElectronicConstants.LED_COLORS.CONE;
-            case 1: ledColor = Constants.ElectronicConstants.LED_COLORS.CUBE;
-            case 0: ledColor = Constants.ElectronicConstants.LED_COLORS.RAINBOW;
+            case -1: 
+                ledColor = Constants.ElectronicConstants.LED_COLORS.CONE;
+                break;
+
+            case 1: 
+                ledColor = Constants.ElectronicConstants.LED_COLORS.CUBE;
+                break;
+
+            case 0: 
+                ledColor = Constants.ElectronicConstants.LED_COLORS.RAINBOW;
+                break;
         }
 
         new SetLEDs(this.leds, ledColor).schedule();
