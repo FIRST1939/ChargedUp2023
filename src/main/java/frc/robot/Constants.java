@@ -22,20 +22,9 @@ public class Constants {
         public static final double TURNUNG_ANGLE_TURN_RATE_TOLERANCE = 10.0;
         public static final double TURNING_ANGLE_KF = 0.2;
 
-        public enum APRILTAG_POSITIONS {
-            one(2.76, -1.79),
-            two(2.76, 0.0),
-            three(2.76, 1.79);
-
-            public final double x;
-            public final double y;
-
-            private APRILTAG_POSITIONS (double x, double y) {
-
-                this.x = x;
-                this.y = y;
-            }
-        }
+        public static final double BALANCE_KP = -0.015;
+        public static final double BALANCE_KI = 0.0;
+        public static final double BALANCE_KD = 0.0;
     }
 
     // West Coast Constants.
