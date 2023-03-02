@@ -106,8 +106,8 @@ public class Constants {
     public static final class ElectronicConstants {
 
         public static final int LED_PWM = 0;
-        public static final List<Integer> LED_LENGTHS = Arrays.asList(66, 23, 19, 66);
-        public static final List<Integer> LED_DIRECTIONS = Arrays.asList(-1, -1, 1, 1);
+        public static final List<Integer> LED_LENGTHS = Arrays.asList(23, 66, 66, 14);
+        public static final List<Integer> LED_DIRECTIONS = Arrays.asList(-1, 1, -1, 1);
 
         public enum LED_COLORS {
             CONE(27, 14),
