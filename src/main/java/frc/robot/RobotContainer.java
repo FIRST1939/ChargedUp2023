@@ -58,9 +58,9 @@ public class RobotContainer {
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
 
-  private final Intaker intaker = new Intaker();
-  private final Indexer indexer = new Indexer();
-  private final Manipulator manipulator = new Manipulator();
+  private final Intaker intaker = Intaker.getInstance();
+  private final Indexer indexer = Indexer.getInstance();
+  private final Manipulator manipulator = Manipulator.getInstance();
 
   public final LEDs leds = new LEDs();
 

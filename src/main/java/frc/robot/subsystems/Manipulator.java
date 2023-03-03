@@ -14,6 +14,8 @@ import frc.robot.Constants;
 
 public class Manipulator extends SubsystemBase {
     
+    private static Manipulator manipulatorInstance = null;
+
     private final WPI_TalonFX armMotor;
     private final CANSparkMax rollerMotor;
 
@@ -39,6 +41,12 @@ public class Manipulator extends SubsystemBase {
         this.armLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.ARM_LIMIT_SWITCH);
         //this.coneBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CONE_BEAM_BREAK);
         //this.cubeBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CUBE_BEAM_BREAK);
+    }
+
+    public static Manipulator getInstance () {
+
+        if (manipulatorInstance == null) { manipulatorInstance = new Manipulator(); }
+        return manipulatorInstance;
     }
 
     public void periodic () { 

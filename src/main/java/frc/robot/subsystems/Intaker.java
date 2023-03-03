@@ -14,6 +14,8 @@ import frc.robot.Constants;
 
 public class Intaker extends SubsystemBase {
 
+    private static Intaker intakerInstance = null;
+
     private final WPI_TalonFX sliderMotor;
     private final CANSparkMax rollerMotor;
 
@@ -36,6 +38,12 @@ public class Intaker extends SubsystemBase {
         this.rollerMotor.setIdleMode(IdleMode.kBrake);
 
         this.sliderLimitSwitch = new DigitalInput(Constants.IntakerConstants.SLIDER_LIMIT_SWITCH);
+    }
+
+    public static Intaker getInstance () {
+
+        if (intakerInstance == null) { intakerInstance = new Intaker(); }
+        return intakerInstance;
     }
 
     public void periodic () { 

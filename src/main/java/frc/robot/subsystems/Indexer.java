@@ -10,6 +10,7 @@ import frc.robot.Constants;
 
 public class Indexer extends SubsystemBase {
     
+    private static Indexer indexerInstance = null;
     private final WPI_TalonFX indexerMotor;
 
     public Indexer () {
@@ -22,6 +23,12 @@ public class Indexer extends SubsystemBase {
         this.indexerMotor.configNominalOutputReverse(0,30);
         this.indexerMotor.configPeakOutputForward(1,30);
         this.indexerMotor.configPeakOutputReverse(-1,30);
+    }
+
+    public static Indexer getInstance () {
+
+        if (indexerInstance == null) { indexerInstance = new Indexer(); }
+        return indexerInstance;
     }
 
     public void periodic () { SmartDashboard.putNumber("Indexer Postion", this.getIndexerPosition()); }
