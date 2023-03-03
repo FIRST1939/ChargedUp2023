@@ -97,10 +97,10 @@ public class RobotContainer {
     SmartDashboard.putData("Zero Indexer", new ZeroIndexer(this.indexer));
     SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
     
+    //new JoystickButton(this.rightJoystick, 11).whileTrue(new HoldSliderPosition(this.intaker, Constants.IntakerConstants.SLIDER_POSITIONS.TEST));
+
     this.driverTwo.povUp().whileTrue(new RunIntaker(this.intaker, () -> 1.0));
     this.driverTwo.povDown().whileTrue(new RunIntaker(this.intaker, () -> -1.0));
-
-    //new JoystickButton(this.rightJoystick, 11).whileTrue(new HoldSliderPosition(this.intaker, Constants.IntakerConstants.SLIDER_POSITIONS.TEST));
 
     this.driverTwo.povLeft().whileTrue(new RunIndexer(this.indexer, () -> -1.0));
     this.driverTwo.povRight().whileTrue(new RunIndexer(this.indexer, () -> 1.0));
@@ -127,7 +127,7 @@ public class RobotContainer {
     this.autonomousChooser.setDefaultOption("Do Nothing", () -> new WaitCommand(1.0));
     this.autonomousChooser.addOption("Taxi", () -> new DriveStraightDistance(this.westCoastDrive, -4.1, 0.55));
     this.autonomousChooser.addOption("1 GP", () -> new Auto1GP(this.westCoastDrive, this.manipulator, this.leds));
-    this.autonomousChooser.addOption("1 GP + Taxi", () -> new Auto1GP_Taxi(this.westCoastDrive, this.manipulator, this.leds));
+    this.autonomousChooser.addOption("1 GP + Taxi", () -> new Auto1GP_Taxi(this.westCoastDrive, this.manipulator, this.intaker, this.leds));
     this.autonomousChooser.addOption("Balance", () -> new BalanceChargingStation(this.westCoastDrive, this.navX));
     this.autonomousChooser.addOption("1 GP + Balance", () -> new Auto1GP_Balance(this.westCoastDrive, this.manipulator, this.navX, this.leds));
     
