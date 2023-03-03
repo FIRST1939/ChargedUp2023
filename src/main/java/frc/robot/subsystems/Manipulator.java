@@ -19,7 +19,7 @@ public class Manipulator extends SubsystemBase {
     private final WPI_TalonFX armMotor;
     private final CANSparkMax rollerMotor;
 
-    private final DigitalInput armLimitSwitch;
+    public final DigitalInput armLimitSwitch;
     private int gamePiece = 0;
 
     public Manipulator () {

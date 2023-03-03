@@ -19,7 +19,7 @@ public class Intaker extends SubsystemBase {
     private final WPI_TalonFX sliderMotor;
     private final CANSparkMax rollerMotor;
 
-    private final DigitalInput sliderLimitSwitch;
+    public final DigitalInput sliderLimitSwitch;
 
     public Intaker () {
 

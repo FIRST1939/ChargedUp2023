@@ -37,7 +37,11 @@ public class Indexer extends SubsystemBase {
      * Sets the indexer motor to the given velocity, based upon input from the XBox Controller.
      * All inputs are capped at ~25% power for safety reasons.
      */
-    public void setIndexer (double velocity) { this.indexerMotor.set(velocity / 4.0); }
+    public void setIndexer (double velocity) { 
+        
+        if (!Intaker.getInstance().sliderLimitSwitch.get()) { this.indexerMotor.set(velocity / 4.0); }
+        else { this.indexerMotor.set(0.0); }
+    }
 
     public double getIndexerPosition () { return this.indexerMotor.getSelectedSensorPosition(); }
     public void zeroIndexer () { this.indexerMotor.setSelectedSensorPosition(0.0); }
