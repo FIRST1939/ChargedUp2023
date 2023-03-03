@@ -22,6 +22,7 @@ import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.RunMechanisms;
 import frc.robot.commands.autonomous.BalanceChargingStation;
+import frc.robot.commands.autonomous.DriveStraightDistance;
 import frc.robot.commands.autonomous.modes.Auto1GP;
 import frc.robot.commands.autonomous.modes.Auto1GP_Balance;
 import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
@@ -124,9 +125,10 @@ public class RobotContainer {
   private void configureAutonomousChooser () {
 
     this.autonomousChooser.setDefaultOption("Do Nothing", () -> new WaitCommand(1.0));
-    this.autonomousChooser.addOption("Balance", () -> new BalanceChargingStation(this.westCoastDrive, this.navX));
+    this.autonomousChooser.addOption("Taxi", () -> new DriveStraightDistance(this.westCoastDrive, -4.1, 0.55));
     this.autonomousChooser.addOption("1 GP", () -> new Auto1GP(this.westCoastDrive, this.manipulator, this.leds));
     this.autonomousChooser.addOption("1 GP + Taxi", () -> new Auto1GP_Taxi(this.westCoastDrive, this.manipulator, this.leds));
+    this.autonomousChooser.addOption("Balance", () -> new BalanceChargingStation(this.westCoastDrive, this.navX));
     this.autonomousChooser.addOption("1 GP + Balance", () -> new Auto1GP_Balance(this.westCoastDrive, this.manipulator, this.navX, this.leds));
     
     SmartDashboard.putData("Autonomous Chooser", this.autonomousChooser);
