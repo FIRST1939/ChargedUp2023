@@ -125,9 +125,9 @@ public class RobotContainer {
 
     this.autonomousChooser.setDefaultOption("Do Nothing", () -> new WaitCommand(1.0));
     this.autonomousChooser.addOption("Balance", () -> new BalanceChargingStation(this.westCoastDrive, this.navX));
-    this.autonomousChooser.addOption("1 GP", () -> new Auto1GP(this.westCoastDrive, this.manipulator));
-    this.autonomousChooser.addOption("1 GP + Taxi", () -> new Auto1GP_Taxi(this.westCoastDrive, this.manipulator));
-    this.autonomousChooser.addOption("1 GP + Balance", () -> new Auto1GP_Balance(this.westCoastDrive, this.manipulator, this.navX));
+    this.autonomousChooser.addOption("1 GP", () -> new Auto1GP(this.westCoastDrive, this.manipulator, this.leds));
+    this.autonomousChooser.addOption("1 GP + Taxi", () -> new Auto1GP_Taxi(this.westCoastDrive, this.manipulator, this.leds));
+    this.autonomousChooser.addOption("1 GP + Balance", () -> new Auto1GP_Balance(this.westCoastDrive, this.manipulator, this.navX, this.leds));
     
     SmartDashboard.putData("Autonomous Chooser", this.autonomousChooser);
   }
