@@ -53,13 +53,8 @@ public class Manipulator extends SubsystemBase {
      * All inputs are capped at ~20% power for safety reasons.
      */
     public void setArm (double velocity) { 
-        
-        boolean beyondLimit = false;
 
-        if (velocity < 0 && Constants.ManipulatorConstants.ARM_MINIMUM_EXTENSION >= this.getArmPosition()) { beyondLimit = true; }
-        if (velocity > 0 && Constants.ManipulatorConstants.ARM_MAXIMUM_EXTENSION <= this.getArmPosition()) { beyondLimit = true; }
-
-        if (!beyondLimit) { this.armMotor.set(velocity / 5.0); } 
+        if ((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) { this.armMotor.set(velocity / 5.0); } 
         else { this.armMotor.set(0.0); }
     }
 

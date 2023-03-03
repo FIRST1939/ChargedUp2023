@@ -54,7 +54,7 @@ public class WestCoastDrive extends SubsystemBase {
   public void periodic () {
 
     SmartDashboard.putNumber("NavX Angle", this.navX.getRotation2d().getDegrees());
-    SmartDashboard.putNumber("NavX Roll", this.navX.getRoll());
+    SmartDashboard.putNumber("NavX Pitch", this.navX.getPitch());
 
     this.differentialDriveOdometry.update(this.navX.getRotation2d(), this.leftNeoEncoder.getPosition(), this.rightNeoEncoder.getPosition());
     }

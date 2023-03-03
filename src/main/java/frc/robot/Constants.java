@@ -25,7 +25,7 @@ public class Constants {
         public static final double TURNUNG_ANGLE_TURN_RATE_TOLERANCE = 10.0;
         public static final double TURNING_ANGLE_KF = 0.2;
 
-        public static final double BALANCE_KP = -0.015;
+        public static final double BALANCE_KP = -0.005;
         public static final double BALANCE_KI = 0.0;
         public static final double BALANCE_KD = 0.0;
     }
@@ -49,20 +49,17 @@ public class Constants {
     // Intaker Constants.
     public static final class IntakerConstants {
 
-        public static final int SLIDER_MINIMUM_EXTENSION = -40000; // TODO
-        public static final int SLIDER_MAXIMUM_EXTENSION = 60000; // TODO
-
         public static final int SLIDER_MOTOR = 10;
         public static final int ROLLER_MOTOR = 20;
 
         public enum SLIDER_POSITIONS {
-            CUBE(62000);
+            TEST(30000);
 
             public final int position;
             private SLIDER_POSITIONS (int position) { this.position = position; }
         }
 
-        public static final double SLIDER_KP = 0.0;
+        public static final double SLIDER_KP = 0.00001;
         public static final double SLIDER_KI = 0.0;
         public static final double SLIDER_KD = 0.0;
 
@@ -77,9 +74,6 @@ public class Constants {
     
     // Manipulator Constants.
     public static final class ManipulatorConstants {
-
-        public static final int ARM_MINIMUM_EXTENSION = 0;
-        public static final int ARM_MAXIMUM_EXTENSION = 78000;
 
         public enum ARM_POSITIONS {
             MIDDLE(38000),
@@ -106,12 +100,12 @@ public class Constants {
     public static final class ElectronicConstants {
 
         public static final int LED_PWM = 0;
-        public static final List<Integer> LED_LENGTHS = Arrays.asList(23, 66, 66, 14);
+        public static final List<Integer> LED_LENGTHS = Arrays.asList(22, 64, 65, 14);
         public static final List<Integer> LED_DIRECTIONS = Arrays.asList(-1, 1, -1, 1);
 
         public enum LED_COLORS {
-            CONE(27, 14),
-            CUBE(128, 2),
+            CONE(27, 20),
+            CUBE(128, 25),
             ERROR(0, 10),
             RAINBOW(90, 90);
 

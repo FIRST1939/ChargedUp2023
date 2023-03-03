@@ -1,0 +1,12 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Autonomous Chooser": "String Chooser",
+      "/SmartDashboard/Reset Gyro": "Command",
+      "/SmartDashboard/Zero Arm": "Command",
+      "/SmartDashboard/Zero Indexer": "Command",
+      "/SmartDashboard/Zero Slider": "Command"
+    }
+  }
+}

@@ -47,24 +47,19 @@ public class Intaker extends SubsystemBase {
 
     /**
      * Sets the slider motor to the given velocity, based upon input from the XBox Controller.
-     * All inputs are capped at ~40% power for safety reasons.
+     * All inputs are capped at ~30% power for safety reasons.
      */
     public void setSlider (double velocity) { 
         
-        boolean beyondLimit = false;
-
-        if (velocity < 0 && Constants.IntakerConstants.SLIDER_MINIMUM_EXTENSION >= this.getSliderPosition()) { beyondLimit = true; }
-        if (velocity > 0 && Constants.IntakerConstants.SLIDER_MAXIMUM_EXTENSION <= this.getSliderPosition()) { beyondLimit = true; }
-
-        if (!beyondLimit) { this.sliderMotor.set(velocity / 2.5); } 
+        if ((velocity < 0 && !this.sliderLimitSwitch.get()) || (velocity > 0)) { this.sliderMotor.set(velocity / 3.6); } 
         else { this.sliderMotor.set(0.0); }
     }
 
     /**
      * Sets the roller motor to the given velocity, based upon input from the XBox Controller.
-     * All inputs are capped at ~40% power for safety reasons.
+     * All inputs are capped at ~60% power for safety reasons.
      */
-    public void setRollers (double velocity) { this.rollerMotor.set(velocity / 2.5); }
+    public void setRollers (double velocity) { this.rollerMotor.set(velocity / 1.65); }
 
     public double getSliderPosition () { return this.sliderMotor.getSelectedSensorPosition(); }
     public void zeroSlider () { this.sliderMotor.setSelectedSensorPosition(0.0); }

@@ -33,16 +33,16 @@ public class BalanceChargingStation extends CommandBase {
 
         if (!this.onStation) {
 
-            if (this.navX.getRoll() < 6.0) { this.westCoastDrive.drive(0.35, 0); }
+            if (this.navX.getPitch() < 6.0) { this.westCoastDrive.drive(0.35, 0); }
             else { this.onStation = true; }
             return;
         }
 
-        double powerValue = this.balancePID.calculate(this.navX.getRoll());
+        double powerValue = this.balancePID.calculate(this.navX.getPitch());
         double turningValue = -this.westCoastDrive.getHeading() * Constants.AutonomousConstants.GYRO_STRAIGHT_KP;
         this.westCoastDrive.drive(powerValue, turningValue);
 
-        if (Math.abs(this.navX.getRoll()) <= 3.0) { this.balancedTicks++; }
+        if (Math.abs(this.navX.getPitch()) <= 3.0) { this.balancedTicks++; }
         else { this.balancedTicks = 0; } 
     }
 
