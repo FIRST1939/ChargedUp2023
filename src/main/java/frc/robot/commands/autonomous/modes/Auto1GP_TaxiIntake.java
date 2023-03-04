@@ -23,8 +23,9 @@ public class Auto1GP_TaxiIntake extends SequentialCommandGroup {
     public Auto1GP_TaxiIntake (WestCoastDrive westCoastDrive, Manipulator manipulator, Intaker intaker, Indexer indexer, LEDs leds) {
 
         this.addCommands(
-            // Score Cone.
             new WaitCommand(SmartDashboard.getNumber("Auto Start Wait", 0.0)),
+
+            // Score Cone.
             new SetGamePiece(manipulator, leds, -1),
             new HoldArmPosition(manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TOP).withTimeout(2.6),
             new RunManipulator(manipulator, () -> 0.8).withTimeout(0.8),
