@@ -1,49 +1,35 @@
 package frc.robot.commands.autonomous;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.WestCoastDrive;
 
-public class TurnToRelativeAngle extends PIDCommand {
+public class TurnToRelativeAngle extends CommandBase {
     
     private final WestCoastDrive westCoastDrive;
+    private final double relativeAngle;
+    private final double power;
 
     /*
      * @param relativeAngle: The relative angle where turning clockwise moves the angle negatively.
      */
-    public TurnToRelativeAngle (WestCoastDrive westCoastDrive, double relativeAngle) {
-
-        super(
-            new PIDController(Constants.AutonomousConstants.GYRO_TURNING_KP, 0.0, 0.0),
-            westCoastDrive::getHeading,
-            relativeAngle,
-            output -> useOutput(westCoastDrive, output),
-            westCoastDrive
-        );
+    public TurnToRelativeAngle (WestCoastDrive westCoastDrive, double relativeAngle, double power) {
 
         this.westCoastDrive = westCoastDrive;
-        this.getController().enableContinuousInput(-180.0, 180.0);
-        this.getController().setTolerance(Constants.AutonomousConstants.TURNING_ANGLE_TOLERANCE, Constants.AutonomousConstants.TURNUNG_ANGLE_TURN_RATE_TOLERANCE);
+        this.relativeAngle = relativeAngle;
+        this.power = power;
+
+        this.addRequirements(this.westCoastDrive);
     }
 
     @Override
-    public void initialize () {
-
-        super.isScheduled();
-        this.westCoastDrive.resetDistance();
-        this.westCoastDrive.resetHeading();
-    }
-
-    private static void useOutput (final WestCoastDrive westCoastDrive, final double pidControllerOutput) {
-
-        double output = pidControllerOutput;
-        if (pidControllerOutput >= 0) { output += Constants.AutonomousConstants.TURNING_ANGLE_KF; }
-        else { output -= Constants.AutonomousConstants.TURNING_ANGLE_KF; }
-
-        westCoastDrive.drive(0.0, output);
-      }
+    public void initialize () { this.westCoastDrive.resetHeading(); }
 
     @Override
-    public boolean isFinished () { return getController().atSetpoint(); }
+    public void execute () { this.westCoastDrive.drive(0.0, -this.power * Math.signum(this.relativeAngle)); }
+
+    @Override
+    public boolean isFinished () { return Math.abs(this.relativeAngle) >= this.westCoastDrive.getHeading(); }
+
+    @Override
+    public void end (boolean interrupted) { this.westCoastDrive.stop(); }
 }
