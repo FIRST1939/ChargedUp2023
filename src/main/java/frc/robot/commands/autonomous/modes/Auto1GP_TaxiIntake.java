@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
-import frc.robot.commands.autonomous.DriveStraightDistance;
+import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
 import frc.robot.commands.intaker.RunIntaker;
 import frc.robot.commands.intaker.RunSlider;
 import frc.robot.commands.manipulator.HoldArmPosition;
@@ -18,11 +18,12 @@ import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.WestCoastDrive;
 
-public class Auto1GP_Taxi extends SequentialCommandGroup {
+public class Auto1GP_TaxiIntake extends SequentialCommandGroup {
     
-    public Auto1GP_Taxi (WestCoastDrive westCoastDrive, Manipulator manipulator, Intaker intaker, Indexer indexer, LEDs leds) {
+    public Auto1GP_TaxiIntake (WestCoastDrive westCoastDrive, Manipulator manipulator, Intaker intaker, Indexer indexer, LEDs leds) {
 
         this.addCommands(
+            // Score Cone.
             new WaitCommand(SmartDashboard.getNumber("Auto Start Wait", 0.0)),
             new SetGamePiece(manipulator, leds, -1),
             new HoldArmPosition(manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TOP).withTimeout(2.6),
@@ -31,6 +32,7 @@ public class Auto1GP_Taxi extends SequentialCommandGroup {
             new SetGamePiece(manipulator, leds, 0),
             new DriveStraightDistance(westCoastDrive, -4.0, 0.55),
 
+            // Backup and Intake Cube.
             new SetGamePiece(manipulator, leds, 1),
             new RunSlider(intaker, () -> 0.8).withTimeout(1.6),
             new ParallelCommandGroup(

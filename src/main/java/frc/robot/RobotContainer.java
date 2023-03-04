@@ -21,9 +21,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.RunMechanisms;
-import frc.robot.commands.autonomous.DriveStraightDistance;
+import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
 import frc.robot.commands.autonomous.modes.Auto1GP;
-import frc.robot.commands.autonomous.modes.Auto1GP_Taxi;
+import frc.robot.commands.autonomous.modes.Auto1GP_TaxiIntake;
 import frc.robot.commands.autonomous.modes.BalanceChargingStation;
 import frc.robot.commands.indexer.RunIndexer;
 import frc.robot.commands.indexer.ZeroIndexer;
@@ -126,7 +126,7 @@ public class RobotContainer {
     this.autonomousChooser.addOption("Taxi", () -> new DriveStraightDistance(this.westCoastDrive, -4.1, 0.55));
     this.autonomousChooser.addOption("1 GP", () -> new Auto1GP(this.westCoastDrive, this.manipulator, this.leds));
     this.autonomousChooser.addOption("Balance", () -> new BalanceChargingStation(this.westCoastDrive, this.navX));
-    this.autonomousChooser.setDefaultOption("1 GP + Taxi Intake", () -> new Auto1GP_Taxi(this.westCoastDrive, this.manipulator, this.intaker, this.indexer, this.leds));
+    this.autonomousChooser.setDefaultOption("1 GP + Taxi Intake", () -> new Auto1GP_TaxiIntake(this.westCoastDrive, this.manipulator, this.intaker, this.indexer, this.leds));
     //this.autonomousChooser.addOption("1 GP + Balance", () -> new Auto1GP_Balance(this.westCoastDrive, this.manipulator, this.navX, this.leds));
     
     SmartDashboard.putData("Autonomous Chooser", this.autonomousChooser);
