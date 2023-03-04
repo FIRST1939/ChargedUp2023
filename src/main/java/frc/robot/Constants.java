@@ -24,10 +24,6 @@ public class Constants {
         public static final double TURNING_ANGLE_TOLERANCE = 5.0;
         public static final double TURNUNG_ANGLE_TURN_RATE_TOLERANCE = 10.0;
         public static final double TURNING_ANGLE_KF = 0.2;
-
-        public static final double BALANCE_KP = -0.005;
-        public static final double BALANCE_KI = 0.0;
-        public static final double BALANCE_KD = 0.0;
     }
 
     // West Coast Constants.
@@ -76,12 +72,18 @@ public class Constants {
     public static final class ManipulatorConstants {
 
         public enum ARM_POSITIONS {
-            MIDDLE(38000),
-            STATION(58000),
-            TOP(64000);
+            MIDDLE(28000, false),
+            STATION(48000, true),
+            TOP(55500, true);
 
             public final int position;
-            private ARM_POSITIONS (int position) { this.position = position; }
+            public final boolean useIntegral;
+
+            private ARM_POSITIONS (int position, boolean useIntegral) { 
+                
+                this.position = position; 
+                this.useIntegral = useIntegral;
+            }
         }
 
         public static final double ARM_KP = 0.00006;
@@ -100,12 +102,12 @@ public class Constants {
     public static final class ElectronicConstants {
 
         public static final int LED_PWM = 0;
-        public static final List<Integer> LED_LENGTHS = Arrays.asList(22, 64, 65, 14);
-        public static final List<Integer> LED_DIRECTIONS = Arrays.asList(-1, 1, -1, 1);
+        public static final List<Integer> LED_LENGTHS = Arrays.asList(22, 64, 14);
+        public static final List<Integer> LED_DIRECTIONS = Arrays.asList(-1, 1, 1);
 
         public enum LED_COLORS {
             CONE(27, 20),
-            CUBE(128, 25),
+            CUBE(154, 20),
             ERROR(0, 10),
             RAINBOW(90, 90);
 

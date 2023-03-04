@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
     CameraServer.startAutomaticCapture("Manipulator Camera", 1);
 
     PortForwarder.add(5800, "photonvision.local", 5800);
+    this.m_robotContainer.leds.setHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW);
   }
 
   /**
@@ -52,7 +53,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit () { this.m_robotContainer.leds.setHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW); }
+  public void disabledInit () {}
 
   @Override
   public void disabledPeriodic () {}

@@ -55,11 +55,11 @@ public class Intaker extends SubsystemBase {
 
     /**
      * Sets the slider motor to the given velocity, based upon input from the XBox Controller.
-     * All inputs are capped at ~30% power for safety reasons.
+     * All inputs are capped at ~20% power for safety reasons.
      */
     public void setSlider (double velocity) { 
         
-        if ((velocity < 0 && !this.sliderLimitSwitch.get()) || (velocity > 0)) { this.sliderMotor.set(velocity / 3.6); } 
+        if ((velocity < 0 && !this.sliderLimitSwitch.get()) || (velocity > 0)) { this.sliderMotor.set(velocity / 5.0); } 
         else { this.sliderMotor.set(0.0); }
     }
 

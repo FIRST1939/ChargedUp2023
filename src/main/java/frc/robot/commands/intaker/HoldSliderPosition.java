@@ -16,7 +16,7 @@ public class HoldSliderPosition extends CommandBase {
     public HoldSliderPosition (Intaker intaker, int sliderPosition) {
 
         this.intaker = intaker;
-        this.sliderPID = new PID(Constants.IntakerConstants.SLIDER_KP, Constants.IntakerConstants.SLIDER_KI, Constants.IntakerConstants.SLIDER_KD, 20000);
+        this.sliderPID = new PID(Constants.IntakerConstants.SLIDER_KP, Constants.IntakerConstants.SLIDER_KI, Constants.IntakerConstants.SLIDER_KD, 20000, false);
         this.position = sliderPosition;
 
         this.addRequirements(this.intaker);
@@ -25,7 +25,7 @@ public class HoldSliderPosition extends CommandBase {
     public HoldSliderPosition (Intaker intaker, SLIDER_POSITIONS sliderPosition) {
 
         this.intaker = intaker;
-        this.sliderPID = new PID(Constants.IntakerConstants.SLIDER_KP, Constants.IntakerConstants.SLIDER_KI, Constants.IntakerConstants.SLIDER_KD, 20000);
+        this.sliderPID = new PID(Constants.IntakerConstants.SLIDER_KP, Constants.IntakerConstants.SLIDER_KI, Constants.IntakerConstants.SLIDER_KD, 20000, false);
         this.position = sliderPosition.position;
     
         this.addRequirements(this.intaker);

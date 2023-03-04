@@ -35,7 +35,7 @@ public class DriveStraightDistance extends CommandBase {
     }
 
     @Override
-    public boolean isFinished () { return this.westCoastDrive.getAverageDistance() >= Math.abs(this.meters); }
+    public boolean isFinished () { return Math.abs(this.westCoastDrive.getAverageDistance()) >= Math.abs(this.meters); }
 
     @Override
     public void end (boolean interrupted) { this.westCoastDrive.stop(); }
