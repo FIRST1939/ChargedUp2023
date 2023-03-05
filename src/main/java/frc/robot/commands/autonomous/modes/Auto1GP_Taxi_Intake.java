@@ -18,9 +18,9 @@ import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.WestCoastDrive;
 
-public class Auto1GP_TaxiIntake extends SequentialCommandGroup {
+public class Auto1GP_Taxi_Intake extends SequentialCommandGroup {
     
-    public Auto1GP_TaxiIntake (WestCoastDrive westCoastDrive, Manipulator manipulator, Intaker intaker, Indexer indexer, LEDs leds) {
+    public Auto1GP_Taxi_Intake (WestCoastDrive westCoastDrive, Manipulator manipulator, Intaker intaker, Indexer indexer, LEDs leds) {
 
         this.addCommands(
             new WaitCommand(SmartDashboard.getNumber("Auto Start Wait", 0.0)),
@@ -31,20 +31,20 @@ public class Auto1GP_TaxiIntake extends SequentialCommandGroup {
             new RunManipulator(manipulator, () -> 0.8).withTimeout(0.8),
             new ResetArmPosition(manipulator, 0.75).withTimeout(3.0),
             new SetGamePiece(manipulator, leds, 0),
-            new DriveStraightDistance(westCoastDrive, -4.0, 0.55),
+            new DriveStraightDistance(westCoastDrive, -3.8, 0.55),
 
             // Backup and Intake Cube.
-            new SetGamePiece(manipulator, leds, 1),
-            new RunSlider(intaker, () -> 0.8).withTimeout(1.6),
-            new ParallelCommandGroup(
-                new RunIntaker(intaker, () -> 0.8).withTimeout(0.6),
-                new DriveStraightDistance(westCoastDrive, -0.8, 0.35)
-            ),
-            new RunSlider(intaker, () -> -0.8).withTimeout(2.4),
-            new RunIntaker(intaker, () -> 0.8).withTimeout(0.6),
-            new WaitCommand(0.8),
+            new SetGamePiece(manipulator, leds, -1),
+            new RunSlider(intaker, () -> 0.8).withTimeout(1.6)
+            //new ParallelCommandGroup(
+            //    new RunIntaker(intaker, () -> 0.8).withTimeout(0.6),
+            //    new DriveStraightDistance(westCoastDrive, -0.8, 0.35)
+            //),
+            //new RunSlider(intaker, () -> -0.8).withTimeout(2.4),
+            //new RunIntaker(intaker, () -> 0.8).withTimeout(0.6),
+            //new WaitCommand(0.8),
             //new RunMechanisms(indexer, manipulator, () -> 0.8, () -> 0.8).withTimeout(1.6    )
-            new DriveStraightDistance(westCoastDrive, 4.0, 0.45)
+            //new DriveStraightDistance(westCoastDrive, 4.0, 0.45)
         );
     }
 }

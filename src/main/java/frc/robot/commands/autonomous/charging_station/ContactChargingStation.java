@@ -1,4 +1,4 @@
-package frc.robot.commands.autonomous;
+package frc.robot.commands.autonomous.charging_station;
 
 import com.kauailabs.navx.frc.AHRS;
 

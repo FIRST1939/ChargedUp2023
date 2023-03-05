@@ -22,15 +22,9 @@ public class Auto1GP_Balance extends SequentialCommandGroup {
 
         this.addCommands(
             new WaitCommand(SmartDashboard.getNumber("Auto Start Wait", 0.0)),
+            new Auto1GP(westCoastDrive, manipulator, leds),
 
-            // Score Cone.
-            new SetGamePiece(manipulator, leds, -1),
-            new HoldArmPosition(manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TOP).withTimeout(3.0),
-            new RunManipulator(manipulator, () -> 0.8).withTimeout(0.8),
-            new ResetArmPosition(manipulator, 0.75).withTimeout(3.0),
-
-            // Balance Charging Station.
-            new SetGamePiece(manipulator, leds, 0),
+            // Balance Charging Station
             new DriveStraightDistance(westCoastDrive, 0.3, 0.35),
             new TurnToRelativeAngle(westCoastDrive, 180, 0.35),
             new BalanceChargingStation(westCoastDrive, navX)

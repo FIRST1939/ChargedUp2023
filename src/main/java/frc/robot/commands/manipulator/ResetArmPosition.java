@@ -27,5 +27,9 @@ public class ResetArmPosition extends CommandBase {
     public boolean isFinished () { return this.manipulator.getArmPosition() <= 0; }
 
     @Override
-    public void end (boolean interrupted) { this.manipulator.setArm(0.0); }
+    public void end (boolean interrupted) { 
+        
+        this.manipulator.setArm(0.0); 
+        if (!interrupted) { this.manipulator.setUsedPID(false); }
+    }
 }

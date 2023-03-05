@@ -72,9 +72,9 @@ public class Constants {
     public static final class ManipulatorConstants {
 
         public enum ARM_POSITIONS {
-            MIDDLE(28000, false),
-            STATION(48000, true),
-            TOP(55500, true);
+            MIDDLE(39000, false),
+            STATION(52000, true),
+            TOP(56000, true);
 
             public final int position;
             public final boolean useIntegral;
@@ -102,8 +102,8 @@ public class Constants {
     public static final class ElectronicConstants {
 
         public static final int LED_PWM = 0;
-        public static final List<Integer> LED_LENGTHS = Arrays.asList(22, 64, 14);
-        public static final List<Integer> LED_DIRECTIONS = Arrays.asList(-1, 1, 1);
+        public static final List<Integer> LED_LENGTHS = Arrays.asList(22, 64, 65, 14);
+        public static final List<Integer> LED_DIRECTIONS = Arrays.asList(-1, 1, -1, 1);
 
         public enum LED_COLORS {
             CONE(27, 20),

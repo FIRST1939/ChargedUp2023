@@ -20,6 +20,7 @@ public class Manipulator extends SubsystemBase {
     private final CANSparkMax rollerMotor;
 
     public final DigitalInput armLimitSwitch;
+    private boolean usedPID = false;
     private int gamePiece = 0;
 
     public Manipulator () {
@@ -53,7 +54,12 @@ public class Manipulator extends SubsystemBase {
         
         SmartDashboard.putNumber("Arm Position", this.getArmPosition());
         SmartDashboard.putBoolean("Arm Limit Switch", this.armLimitSwitch.get());
-        if (this.armLimitSwitch.get()) { this.zeroArm(); }
+
+        if (this.armLimitSwitch.get()) { 
+            
+            this.zeroArm(); 
+            this.setUsedPID(false);
+        }
     }
 
     /**
@@ -61,6 +67,8 @@ public class Manipulator extends SubsystemBase {
      * All inputs are capped at ~20% power for safety reasons.
      */
     public void setArm (double velocity) { 
+
+        if (Math.abs(velocity) > 1.0) { velocity = Math.signum(velocity) * 1.0; }
 
         if ((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) { this.armMotor.set(velocity / 5.0); } 
         else { this.armMotor.set(0.0); }
@@ -79,4 +87,7 @@ public class Manipulator extends SubsystemBase {
 
     public void setGamePiece (int gamePiece) { this.gamePiece = gamePiece; }
     public int getGamePiece () { return this.gamePiece; }
+
+    public void setUsedPID (boolean usedPID) { this.usedPID = usedPID; }
+    public boolean getUsedPID () { return this.usedPID; }
 }
