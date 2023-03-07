@@ -27,6 +27,7 @@ public class Manipulator extends SubsystemBase {
 
         this.armMotor = new WPI_TalonFX(Constants.ManipulatorConstants.ARM_MOTOR);
         this.rollerMotor = new CANSparkMax(Constants.ManipulatorConstants.ROLLER_MOTOR, MotorType.kBrushless);
+        this.armLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.ARM_LIMIT_SWITCH);
 
         this.armMotor.configFactoryDefault();
         this.armMotor.setNeutralMode(NeutralMode.Brake);
@@ -38,10 +39,6 @@ public class Manipulator extends SubsystemBase {
 
         this.rollerMotor.restoreFactoryDefaults();
         this.rollerMotor.setIdleMode(IdleMode.kBrake);
-
-        this.armLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.ARM_LIMIT_SWITCH);
-        //this.coneBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CONE_BEAM_BREAK);
-        //this.cubeBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CUBE_BEAM_BREAK);
     }
 
     public static Manipulator getInstance () {
@@ -79,8 +76,6 @@ public class Manipulator extends SubsystemBase {
      * All inputs are capped at ~70% power for safety reasons.
      */
     public void setRollers (double velocity) { this.rollerMotor.set(velocity / 1.4); }
-    public boolean isHoldingCone () { return false; }
-    public boolean isHoldingCube () { return false; }
 
     public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
     public void zeroArm () { this.armMotor.setSelectedSensorPosition(0.0); }
