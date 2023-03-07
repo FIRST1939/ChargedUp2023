@@ -8,8 +8,10 @@ import java.util.function.Supplier;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -48,8 +50,9 @@ public class RobotContainer {
 
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
-  private final Manipulator manipulator = Manipulator.getInstance();
+  private final Compressor compressor = new Compressor(Constants.ElectronicConstants.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
 
+  private final Manipulator manipulator = Manipulator.getInstance();
   public final LEDs leds = new LEDs();
 
   private final SendableChooser<Supplier<Command>> autonomousChooser = new SendableChooser<>();
@@ -67,6 +70,7 @@ public class RobotContainer {
     this.manipulator.setDefaultCommand(new Manipulate(this.manipulator, () -> (-this.driverTwo.getLeftY())));
 
     configureTriggers();
+    configurePneumatics();
     configureAutonomousChooser();
   }
 
@@ -93,6 +97,12 @@ public class RobotContainer {
     new JoystickButton(this.rightJoystick, 1).onTrue(new SetGamePiece(this.manipulator, this.leds, 1));
     new JoystickButton(this.leftJoystick, 2).onTrue(new SetGamePiece(this.manipulator, this.leds, 0));
     new JoystickButton(this.rightJoystick, 2).onTrue(new SetGamePiece(this.manipulator, this.leds, 0));
+  }
+
+  private void configurePneumatics () {
+
+    this.compressor.enableAnalog(Constants.ElectronicConstants.PNEUMATICS_MINIMUM_PRESSURE, Constants.ElectronicConstants.PNEUMATICS_MAXIMUM_PRESSURE);
+    this.compressor.enableDigital();
   }
 
   private void configureAutonomousChooser () {

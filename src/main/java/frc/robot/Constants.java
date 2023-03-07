@@ -67,6 +67,13 @@ public class Constants {
 
         public static final int INDEXER_MOTOR = 11;
     }
+
+    // Shooter Constants.
+    public static final class ShooterConstants {
+
+        public static final int INTAKE_PISTON = 0; // TODO
+        public static final int INTAKE_ROLLER_MOTOR = 0; // TODO
+    }
     
     // Manipulator Constants.
     public static final class ManipulatorConstants {
@@ -100,6 +107,10 @@ public class Constants {
     
     // Electronic Constants.
     public static final class ElectronicConstants {
+
+        public static final int PNEUMATICS_HUB = 0; // TODO
+        public static final int PNEUMATICS_MINIMUM_PRESSURE = 100;
+        public static final int PNEUMATICS_MAXIMUM_PRESSURE = 120;
 
         public static final int LED_PWM = 0;
         public static final List<Integer> LED_LENGTHS = Arrays.asList(22, 64, 65, 14);
