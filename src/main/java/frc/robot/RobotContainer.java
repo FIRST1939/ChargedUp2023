@@ -20,25 +20,16 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
-import frc.robot.commands.RunMechanisms;
 import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
 import frc.robot.commands.autonomous.modes.Auto1GP;
 import frc.robot.commands.autonomous.modes.Auto1GP_Balance;
-import frc.robot.commands.autonomous.modes.Auto1GP_Taxi_Intake;
 import frc.robot.commands.autonomous.modes.BalanceChargingStation;
-import frc.robot.commands.indexer.RunIndexer;
-import frc.robot.commands.indexer.ZeroIndexer;
-import frc.robot.commands.intaker.Intake;
-import frc.robot.commands.intaker.RunIntaker;
-import frc.robot.commands.intaker.ZeroSlider;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ResetArmPosition;
 import frc.robot.commands.manipulator.RunManipulator;
 import frc.robot.commands.manipulator.SetGamePiece;
 import frc.robot.commands.manipulator.ZeroArm;
-import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.WestCoastDrive;
@@ -57,9 +48,6 @@ public class RobotContainer {
 
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
-
-  private final Intaker intaker = Intaker.getInstance();
-  private final Indexer indexer = Indexer.getInstance();
   private final Manipulator manipulator = Manipulator.getInstance();
 
   public final LEDs leds = new LEDs();
@@ -76,7 +64,6 @@ public class RobotContainer {
       )
     );
 
-    this.intaker.setDefaultCommand(new Intake(this.intaker, () -> (this.driverTwo.getRightY())));
     this.manipulator.setDefaultCommand(new Manipulate(this.manipulator, () -> (-this.driverTwo.getLeftY())));
 
     configureTriggers();
@@ -92,17 +79,7 @@ public class RobotContainer {
   private void configureTriggers () {
 
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
-    SmartDashboard.putData("Zero Slider", new ZeroSlider(this.intaker));
-    SmartDashboard.putData("Zero Indexer", new ZeroIndexer(this.indexer));
     SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
-
-    this.driverTwo.povUp().whileTrue(new RunIntaker(this.intaker, () -> 1.0));
-    this.driverTwo.povDown().whileTrue(new RunIntaker(this.intaker, () -> -1.0));
-
-    this.driverTwo.povLeft().whileTrue(new RunIndexer(this.indexer, () -> -1.0));
-    this.driverTwo.povRight().whileTrue(new RunIndexer(this.indexer, () -> 1.0));
-    new JoystickButton(this.rightJoystick, 11).whileTrue(new RunIndexer(this.indexer, () -> 2.5));
-    new JoystickButton(this.rightJoystick, 12).whileTrue(new RunIndexer(this.indexer, () -> -2.5));
 
     this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()));
     this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()));
@@ -111,9 +88,6 @@ public class RobotContainer {
     this.driverTwo.a().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.STATION));
     this.driverTwo.b().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.MIDDLE));
     this.driverTwo.y().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.TOP));
-
-    this.driverTwo.leftBumper().whileTrue(new RunMechanisms(this.indexer, this.manipulator, () -> -1.0, () -> -this.manipulator.getGamePiece()));
-    this.driverTwo.rightBumper().whileTrue(new RunMechanisms(this.indexer, this.manipulator, () -> 1.0, () -> this.manipulator.getGamePiece()));
 
     new JoystickButton(this.leftJoystick, 1).onTrue(new SetGamePiece(this.manipulator, this.leds, -1));
     new JoystickButton(this.rightJoystick, 1).onTrue(new SetGamePiece(this.manipulator, this.leds, 1));
@@ -127,7 +101,6 @@ public class RobotContainer {
     this.autonomousChooser.setDefaultOption("Taxi", () -> new DriveStraightDistance(this.westCoastDrive, -4.1, 0.55));
     this.autonomousChooser.addOption("1 GP", () -> new Auto1GP(this.westCoastDrive, this.manipulator, this.leds));
     this.autonomousChooser.addOption("Balance", () -> new BalanceChargingStation(this.westCoastDrive, this.navX));
-    this.autonomousChooser.addOption("1 GP + Taxi Intake", () -> new Auto1GP_Taxi_Intake(this.westCoastDrive, this.manipulator, this.intaker, this.indexer, this.leds));
     this.autonomousChooser.addOption("1 GP + Balance", () -> new Auto1GP_Balance(this.westCoastDrive, this.manipulator, this.navX, this.leds));
     
     SmartDashboard.putData("Autonomous Chooser", this.autonomousChooser);
