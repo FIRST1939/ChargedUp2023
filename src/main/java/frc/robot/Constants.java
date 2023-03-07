@@ -42,32 +42,6 @@ public class Constants {
         public static final int FRONT_RIGHT_MOTOR = 6;
     }
 
-    // Intaker Constants.
-    public static final class IntakerConstants {
-
-        public static final int SLIDER_MOTOR = 10;
-        public static final int ROLLER_MOTOR = 20;
-
-        public enum SLIDER_POSITIONS {
-            TEST(30000);
-
-            public final int position;
-            private SLIDER_POSITIONS (int position) { this.position = position; }
-        }
-
-        public static final double SLIDER_KP = 0.00001;
-        public static final double SLIDER_KI = 0.0;
-        public static final double SLIDER_KD = 0.0;
-
-        public static final int SLIDER_LIMIT_SWITCH = 7;
-    }
-    
-    // Indexer Constants.
-    public static final class IndexerConstants {
-
-        public static final int INDEXER_MOTOR = 11;
-    }
-    
     // Manipulator Constants.
     public static final class ManipulatorConstants {
 
@@ -92,10 +66,7 @@ public class Constants {
 
         public static final int ARM_MOTOR = 12;
         public static final int ROLLER_MOTOR = 21;
-
         public static final int ARM_LIMIT_SWITCH = 9;
-        public static final int CONE_BEAM_BREAK = 0; // TODO
-        public static final int CUBE_BEAM_BREAK = 0; // TODO
     }
     
     // Electronic Constants.
