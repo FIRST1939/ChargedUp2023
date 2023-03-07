@@ -24,7 +24,7 @@ public class ResetArmPosition extends CommandBase {
     public void execute () { this.manipulator.setArm(this.direction * this.power); }
 
     @Override
-    public boolean isFinished () { return this.manipulator.getArmPosition() <= 0; }
+    public boolean isFinished () { return this.manipulator.armLimitSwitch.get(); }
 
     @Override
     public void end (boolean interrupted) { 
