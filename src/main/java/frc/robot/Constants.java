@@ -69,7 +69,7 @@ public class Constants {
     }
 
     // Shooter Constants.
-    public static final class ShooterConstants {
+    public static final class CubertConstants {
 
         public static final int LEFT_INTAKE_PISTON_FORWARD = 0; // TODO
         public static final int LEFT_INTAKE_PISTON_REVERSE = 0; // TODO
@@ -78,6 +78,7 @@ public class Constants {
 
         public static final int INTAKE_ROLLER_MOTOR = 0; // TODO
         public static final int INDEXER_MOTOR = 0; // TODO
+        public static final int SHOOTER_MOTOR = 0; // TODO
     }
     
     // Manipulator Constants.
