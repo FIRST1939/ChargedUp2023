@@ -17,14 +17,21 @@ public class Shooter extends SubsystemBase {
     private final DoubleSolenoid rightIntakePiston;
     private final CANSparkMax intakeRollerMotor;
 
+    private final CANSparkMax indexerMotor;
+
     public Shooter () {
 
         this.leftIntakePiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ShooterConstants.LEFT_INTAKE_PISTON_FORWARD, Constants.ShooterConstants.LEFT_INTAKE_PISTON_REVERSE);
         this.rightIntakePiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ShooterConstants.RIGHT_INTAKE_PISTON_FORWARD, Constants.ShooterConstants.RIGHT_INTAKE_PISTON_REVERSE);
         this.intakeRollerMotor = new CANSparkMax(Constants.ShooterConstants.INTAKE_ROLLER_MOTOR, MotorType.kBrushed);
 
+        this.indexerMotor = new CANSparkMax(Constants.ShooterConstants.INDEXER_MOTOR, MotorType.kBrushless);
+
         this.intakeRollerMotor.restoreFactoryDefaults();
         this.intakeRollerMotor.setIdleMode(IdleMode.kCoast);
+
+        this.indexerMotor.restoreFactoryDefaults();
+        this.indexerMotor.setIdleMode(IdleMode.kBrake);
     }
 
     public static Shooter getInstance () {
