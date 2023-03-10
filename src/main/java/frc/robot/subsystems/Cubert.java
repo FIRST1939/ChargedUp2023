@@ -66,4 +66,23 @@ public class Cubert extends SubsystemBase {
         this.leftIntakePiston.set(pistonValue);
         this.rightIntakePiston.set(pistonValue);
     }
+
+    /**
+     * Sets the intake roller motor to the given velocity, based upon input from the XBox Controller.
+     * All inputs are capped at ~70% power for safety reasons.
+     */
+    // TODO Beam Breaks
+    public void setIntakeRollers (double velocity) { this.intakeRollerMotor.set(velocity / 1.4); }
+
+    /**
+     * Sets the indexer motor to the given velocity, based upon input from the XBox Controller.
+     * All inputs are capped at ~50% power for safety reasons.
+     */
+    public void setIndexer (double velocity) { this.indexerMotor.set(velocity / 2.0); }
+
+    /**
+     * Sets the shooter motor to the given velocity, based upon input from the XBox Controller.
+     * No restriction is placed upon the inputs
+     */
+    public void setShooter (double velocity) { this.shooterMotor.set(velocity); }
 }
