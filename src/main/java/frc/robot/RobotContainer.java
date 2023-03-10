@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.SetShot;
 import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
 import frc.robot.commands.autonomous.modes.Auto1GP;
 import frc.robot.commands.autonomous.modes.Auto1GP_Balance;
@@ -32,6 +33,7 @@ import frc.robot.commands.manipulator.ResetArmPosition;
 import frc.robot.commands.manipulator.RunManipulator;
 import frc.robot.commands.manipulator.SetGamePiece;
 import frc.robot.commands.manipulator.ZeroArm;
+import frc.robot.subsystems.Cubert;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.WestCoastDrive;
@@ -52,9 +54,10 @@ public class RobotContainer {
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
   private final Compressor compressor = new Compressor(Constants.ElectronicConstants.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
 
+  private final Cubert cubert = Cubert.getInstance();
   private final Manipulator manipulator = Manipulator.getInstance();
-  public final LEDs leds = new LEDs();
 
+  public final LEDs leds = new LEDs();
   private final SendableChooser<Supplier<Command>> autonomousChooser = new SendableChooser<>();
 
   public RobotContainer () {
@@ -84,6 +87,8 @@ public class RobotContainer {
 
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
     SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
+
+    this.driverTwo.povLeft().whileTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.TEST));
 
     this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()));
     this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()));
