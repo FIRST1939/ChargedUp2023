@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -41,11 +42,15 @@ public class Cubert extends SubsystemBase {
 
         this.shooterMotor.configFactoryDefault();
         this.shooterMotor.setNeutralMode(NeutralMode.Coast);
+        this.shooterMotor.setInverted(InvertType.InvertMotorOutput);
         this.shooterMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
         this.shooterMotor.configNominalOutputForward(0,30);
         this.shooterMotor.configNominalOutputReverse(0,30);
         this.shooterMotor.configPeakOutputForward(1,30);
         this.shooterMotor.configPeakOutputReverse(-1,30);
+
+        this.shooterMotor.config_kF(0, 0.10792);
+        this.shooterMotor.config_kP(0, 0.0164);
     }
 
     public static Cubert getInstance () {

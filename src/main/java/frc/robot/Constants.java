@@ -78,10 +78,10 @@ public class Constants {
 
         public static final int INTAKE_ROLLER_MOTOR = 0; // TODO
         public static final int INDEXER_MOTOR = 0; // TODO
-        public static final int SHOOTER_MOTOR = 0; // TODO
+        public static final int SHOOTER_MOTOR = 10; // TODO
 
         public enum SHOTS {
-            TEST(5300);
+            TEST(7000);
 
             public final int velocity;
             private SHOTS (int velocity) { this.velocity = velocity; }
