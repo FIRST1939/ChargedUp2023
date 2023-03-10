@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -83,6 +84,6 @@ public class Cubert extends SubsystemBase {
     /**
      * Sets the shooter motor to the given velocity, based upon input from the XBox Controller.
      * No restriction is placed upon the inputs
-     */
-    public void setShooter (double velocity) { this.shooterMotor.set(velocity); }
+    */
+    public void setShooter (double velocity) { this.shooterMotor.set(ControlMode.Velocity, velocity); }
 }
