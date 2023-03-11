@@ -92,7 +92,10 @@ public class RobotContainer {
     this.driverTwo.leftBumper().whileTrue(new RunCubert(this.cubert, () -> -0.8, () -> -0.8));
     this.driverTwo.rightBumper().whileTrue(new RunCubert(this.cubert, () -> 0.8, () -> 0.8));
     
-    this.driverTwo.povLeft().whileTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.TEST));
+    this.driverTwo.povLeft().whileTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.LEFT));
+    this.driverTwo.povRight().whileTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.RIGHT));
+    this.driverTwo.povUp().whileTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.UP));
+    this.driverTwo.povDown().whileTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.DOWN));
 
     /**
     this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()));
