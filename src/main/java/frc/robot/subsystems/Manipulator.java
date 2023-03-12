@@ -52,7 +52,7 @@ public class Manipulator extends SubsystemBase {
             .withWidget(BuiltInWidgets.kGraph)
             .withPosition(0, 0)
             .withSize(3, 3)
-            .withProperties(Map.of("visible time", 30, "lower bound", -42000, "upper bound", 164000, "automatic bounds", false, "unit", "Encoder Clicks"))
+            .withProperties(Map.of("visible time", 30, "lower bound", -10000, "upper bound", 164000, "automatic bounds", false, "unit", "Encoder Clicks"))
             .getEntry();
     }
 
