@@ -10,3 +10,5 @@
   <li><p>Rank 8 with a record of 8-6-0</p></li>
   <li><p>Creativity Award sponsored by Rockwell Automation</p></li>
 </ul>
+
+<image src="https://i.imgur.com/F1Nl8tN.jpeg" width=500px alt="Black Knight">
