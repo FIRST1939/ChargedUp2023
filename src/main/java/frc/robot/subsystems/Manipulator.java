@@ -52,7 +52,7 @@ public class Manipulator extends SubsystemBase {
             .withWidget(BuiltInWidgets.kGraph)
             .withPosition(0, 0)
             .withSize(3, 3)
-            .withProperties(Map.of("visible time", 30, "lower bound", -20000, "upper bound", 80000, "automatic bounds", false, "unit", "Encoder Clicks"))
+            .withProperties(Map.of("visible time", 30, "lower bound", -42000, "upper bound", 164000, "automatic bounds", false, "unit", "Encoder Clicks"))
             .getEntry();
     }
 
@@ -78,13 +78,13 @@ public class Manipulator extends SubsystemBase {
 
     /**
      * Sets the arm motor to the given velocity, based upon input from the XBox Controller.
-     * All inputs are capped at ~20% power for safety reasons.
+     * All inputs are capped at ~40% power for safety reasons.
      */
     public void setArm (double velocity) { 
 
         if (Math.abs(velocity) > 1.0) { velocity = Math.signum(velocity) * 1.0; }
 
-        if ((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) { this.armMotor.set(velocity / 5.0); } 
+        if ((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) { this.armMotor.set(velocity / 2.5); } 
         else { this.armMotor.set(0.0); }
     }
 
