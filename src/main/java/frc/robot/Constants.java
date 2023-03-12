@@ -46,9 +46,9 @@ public class Constants {
     public static final class ManipulatorConstants {
 
         public enum ARM_POSITIONS {
-            MIDDLE(39000, false),
-            STATION(52000, true),
-            TOP(56000, true);
+            A_BUTTON(39000, false),
+            B_BUTTON(52000, true),
+            Y_BUTTON(56000, true);
 
             public final int position;
             public final boolean useIntegral;
