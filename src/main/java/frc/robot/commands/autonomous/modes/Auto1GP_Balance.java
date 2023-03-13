@@ -2,9 +2,7 @@ package frc.robot.commands.autonomous.modes;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
 import frc.robot.commands.autonomous.drivetrain.TurnToRelativeAngle;
 import frc.robot.subsystems.LEDs;
@@ -16,7 +14,6 @@ public class Auto1GP_Balance extends SequentialCommandGroup {
     public Auto1GP_Balance (WestCoastDrive westCoastDrive, Manipulator manipulator, AHRS navX, LEDs leds) {
 
         this.addCommands(
-            new WaitCommand(SmartDashboard.getNumber("Auto Start Wait", 0.0)),
             new Auto1GP(westCoastDrive, manipulator, leds),
 
             // Balance Charging Station
