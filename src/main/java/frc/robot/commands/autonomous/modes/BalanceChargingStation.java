@@ -5,9 +5,9 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
-import frc.robot.commands.autonomous.charging_station.MaintainChargingStation;
 import frc.robot.commands.autonomous.charging_station.ContactChargingStation;
+import frc.robot.commands.autonomous.charging_station.MaintainChargingStation;
+import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
 import frc.robot.subsystems.WestCoastDrive;
 
 public class BalanceChargingStation extends SequentialCommandGroup {

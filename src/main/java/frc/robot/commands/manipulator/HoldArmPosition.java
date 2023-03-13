@@ -2,11 +2,11 @@ package frc.robot.commands.manipulator;
 
 import java.util.Map;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.lib.PID;
 import frc.robot.Constants;
 import frc.robot.Constants.ManipulatorConstants.ARM_POSITIONS;
 import frc.robot.subsystems.Manipulator;
@@ -15,24 +15,15 @@ public class HoldArmPosition extends CommandBase {
     
     private final Manipulator manipulator;
 
-    private final PID armPID;
+    private final PIDController armPID;
     private final int position;
 
     private GenericEntry armPowerEntry;
 
-    public HoldArmPosition (Manipulator manipulator, int armPosition, boolean useIntegral) {
-
-        this.manipulator = manipulator;
-        this.armPID = new PID(Constants.ManipulatorConstants.ARM_KP, Constants.ManipulatorConstants.ARM_KI, Constants.ManipulatorConstants.ARM_KD, 30000, useIntegral);
-        this.position = armPosition;
-
-        this.addRequirements(this.manipulator);
-    }
-
     public HoldArmPosition (Manipulator manipulator, ARM_POSITIONS armPosition) {
 
         this.manipulator = manipulator;
-        this.armPID = new PID(Constants.ManipulatorConstants.ARM_KP, Constants.ManipulatorConstants.ARM_KI, Constants.ManipulatorConstants.ARM_KD, 30000, armPosition.useIntegral);
+        this.armPID = new PIDController(Constants.ManipulatorConstants.ARM_KP, Constants.ManipulatorConstants.ARM_KI, Constants.ManipulatorConstants.ARM_KD);
         this.position = armPosition.position;
     
         this.addRequirements(this.manipulator);
@@ -57,8 +48,9 @@ public class HoldArmPosition extends CommandBase {
     public void execute () {
 
         double error = this.position - this.manipulator.getArmPosition();
-        double armPower = this.armPID.calculate(error);
+        double armPower = this.armPID.calculate(this.manipulator.getArmPosition(), this.position);
 
+        // Gradients the Initial 30,000 Encoder Clicks
         if (error > 30000) { armPower *= (30000 / error); }
         this.manipulator.setArm(armPower);
 
