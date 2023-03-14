@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -28,8 +27,6 @@ public class Manipulator extends SubsystemBase {
     private boolean usedPID = false;
     private int gamePiece = 0;
 
-    private GenericEntry armPositionEntry;
-
     public Manipulator () {
 
         this.armMotor = new WPI_TalonFX(Constants.ManipulatorConstants.ARM_MOTOR);
@@ -47,13 +44,12 @@ public class Manipulator extends SubsystemBase {
         this.rollerMotor.restoreFactoryDefaults();
         this.rollerMotor.setIdleMode(IdleMode.kBrake);
 
-        this.armPositionEntry = Shuffleboard.getTab("Arm Tuning")
-            .add("Arm Position", this.getArmPosition())
+        Shuffleboard.getTab("Arm Tuning")
+            .addDouble("Arm Position", () -> this.getArmPosition())
             .withWidget(BuiltInWidgets.kGraph)
             .withPosition(0, 0)
             .withSize(3, 3)
-            .withProperties(Map.of("visible time", 30, "lower bound", -10000, "upper bound", 164000, "automatic bounds", false, "unit", "Encoder Clicks"))
-            .getEntry();
+            .withProperties(Map.of("visible time", 30, "lower bound", -10000, "upper bound", 164000, "automatic bounds", false, "unit", "Encoder Clicks"));
     }
 
     public static Manipulator getInstance () {
@@ -64,8 +60,6 @@ public class Manipulator extends SubsystemBase {
 
     public void periodic () { 
         
-        this.armPositionEntry.setDouble(this.getArmPosition());
-
         SmartDashboard.putNumber("Arm Position", this.getArmPosition());
         SmartDashboard.putBoolean("Arm Limit Switch", this.armLimitSwitch.get());
 

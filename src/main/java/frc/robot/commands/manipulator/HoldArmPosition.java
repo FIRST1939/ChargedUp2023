@@ -3,7 +3,6 @@ package frc.robot.commands.manipulator;
 import java.util.Map;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -17,8 +16,6 @@ public class HoldArmPosition extends CommandBase {
 
     private final PIDController armPID;
     private final int position;
-
-    private GenericEntry armPowerEntry;
 
     public HoldArmPosition (Manipulator manipulator, ARM_POSITIONS armPosition) {
 
@@ -35,13 +32,12 @@ public class HoldArmPosition extends CommandBase {
         if (this.manipulator.getUsedPID()) { this.cancel(); }
         this.manipulator.setUsedPID(true); 
 
-        this.armPowerEntry = Shuffleboard.getTab("Arm Tuning")
-            .add("Arm Power", 0.0)
+        Shuffleboard.getTab("Arm Tuning")
+            .addDouble("Arm Power", () -> this.armPID.calculate(this.manipulator.getArmPosition(), this.position))
             .withWidget(BuiltInWidgets.kDial)
             .withPosition(3, 0)
             .withSize(2, 2)
-            .withProperties(Map.of("min", -1.0, "max", 1.0))
-            .getEntry();
+            .withProperties(Map.of("min", -1.0, "max", 1.0));
     }
 
     @Override
@@ -53,7 +49,5 @@ public class HoldArmPosition extends CommandBase {
         // Gradients the Initial 30,000 Encoder Clicks
         if (error > 30000) { armPower *= (30000 / error); }
         this.manipulator.setArm(armPower);
-
-        this.armPowerEntry.setDouble(armPower);
     }
 }
