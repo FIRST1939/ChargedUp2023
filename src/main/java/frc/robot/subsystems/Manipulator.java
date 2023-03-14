@@ -47,7 +47,7 @@ public class Manipulator extends SubsystemBase {
         Shuffleboard.getTab("Arm Tuning")
             .addDouble("Arm Position", () -> this.getArmPosition())
             .withWidget(BuiltInWidgets.kGraph)
-            .withPosition(0, 0)
+            .withPosition(2, 0)
             .withSize(3, 3)
             .withProperties(Map.of("visible time", 30, "lower bound", -10000, "upper bound", 164000, "automatic bounds", false, "unit", "Encoder Clicks"));
     }

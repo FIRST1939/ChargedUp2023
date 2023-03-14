@@ -35,9 +35,15 @@ public class HoldArmPosition extends CommandBase {
         Shuffleboard.getTab("Arm Tuning")
             .addDouble("Arm Power", () -> this.armPID.calculate(this.manipulator.getArmPosition(), this.position))
             .withWidget(BuiltInWidgets.kDial)
-            .withPosition(3, 0)
+            .withPosition(5, 0)
             .withSize(2, 2)
             .withProperties(Map.of("min", -1.0, "max", 1.0));
+
+        Shuffleboard.getTab("Arm Tuning")
+            .add("Arm PID", this.armPID)
+            .withWidget(BuiltInWidgets.kPIDController)
+            .withPosition(0, 0)
+            .withSize(2, 3);
     }
 
     @Override
