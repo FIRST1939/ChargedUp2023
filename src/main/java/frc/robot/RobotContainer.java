@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.RunCubert;
 import frc.robot.commands.SetShot;
 import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
 import frc.robot.commands.autonomous.modes.Auto1GP;
@@ -88,6 +89,9 @@ public class RobotContainer {
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
     //SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
 
+    this.driverTwo.leftBumper().whileTrue(new RunCubert(this.cubert, () -> -0.8, () -> -0.8));
+    this.driverTwo.rightBumper().whileTrue(new RunCubert(this.cubert, () -> 0.8, () -> 0.8));
+    
     this.driverTwo.povLeft().whileTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.TEST));
 
     /**
