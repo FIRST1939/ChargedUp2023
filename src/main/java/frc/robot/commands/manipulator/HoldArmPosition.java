@@ -34,17 +34,21 @@ public class HoldArmPosition extends CommandBase {
     @Override
     public void initialize () { 
     
+        /**
         if (this.manipulator.getUsedPID()) { this.cancel(); }
         this.manipulator.setUsedPID(true); 
+        */
     }
 
     @Override
     public void execute () {
 
+        /** 
         double error = this.position - this.manipulator.getArmPosition();
         double armPower = this.armPID.calculate(error);
 
         if (error > 30000) { armPower *= (30000 / error); }
         this.manipulator.setArm(armPower);
+        */
     }
 }

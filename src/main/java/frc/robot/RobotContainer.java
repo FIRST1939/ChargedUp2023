@@ -52,7 +52,7 @@ public class RobotContainer {
 
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
-  private final Compressor compressor = new Compressor(Constants.ElectronicConstants.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
+  //private final Compressor compressor = new Compressor(Constants.ElectronicConstants.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
 
   private final Cubert cubert = Cubert.getInstance();
   private final Manipulator manipulator = Manipulator.getInstance();
@@ -73,7 +73,7 @@ public class RobotContainer {
     this.manipulator.setDefaultCommand(new Manipulate(this.manipulator, () -> (-this.driverTwo.getLeftY())));
 
     configureTriggers();
-    configurePneumatics();
+    //configurePneumatics();
     configureAutonomousChooser();
   }
 
@@ -86,10 +86,11 @@ public class RobotContainer {
   private void configureTriggers () {
 
     SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
-    SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
+    //SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
 
     this.driverTwo.povLeft().whileTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.TEST));
 
+    /**
     this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()));
     this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()));
 
@@ -102,13 +103,16 @@ public class RobotContainer {
     new JoystickButton(this.rightJoystick, 1).onTrue(new SetGamePiece(this.manipulator, this.leds, 1));
     new JoystickButton(this.leftJoystick, 2).onTrue(new SetGamePiece(this.manipulator, this.leds, 0));
     new JoystickButton(this.rightJoystick, 2).onTrue(new SetGamePiece(this.manipulator, this.leds, 0));
+    */
   }
 
+  /**
   private void configurePneumatics () {
 
     this.compressor.enableAnalog(Constants.ElectronicConstants.PNEUMATICS_MINIMUM_PRESSURE, Constants.ElectronicConstants.PNEUMATICS_MAXIMUM_PRESSURE);
     this.compressor.enableDigital();
   }
+  */
 
   private void configureAutonomousChooser () {
 

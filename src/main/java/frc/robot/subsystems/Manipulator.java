@@ -16,18 +16,21 @@ public class Manipulator extends SubsystemBase {
     
     private static Manipulator manipulatorInstance = null;
 
-    private final WPI_TalonFX armMotor;
+    //private final WPI_TalonFX armMotor;
     private final CANSparkMax rollerMotor;
 
+    /**
     public final DigitalInput armLimitSwitch;
     private boolean usedPID = false;
     private int gamePiece = 0;
+     */
 
     public Manipulator () {
 
-        this.armMotor = new WPI_TalonFX(Constants.ManipulatorConstants.ARM_MOTOR);
+        //this.armMotor = new WPI_TalonFX(Constants.ManipulatorConstants.ARM_MOTOR);
         this.rollerMotor = new CANSparkMax(Constants.ManipulatorConstants.ROLLER_MOTOR, MotorType.kBrushless);
 
+        /**
         this.armMotor.configFactoryDefault();
         this.armMotor.setNeutralMode(NeutralMode.Brake);
         this.armMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
@@ -35,11 +38,12 @@ public class Manipulator extends SubsystemBase {
         this.armMotor.configNominalOutputReverse(0,30);
         this.armMotor.configPeakOutputForward(1,30);
         this.armMotor.configPeakOutputReverse(-1,30);
+        */
 
         this.rollerMotor.restoreFactoryDefaults();
         this.rollerMotor.setIdleMode(IdleMode.kBrake);
 
-        this.armLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.ARM_LIMIT_SWITCH);
+        //this.armLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.ARM_LIMIT_SWITCH);
         //this.coneBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CONE_BEAM_BREAK);
         //this.cubeBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CUBE_BEAM_BREAK);
     }
@@ -50,6 +54,7 @@ public class Manipulator extends SubsystemBase {
         return manipulatorInstance;
     }
 
+    /** 
     public void periodic () { 
         
         SmartDashboard.putNumber("Arm Position", this.getArmPosition());
@@ -61,11 +66,11 @@ public class Manipulator extends SubsystemBase {
             this.setUsedPID(false);
         }
     }
+    */
 
     /**
      * Sets the arm motor to the given velocity, based upon input from the XBox Controller.
      * All inputs are capped at ~20% power for safety reasons.
-     */
     public void setArm (double velocity) { 
 
         if (Math.abs(velocity) > 1.0) { velocity = Math.signum(velocity) * 1.0; }
@@ -73,6 +78,7 @@ public class Manipulator extends SubsystemBase {
         if ((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) { this.armMotor.set(velocity / 5.0); } 
         else { this.armMotor.set(0.0); }
     }
+    */
 
     /**
      * Sets the roller motor to the given velocity, based upon input from the XBox Controller.
@@ -82,6 +88,7 @@ public class Manipulator extends SubsystemBase {
     public boolean isHoldingCone () { return false; }
     public boolean isHoldingCube () { return false; }
 
+    /**
     public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
     public void zeroArm () { this.armMotor.setSelectedSensorPosition(0.0); }
 
@@ -90,4 +97,5 @@ public class Manipulator extends SubsystemBase {
 
     public void setUsedPID (boolean usedPID) { this.usedPID = usedPID; }
     public boolean getUsedPID () { return this.usedPID; }
+    */
 }
