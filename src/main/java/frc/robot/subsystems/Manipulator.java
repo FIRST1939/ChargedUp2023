@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 
+import org.ejml.equation.VariableDouble;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -9,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -26,6 +29,9 @@ public class Manipulator extends SubsystemBase {
     public final DigitalInput armLimitSwitch;
     private boolean usedPID = false;
     private int gamePiece = 0;
+    private double power =0;
+
+    private GenericEntry armPositionEntry;
 
     public Manipulator () {
 
@@ -43,13 +49,14 @@ public class Manipulator extends SubsystemBase {
 
         this.rollerMotor.restoreFactoryDefaults();
         this.rollerMotor.setIdleMode(IdleMode.kBrake);
-
-        Shuffleboard.getTab("Arm Tuning")
-            .addDouble("Arm Position", () -> this.getArmPosition())
+        
+        this.armPositionEntry = Shuffleboard.getTab("Arm Tuning")
+            .add("Arm Position", this.getArmPosition())
             .withWidget(BuiltInWidgets.kGraph)
-            .withPosition(2, 0)
+            .withPosition(0, 0)
             .withSize(3, 3)
-            .withProperties(Map.of("visible time", 30, "lower bound", -10000, "upper bound", 164000, "automatic bounds", false, "unit", "Encoder Clicks"));
+            .withProperties(Map.of("visible time", 30, "lower bound", -10000, "upper bound", 164000, "automatic bounds", false, "unit", "Encoder Clicks"))
+            .getEntry();
     }
 
     public static Manipulator getInstance () {
@@ -60,8 +67,11 @@ public class Manipulator extends SubsystemBase {
 
     public void periodic () { 
         
+        this.armPositionEntry.setDouble(this.getArmPosition());
+        
         SmartDashboard.putNumber("Arm Position", this.getArmPosition());
         SmartDashboard.putBoolean("Arm Limit Switch", this.armLimitSwitch.get());
+        SmartDashboard.putNumber("Arm Power", this.getArmPower());
 
         if (this.armLimitSwitch.get()) { 
             
@@ -76,10 +86,14 @@ public class Manipulator extends SubsystemBase {
      */
     public void setArm (double velocity) { 
 
+        
         if (Math.abs(velocity) > 1.0) { velocity = Math.signum(velocity) * 1.0; }
 
-        if ((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) { this.armMotor.set(velocity / 2.5); } 
-        else { this.armMotor.set(0.0); }
+        if ((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) {
+            power=velocity*.6;
+            this.armMotor.set(velocity * .6); } 
+        else {power=0; 
+            this.armMotor.set(0.0); }
     }
 
     /**
@@ -88,7 +102,18 @@ public class Manipulator extends SubsystemBase {
      */
     public void setRollers (double velocity) { this.rollerMotor.set(velocity / 1.4); }
 
-    public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
+    public double getArmPosition () {  
+        
+       
+        //Getting the Arm Position has to be in a try catch because it returns null during bootup.
+      //  try {
+       return     this.armMotor.getSelectedSensorPosition();    
+        // } catch (Exception e) {
+        //     results =0;
+        // }
+        // return results;
+    }
+    public double getArmPower () { return power; }
     public void zeroArm () { this.armMotor.setSelectedSensorPosition(0.0); }
 
     public void setGamePiece (int gamePiece) { this.gamePiece = gamePiece; }

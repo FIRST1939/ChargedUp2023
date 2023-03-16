@@ -46,23 +46,26 @@ public class Constants {
     public static final class ManipulatorConstants {
 
         public enum ARM_POSITIONS {
-            A_BUTTON(39000, false),
-            B_BUTTON(52000, true),
-            Y_BUTTON(56000, true);
+            A_BUTTON("Low",121500, false,350),
+            B_BUTTON("Medium",82000, true,350),
+            Y_BUTTON("High",132000, true,350);
 
             public final int position;
+            public final String name;
             public final boolean useIntegral;
+            public final double tolerance;
 
-            private ARM_POSITIONS (int position, boolean useIntegral) { 
-                
+            private ARM_POSITIONS (String name, int position, boolean useIntegral, double tolerance) { 
+                this.name = name;
                 this.position = position; 
                 this.useIntegral = useIntegral;
+                this.tolerance = tolerance;
             }
         }
 
-        public static final double ARM_KP = 0.00006;
-        public static final double ARM_KI = 0.00008;
-        public static final double ARM_KD = 0.0;
+        public static final double ARM_KP = 0.00030;
+        public static final double ARM_KI = 0.000120;
+        public static final double ARM_KD = 0.000001;
 
         public static final int ARM_MOTOR = 12;
         public static final int ROLLER_MOTOR = 21;

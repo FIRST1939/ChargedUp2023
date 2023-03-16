@@ -1,5 +1,6 @@
 package frc.robot.commands.manipulator;
 
+import java.io.Console;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -18,7 +19,9 @@ public class RunManipulator extends CommandBase {
     }
     
     @Override
-    public void execute () { this.manipulator.setRollers(this.powerSupplier.getAsDouble() * 0.8); }
+    public void execute () {
+        double power = this.powerSupplier.getAsDouble() * 0.8;
+        this.manipulator.setRollers(power); }
 
     @Override
     public boolean isFinished () { return false; }
