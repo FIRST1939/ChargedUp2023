@@ -53,7 +53,7 @@ public class RobotContainer {
 
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
-  //private final Compressor compressor = new Compressor(Constants.ElectronicConstants.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
+  private final Compressor compressor = new Compressor(Constants.ElectronicConstants.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
 
   private final Cubert cubert = Cubert.getInstance();
   private final Manipulator manipulator = Manipulator.getInstance();
@@ -74,7 +74,7 @@ public class RobotContainer {
     this.manipulator.setDefaultCommand(new Manipulate(this.manipulator, () -> (-this.driverTwo.getLeftY())));
 
     configureTriggers();
-    //configurePneumatics();
+    configurePneumatics();
     configureAutonomousChooser();
   }
 
@@ -113,13 +113,11 @@ public class RobotContainer {
     */
   }
 
-  /**
   private void configurePneumatics () {
 
     this.compressor.enableAnalog(Constants.ElectronicConstants.PNEUMATICS_MINIMUM_PRESSURE, Constants.ElectronicConstants.PNEUMATICS_MAXIMUM_PRESSURE);
     this.compressor.enableDigital();
   }
-  */
 
   private void configureAutonomousChooser () {
 

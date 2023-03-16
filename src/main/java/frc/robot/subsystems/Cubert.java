@@ -18,10 +18,8 @@ public class Cubert extends SubsystemBase {
     
     private static Cubert shooterInstance = null;
 
-    /**
     private final DoubleSolenoid leftIntakePiston;
     private final DoubleSolenoid rightIntakePiston;
-    */
     private final CANSparkMax intakeRollerMotor;
 
     private final CANSparkMax indexerMotor;
@@ -29,10 +27,8 @@ public class Cubert extends SubsystemBase {
 
     public Cubert () {
 
-        /**
         this.leftIntakePiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.CubertConstants.LEFT_INTAKE_PISTON_FORWARD, Constants.CubertConstants.LEFT_INTAKE_PISTON_REVERSE);
         this.rightIntakePiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.CubertConstants.RIGHT_INTAKE_PISTON_FORWARD, Constants.CubertConstants.RIGHT_INTAKE_PISTON_REVERSE);
-        */
         this.intakeRollerMotor = new CANSparkMax(Constants.CubertConstants.INTAKE_ROLLER_MOTOR, MotorType.kBrushed);
 
         this.indexerMotor = new CANSparkMax(Constants.CubertConstants.INDEXER_MOTOR, MotorType.kBrushless);
@@ -63,7 +59,6 @@ public class Cubert extends SubsystemBase {
         return shooterInstance;
     }
 
-    /**
     public void setIntakePistons (Boolean intake) {
 
         DoubleSolenoid.Value pistonValue;
@@ -77,7 +72,6 @@ public class Cubert extends SubsystemBase {
         this.leftIntakePiston.set(pistonValue);
         this.rightIntakePiston.set(pistonValue);
     }
-    */
 
     /**
      * Sets the intake roller motor to the given velocity, based upon input from the XBox Controller.
