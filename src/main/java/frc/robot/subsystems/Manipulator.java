@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 
-import org.ejml.equation.VariableDouble;
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -29,9 +27,9 @@ public class Manipulator extends SubsystemBase {
     public final DigitalInput armLimitSwitch;
     private boolean usedPID = false;
     private int gamePiece = 0;
-    private double power =0;
+    private double armPower = 0;
 
-    private GenericEntry armPositionEntry;
+    //private GenericEntry armPositionEntry;
 
     public Manipulator () {
 
@@ -50,6 +48,7 @@ public class Manipulator extends SubsystemBase {
         this.rollerMotor.restoreFactoryDefaults();
         this.rollerMotor.setIdleMode(IdleMode.kBrake);
         
+        /**
         this.armPositionEntry = Shuffleboard.getTab("Arm Tuning")
             .add("Arm Position", this.getArmPosition())
             .withWidget(BuiltInWidgets.kGraph)
@@ -57,6 +56,7 @@ public class Manipulator extends SubsystemBase {
             .withSize(3, 3)
             .withProperties(Map.of("visible time", 30, "lower bound", -10000, "upper bound", 164000, "automatic bounds", false, "unit", "Encoder Clicks"))
             .getEntry();
+        */
     }
 
     public static Manipulator getInstance () {
@@ -67,11 +67,9 @@ public class Manipulator extends SubsystemBase {
 
     public void periodic () { 
         
-        this.armPositionEntry.setDouble(this.getArmPosition());
-        
         SmartDashboard.putNumber("Arm Position", this.getArmPosition());
         SmartDashboard.putBoolean("Arm Limit Switch", this.armLimitSwitch.get());
-        SmartDashboard.putNumber("Arm Power", this.getArmPower());
+        //this.armPositionEntry.setDouble(this.getArmPosition());
 
         if (this.armLimitSwitch.get()) { 
             
@@ -82,18 +80,15 @@ public class Manipulator extends SubsystemBase {
 
     /**
      * Sets the arm motor to the given velocity, based upon input from the XBox Controller.
-     * All inputs are capped at ~40% power for safety reasons.
+     * All inputs are capped at ~60% power for safety reasons.
      */
     public void setArm (double velocity) { 
 
         
         if (Math.abs(velocity) > 1.0) { velocity = Math.signum(velocity) * 1.0; }
 
-        if ((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) {
-            power=velocity*.6;
-            this.armMotor.set(velocity * .6); } 
-        else {power=0; 
-            this.armMotor.set(0.0); }
+        if ((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) { this.armMotor.set(velocity / 1.75); } 
+        else { this.armMotor.set(0.0); }
     }
 
     /**
@@ -102,18 +97,7 @@ public class Manipulator extends SubsystemBase {
      */
     public void setRollers (double velocity) { this.rollerMotor.set(velocity / 1.4); }
 
-    public double getArmPosition () {  
-        
-       
-        //Getting the Arm Position has to be in a try catch because it returns null during bootup.
-      //  try {
-       return     this.armMotor.getSelectedSensorPosition();    
-        // } catch (Exception e) {
-        //     results =0;
-        // }
-        // return results;
-    }
-    public double getArmPower () { return power; }
+    public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
     public void zeroArm () { this.armMotor.setSelectedSensorPosition(0.0); }
 
     public void setGamePiece (int gamePiece) { this.gamePiece = gamePiece; }
