@@ -46,7 +46,7 @@ public class Constants {
     public static final class ManipulatorConstants {
 
         public enum ARM_POSITIONS {
-            LOW(121500, 350),
+            PLATFORM(121500, 350),
             MIDDLE(82000, 350),
             HIGH(132000, 350);
 
