@@ -26,7 +26,9 @@ public class Manipulator extends SubsystemBase {
     private final WPI_TalonFX armMotor;
     private final CANSparkMax rollerMotor;
     public final DigitalInput armLimitSwitch;
+
     private final DoubleSolenoid airLockPiston;
+    private boolean isAirLockPistonExtended = false;
 
     private boolean usedPID = false;
     private int gamePiece = 0;
@@ -88,11 +90,17 @@ public class Manipulator extends SubsystemBase {
      */
     public void setArm (double velocity) { 
 
-        
         if (Math.abs(velocity) > 1.0) { velocity = Math.signum(velocity) * 1.0; }
 
-        if ((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) { this.armMotor.set(velocity / 1.75); } 
-        else { this.armMotor.set(0.0); }
+        if ((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) { 
+            
+            if (this.getAirLock()) { this.setAirLock(false); }
+            else { this.armMotor.set(velocity / 1.75); }
+        } 
+        else { 
+            
+            this.armMotor.set(0.0); 
+        }
     }
 
     /**
@@ -104,6 +112,33 @@ public class Manipulator extends SubsystemBase {
     public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
     public void zeroArm () { this.armMotor.setSelectedSensorPosition(0.0); }
 
+    public void setAirLock (Boolean airLock) { 
+        
+        DoubleSolenoid.Value pistonValue;
+
+        if (airLock != null) {
+
+            if (airLock.equals(true)) { 
+                
+                pistonValue = DoubleSolenoid.Value.kForward; 
+                this.isAirLockPistonExtended = true;
+            }
+
+            else { 
+                
+                pistonValue = DoubleSolenoid.Value.kReverse; 
+                this.isAirLockPistonExtended = false;
+            }
+        } else { 
+            
+            pistonValue = DoubleSolenoid.Value.kOff; 
+        }
+
+        this.airLockPiston.set(pistonValue);
+    }
+
+    public boolean getAirLock () { return this.isAirLockPistonExtended; }
+    
     public void setGamePiece (int gamePiece) { this.gamePiece = gamePiece; }
     public int getGamePiece () { return this.gamePiece; }
 
