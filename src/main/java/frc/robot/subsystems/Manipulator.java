@@ -11,6 +11,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,8 +25,9 @@ public class Manipulator extends SubsystemBase {
 
     private final WPI_TalonFX armMotor;
     private final CANSparkMax rollerMotor;
-
     public final DigitalInput armLimitSwitch;
+    private final DoubleSolenoid airLockPiston;
+
     private boolean usedPID = false;
     private int gamePiece = 0;
     private double armPower = 0;
@@ -36,6 +39,7 @@ public class Manipulator extends SubsystemBase {
         this.armMotor = new WPI_TalonFX(Constants.ManipulatorConstants.ARM_MOTOR);
         this.rollerMotor = new CANSparkMax(Constants.ManipulatorConstants.ROLLER_MOTOR, MotorType.kBrushless);
         this.armLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.ARM_LIMIT_SWITCH);
+        this.airLockPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ManipulatorConstants.AIR_LOCK_PISTON_FORWARD, Constants.ManipulatorConstants.AIR_LOCK_PISTON_REVERSE);
 
         this.armMotor.configFactoryDefault();
         this.armMotor.setNeutralMode(NeutralMode.Brake);
