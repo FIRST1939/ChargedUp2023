@@ -22,12 +22,13 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ResetGyro;
-import frc.robot.commands.RunCubert;
 import frc.robot.commands.SetShot;
 import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
 import frc.robot.commands.autonomous.modes.Auto1GP;
 import frc.robot.commands.autonomous.modes.Auto1GP_Balance;
 import frc.robot.commands.autonomous.modes.BalanceChargingStation;
+import frc.robot.commands.cubert.Cuber;
+import frc.robot.commands.cubert.RunCubert;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ResetArmPosition;
@@ -71,6 +72,7 @@ public class RobotContainer {
       )
     );
 
+    this.cubert.setDefaultCommand(new Cuber(this.cubert, () -> this.driverTwo.getLeftX()));
     this.manipulator.setDefaultCommand(new Manipulate(this.manipulator, () -> (-this.driverTwo.getLeftY())));
 
     configureTriggers();
