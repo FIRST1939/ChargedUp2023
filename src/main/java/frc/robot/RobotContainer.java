@@ -72,7 +72,7 @@ public class RobotContainer {
       )
     );
 
-    this.cubert.setDefaultCommand(new Cuber(this.cubert, () -> this.driverTwo.getLeftX()));
+    this.cubert.setDefaultCommand(new Cuber(this.cubert, () -> this.driverTwo.getRightX()));
     this.manipulator.setDefaultCommand(new Manipulate(this.manipulator, () -> (-this.driverTwo.getLeftY())));
 
     configureTriggers();
@@ -94,10 +94,10 @@ public class RobotContainer {
     this.driverTwo.leftBumper().whileTrue(new RunCubert(this.cubert, () -> -0.8, () -> -0.8));
     this.driverTwo.rightBumper().whileTrue(new RunCubert(this.cubert, () -> 0.8, () -> 0.8));
     
-    this.driverTwo.povLeft().whileTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.LEFT));
-    this.driverTwo.povRight().whileTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.RIGHT));
-    this.driverTwo.povUp().whileTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.UP));
-    this.driverTwo.povDown().whileTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.DOWN));
+    this.driverTwo.povLeft().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.LEFT));
+    this.driverTwo.povRight().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.RIGHT));
+    this.driverTwo.povUp().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.UP));
+    this.driverTwo.povDown().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.DOWN));
 
     /**
     this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()));

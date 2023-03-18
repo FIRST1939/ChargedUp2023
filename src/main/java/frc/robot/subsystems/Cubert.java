@@ -76,7 +76,6 @@ public class Cubert extends SubsystemBase {
         //this.leftIntakePiston.set(pistonValue);
         this.leftIntakePiston.set(pistonValue);
         this.rightIntakePiston.set(pistonValue);
-        
     }
 
     /**
@@ -96,5 +95,6 @@ public class Cubert extends SubsystemBase {
      * Sets the shooter motor to the given velocity, based upon input from the XBox Controller.
      * No restriction is placed upon the inputs
     */
-    public void setShooter (double velocity) { this.shooterMotor.set(ControlMode.Velocity, 0); }
+    public void setShooter (double velocity) { this.shooterMotor.set(ControlMode.Velocity, velocity); }
+    public double getShooter () { return this.shooterMotor.getSelectedSensorVelocity(); }
 }

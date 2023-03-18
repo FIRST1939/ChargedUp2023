@@ -21,8 +21,8 @@ public class SetShot extends CommandBase {
     public void execute () { this.cubert.setShooter(this.velocity); }
 
     @Override
-    public boolean isFinished () { return false; }
+    public boolean isFinished () { return Math.abs(this.cubert.getShooter() - this.velocity) <= 350; }
 
     @Override
-    public void end (boolean interrupted) { this.cubert.setShooter(0.0); }
+    public void end (boolean interrupted) { if (interrupted) { this.cubert.setShooter(0.0); } }
 }

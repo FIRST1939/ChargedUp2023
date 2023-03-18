@@ -81,7 +81,7 @@ public class Constants {
         public static final int SHOOTER_MOTOR = 10;
 
         public enum SHOTS {
-            LEFT(7000),
+            LEFT(0),
             RIGHT(7000),
             UP(7000),
             DOWN(7000);
