@@ -71,14 +71,14 @@ public class Constants {
     // Shooter Constants.
     public static final class CubertConstants {
 
-        public static final int LEFT_INTAKE_PISTON_FORWARD = 4; // TODO
-        public static final int LEFT_INTAKE_PISTON_REVERSE = 5; // TODO
-        public static final int RIGHT_INTAKE_PISTON_FORWARD = 6; // TODO
-        public static final int RIGHT_INTAKE_PISTON_REVERSE = 7; // TODO
+        public static final int LEFT_INTAKE_PISTON_FORWARD = 14; 
+        public static final int LEFT_INTAKE_PISTON_REVERSE = 4; 
+        public static final int RIGHT_INTAKE_PISTON_FORWARD = 15; 
+        public static final int RIGHT_INTAKE_PISTON_REVERSE = 6; 
 
-        public static final int INTAKE_ROLLER_MOTOR = 20; // TODO
-        public static final int INDEXER_MOTOR = 17; // TODO
-        public static final int SHOOTER_MOTOR = 25; // TODO
+        public static final int INTAKE_ROLLER_MOTOR = 20; 
+        public static final int INDEXER_MOTOR = 17; 
+        public static final int SHOOTER_MOTOR = 10;
 
         public enum SHOTS {
             LEFT(7000),

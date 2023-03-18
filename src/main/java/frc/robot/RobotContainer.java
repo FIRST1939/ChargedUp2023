@@ -53,7 +53,7 @@ public class RobotContainer {
 
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
-  private final Compressor compressor = new Compressor(Constants.ElectronicConstants.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
+  public final Compressor compressor = new Compressor(Constants.ElectronicConstants.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
 
   private final Cubert cubert = Cubert.getInstance();
   private final Manipulator manipulator = Manipulator.getInstance();
@@ -116,9 +116,8 @@ public class RobotContainer {
   private void configurePneumatics () {
 
     this.compressor.enableAnalog(Constants.ElectronicConstants.PNEUMATICS_MINIMUM_PRESSURE, Constants.ElectronicConstants.PNEUMATICS_MAXIMUM_PRESSURE);
-    this.compressor.enableDigital();
+   // this.compressor.enableDigital();
   }
-
   private void configureAutonomousChooser () {
 
     this.autonomousChooser.addOption("Do Nothing", () -> new WaitCommand(1.0));
@@ -129,7 +128,7 @@ public class RobotContainer {
     
     SmartDashboard.putData("Autonomous Chooser", this.autonomousChooser);
   }
-
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

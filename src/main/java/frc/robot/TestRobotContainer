@@ -1,0 +1,11 @@
+import edu.wpi.first.wpilibj2.*;
+
+public class TestRobotContainer {
+
+  private final CommandXboxController driverTwo = new CommandXboxController(Constants.ControllerConstants.DRIVER_TWO);
+
+  public TestRobotContainer () {
+     
+
+    }
+}
