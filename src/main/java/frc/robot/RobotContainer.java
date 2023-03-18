@@ -102,7 +102,7 @@ public class RobotContainer {
   private void configurePneumatics () {
 
     this.compressor.enableAnalog(Constants.ElectronicConstants.PNEUMATICS_MINIMUM_PRESSURE, Constants.ElectronicConstants.PNEUMATICS_MAXIMUM_PRESSURE);
-    this.compressor.enableDigital();
+
   }
 
   private void configureAutonomousChooser () {

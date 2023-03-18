@@ -75,7 +75,7 @@ public class Constants {
     // Electronic Constants.
     public static final class ElectronicConstants {
 
-        public static final int PNEUMATICS_HUB = 0; // TODO
+        public static final int PNEUMATICS_HUB =8; // TODO
         public static final int PNEUMATICS_MINIMUM_PRESSURE = 100;
         public static final int PNEUMATICS_MAXIMUM_PRESSURE = 120;
 
