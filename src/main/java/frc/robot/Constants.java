@@ -71,14 +71,14 @@ public class Constants {
     // Shooter Constants.
     public static final class CubertConstants {
 
-        public static final int LEFT_INTAKE_PISTON_FORWARD = 0; // TODO
-        public static final int LEFT_INTAKE_PISTON_REVERSE = 0; // TODO
-        public static final int RIGHT_INTAKE_PISTON_FORWARD = 0; // TODO
-        public static final int RIGHT_INTAKE_PISTON_REVERSE = 0; // TODO
+        public static final int LEFT_INTAKE_PISTON_FORWARD = 4; // TODO
+        public static final int LEFT_INTAKE_PISTON_REVERSE = 5; // TODO
+        public static final int RIGHT_INTAKE_PISTON_FORWARD = 6; // TODO
+        public static final int RIGHT_INTAKE_PISTON_REVERSE = 7; // TODO
 
-        public static final int INTAKE_ROLLER_MOTOR = 0; // TODO
-        public static final int INDEXER_MOTOR = 0; // TODO
-        public static final int SHOOTER_MOTOR = 10; // TODO
+        public static final int INTAKE_ROLLER_MOTOR = 20; // TODO
+        public static final int INDEXER_MOTOR = 17; // TODO
+        public static final int SHOOTER_MOTOR = 25; // TODO
 
         public enum SHOTS {
             LEFT(7000),
@@ -124,7 +124,7 @@ public class Constants {
     // Electronic Constants.
     public static final class ElectronicConstants {
 
-        public static final int PNEUMATICS_HUB = 0; // TODO
+        public static final int PNEUMATICS_HUB = 8; 
         public static final int PNEUMATICS_MINIMUM_PRESSURE = 100;
         public static final int PNEUMATICS_MAXIMUM_PRESSURE = 120;
 
