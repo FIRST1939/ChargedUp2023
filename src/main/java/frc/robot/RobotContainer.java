@@ -83,7 +83,6 @@ public class RobotContainer {
     this.leds.setHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW);
 
     configureTriggers();
-    configurePneumatics();
     configureAutonomousChooser();
   }
 
@@ -127,12 +126,6 @@ public class RobotContainer {
     new JoystickButton(this.rightJoystick, 1).onTrue(new SetGamePiece(this.manipulator, this.leds, 1));
     new JoystickButton(this.leftJoystick, 2).onTrue(new SetGamePiece(this.manipulator, this.leds, 0));
     new JoystickButton(this.rightJoystick, 2).onTrue(new SetGamePiece(this.manipulator, this.leds, 0));
-  }
-
-  private void configurePneumatics () {
-
-    this.compressor.enableAnalog(Constants.ElectronicConstants.PNEUMATICS_MINIMUM_PRESSURE, Constants.ElectronicConstants.PNEUMATICS_MAXIMUM_PRESSURE);
-
   }
 
   private void configureAutonomousChooser () {

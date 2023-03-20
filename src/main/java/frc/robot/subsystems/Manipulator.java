@@ -37,8 +37,6 @@ public class Manipulator extends SubsystemBase {
     private boolean usedPID = false;
     private int gamePiece = 0;
 
-    private GenericEntry armPositionEntry;
-
     public Manipulator () {
 
         this.armMotor = new WPI_TalonFX(Constants.ManipulatorConstants.ARM_MOTOR);
@@ -70,18 +68,6 @@ public class Manipulator extends SubsystemBase {
             .withProperties(Map.of("COLOR WHEN TRUE", "lime", "COLOR WHEN FALSE", "dark red"))
             .withPosition(6, 4)
             .withSize(2, 1)
-            .getEntry();
-
-        this.armLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.ARM_LIMIT_SWITCH);
-        //this.coneBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CONE_BEAM_BREAK);
-        //this.cubeBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CUBE_BEAM_BREAK);
-        
-        this.armPositionEntry = Shuffleboard.getTab("Arm Tuning")
-            .add("Arm Position", this.getArmPosition())
-            .withWidget(BuiltInWidgets.kGraph)
-            .withPosition(0, 0)
-            .withSize(3, 3)
-            .withProperties(Map.of("visible time", 30, "lower bound", -10000, "upper bound", 164000, "automatic bounds", false, "unit", "Encoder Clicks"))
             .getEntry();
     }
 
@@ -163,5 +149,4 @@ public class Manipulator extends SubsystemBase {
 
     public void setUsedPID (boolean usedPID) { this.usedPID = usedPID; }
     public boolean getUsedPID () { return this.usedPID; }
-    */
 }
