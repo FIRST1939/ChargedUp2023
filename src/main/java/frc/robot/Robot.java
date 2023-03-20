@@ -4,15 +4,15 @@
 
 package frc.robot;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.SetLEDs;
 import edu.wpi.first.wpilibj.Compressor;
@@ -30,20 +30,18 @@ public class Robot extends TimedRobot {
 
     m_robotContainer = new RobotContainer();
 
-    CameraServer.startAutomaticCapture("Intaker Camera", 0);
-    CameraServer.startAutomaticCapture("Manipulator Camera", 1);
-
-    PortForwarder.add(5800, "photonvision.local", 5800);
-   
-    this.m_robotContainer.leds.setHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW);
+    Shuffleboard.getTab("Competition")
+      .add("Manipulator Camera", CameraServer.startAutomaticCapture(0))
+      .withWidget(BuiltInWidgets.kCameraStream)
+      .withPosition(4, 0)
+      .withSize(3, 4);
   }
 
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
    * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
-   * SmartDashboard integrated updating.
+   * <p>This runs after the mode specific periodic functions, but before Shuffleboard integrated updating.
    */
   @Override
   public void robotPeriodic () {
@@ -53,19 +51,6 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-
-    if (!DriverStation.getJoystickIsXbox(Constants.ControllerConstants.DRIVER_TWO)) { 
-
-      DriverStation.reportError("RESCAN USB DEVICES (F1)", false);
-      new SetLEDs(this.m_robotContainer.leds, Constants.ElectronicConstants.LED_COLORS.ERROR).schedule();
-    }
-    SmartDashboard.putData(m_robotContainer.compressor);
-    SmartDashboard.putNumber("CompressorPSI",m_robotContainer.compressor.getPressure());
-   // m_robotContainer.compressor.enableAnalog(Constants.ElectronicConstants.PNEUMATICS_MINIMUM_PRESSURE, Constants.ElectronicConstants.PNEUMATICS_MAXIMUM_PRESSURE);
-
-    //  Compressor compressor = new Compressor(Constants.ElectronicConstants.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
-   /// SmartDashboard.putData(compressor);
-   // SmartDashboard.putNumber("Compressor(PSI)", compressor.getPressure());
   }
 
   @Override
@@ -76,6 +61,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit () {
+
+    new WaitCommand(m_robotContainer.getAutonomousWaitTime()).schedule();
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     if (m_autonomousCommand != null) { m_autonomousCommand.schedule(); }
@@ -101,19 +88,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic () {}
 
   @Override
-  public void testInit () {
-    
-    CommandScheduler.getInstance().cancelAll();
-
-    
-
-    // Cancels all running commands at the start of test mode.
-    
-   // CommandXboxController driverTwo = new CommandXboxController(Constants.ControllerConstants.DRIVER_TWO);
-   // driverTwo.leftBumper().whileTrue(()->{SmartDashboard.putString("Test", "Test");});
-
-
-  }
+  public void testInit () { CommandScheduler.getInstance().cancelAll(); }
 
   @Override
   public void testPeriodic () {}

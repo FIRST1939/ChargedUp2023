@@ -12,7 +12,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -29,8 +28,8 @@ public class Cubert extends SubsystemBase {
 
     public Cubert () {
 
-        this.leftIntakePiston = new DoubleSolenoid(Constants.ElectronicConstants.PNEUMATICS_HUB,PneumaticsModuleType.REVPH, Constants.CubertConstants.LEFT_INTAKE_PISTON_FORWARD, Constants.CubertConstants.LEFT_INTAKE_PISTON_REVERSE);
-        this.rightIntakePiston = new DoubleSolenoid(Constants.ElectronicConstants.PNEUMATICS_HUB,PneumaticsModuleType.REVPH, Constants.CubertConstants.RIGHT_INTAKE_PISTON_FORWARD, Constants.CubertConstants.RIGHT_INTAKE_PISTON_REVERSE);
+        this.leftIntakePiston = new DoubleSolenoid(Constants.ElectronicConstants.PNEUMATICS_HUB, PneumaticsModuleType.REVPH, Constants.CubertConstants.LEFT_INTAKE_PISTON_FORWARD, Constants.CubertConstants.LEFT_INTAKE_PISTON_REVERSE);
+        this.rightIntakePiston = new DoubleSolenoid(Constants.ElectronicConstants.PNEUMATICS_HUB, PneumaticsModuleType.REVPH, Constants.CubertConstants.RIGHT_INTAKE_PISTON_FORWARD, Constants.CubertConstants.RIGHT_INTAKE_PISTON_REVERSE);
         this.intakeRollerMotor = new CANSparkMax(Constants.CubertConstants.INTAKE_ROLLER_MOTOR, MotorType.kBrushed);
 
         this.indexerMotor = new CANSparkMax(Constants.CubertConstants.INDEXER_MOTOR, MotorType.kBrushless);
@@ -66,28 +65,24 @@ public class Cubert extends SubsystemBase {
         DoubleSolenoid.Value pistonValue;
         
         if (intake != null) {
-            if (intake.equals(true)) { 
-                pistonValue = DoubleSolenoid.Value.kForward; }
+            if (intake.equals(true)) { pistonValue = DoubleSolenoid.Value.kForward; }
             else { pistonValue = DoubleSolenoid.Value.kReverse; }
         } else { pistonValue = DoubleSolenoid.Value.kOff; }
      
-        SmartDashboard.putString("PistonValue",pistonValue.toString());
-        //pistonValue.toString();
-        //this.leftIntakePiston.set(pistonValue);
         this.leftIntakePiston.set(pistonValue);
         this.rightIntakePiston.set(pistonValue);
     }
 
     /**
      * Sets the intake roller motor to the given velocity, based upon input from the XBox Controller.
-     * All inputs are capped at ~70% power for safety reasons.
+     * All inputs are capped at 70% power for safety reasons.
      */
     // TODO Beam Breaks
-    public void setIntakeRollers (double velocity) { this.intakeRollerMotor.set(velocity / 1.4); }
+    public void setIntakeRollers (double velocity) { this.intakeRollerMotor.set(velocity * 0.7); }
 
     /**
      * Sets the indexer motor to the given velocity, based upon input from the XBox Controller.
-     * All inputs are capped at ~50% power for safety reasons.
+     * All inputs are capped at 75% power for safety reasons.
      */
     public void setIndexer (double velocity) { this.indexerMotor.set(velocity  * 0.75); }
 

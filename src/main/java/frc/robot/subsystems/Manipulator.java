@@ -7,8 +7,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -19,11 +21,16 @@ public class Manipulator extends SubsystemBase {
     //private final WPI_TalonFX armMotor;
     private final CANSparkMax rollerMotor;
 
+    /** 
+    private final GenericEntry armPositionEntry;
+    private final GenericEntry armLimitSwitchEntry;
+    */
+
     /**
     public final DigitalInput armLimitSwitch;
     private boolean usedPID = false;
     private int gamePiece = 0;
-     */
+    */
 
     public Manipulator () {
 
@@ -43,6 +50,23 @@ public class Manipulator extends SubsystemBase {
         this.rollerMotor.restoreFactoryDefaults();
         this.rollerMotor.setIdleMode(IdleMode.kBrake);
 
+        /**
+        this.armPositionEntry = Shuffleboard.getTab("Competition")
+            .add("Arm Position", 0.0)
+            .withWidget(BuiltInWidgets.kTextView)
+            .withPosition(8, 4)
+            .withSize(2, 1)
+            .getEntry();
+
+        this.armLimitSwitchEntry = Shuffleboard.getTab("Competition")
+            .add("Arm Limit Switch", false)
+            .withWidget(BuiltInWidgets.kBooleanBox)
+            .withProperties(Map.of("COLOR WHEN TRUE", "lime", "COLOR WHEN FALSE", "dark red"))
+            .withPosition(6, 4)
+            .withSize(2, 1)
+            .getEntry();
+        */
+
         //this.armLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.ARM_LIMIT_SWITCH);
         //this.coneBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CONE_BEAM_BREAK);
         //this.cubeBeamBreak = new DigitalInput(Constants.ManipulatorConstants.CUBE_BEAM_BREAK);
@@ -57,8 +81,8 @@ public class Manipulator extends SubsystemBase {
     /** 
     public void periodic () { 
         
-        SmartDashboard.putNumber("Arm Position", this.getArmPosition());
-        SmartDashboard.putBoolean("Arm Limit Switch", this.armLimitSwitch.get());
+        this.armPositionEntry.setDouble(this.getArmPosition());
+        this.armLimitSwitchEntry.setBoolean(this.armLimitSwitch.get());
 
         if (this.armLimitSwitch.get()) { 
             

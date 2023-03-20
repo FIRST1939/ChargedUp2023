@@ -4,25 +4,26 @@
 
 package frc.robot;
 
+import java.util.Map;
 import java.util.function.Supplier;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
-import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetShot;
+import frc.robot.commands.ZeroGyro;
 import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
 import frc.robot.commands.autonomous.modes.Auto1GP;
 import frc.robot.commands.autonomous.modes.Auto1GP_Balance;
@@ -38,6 +39,7 @@ import frc.robot.commands.manipulator.ZeroArm;
 import frc.robot.subsystems.Cubert;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Manipulator;
+import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.WestCoastDrive;
 
 /**
@@ -54,12 +56,13 @@ public class RobotContainer {
 
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
-  public final Compressor compressor = new Compressor(Constants.ElectronicConstants.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
+  private final Pneumatics pneumatics = new Pneumatics();
 
   private final Cubert cubert = Cubert.getInstance();
   private final Manipulator manipulator = Manipulator.getInstance();
 
-  public final LEDs leds = new LEDs();
+  private final LEDs leds = new LEDs();
+  private GenericEntry autonomousWaitTimeEntry;
   private final SendableChooser<Supplier<Command>> autonomousChooser = new SendableChooser<>();
 
   public RobotContainer () {
@@ -75,8 +78,9 @@ public class RobotContainer {
     this.cubert.setDefaultCommand(new Cuber(this.cubert, () -> this.driverTwo.getRightX()));
     this.manipulator.setDefaultCommand(new Manipulate(this.manipulator, () -> (-this.driverTwo.getLeftY())));
 
+    this.leds.setHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW);
+
     configureTriggers();
-    configurePneumatics();
     configureAutonomousChooser();
   }
 
@@ -88,8 +92,19 @@ public class RobotContainer {
    */
   private void configureTriggers () {
 
-    SmartDashboard.putData("Reset Gyro", new ResetGyro(this.navX));
-    //SmartDashboard.putData("Zero Arm", new ZeroArm(this.manipulator));
+    Shuffleboard.getTab("Competition")
+      .add("Zero Gyro", new ZeroGyro(this.navX))
+      .withWidget(BuiltInWidgets.kCommand)
+      .withPosition(0, 3)
+      .withSize(2, 1);
+
+    /**
+    Shuffleboard.getTab("Competition")
+      .add("Zero Arm", new ZeroArm(this.manipulator))
+      .withWidget(BuiltInWidgets.kCommand)
+      .withPosition(2, 3)
+      .withSize(2, 1);
+    */
 
     this.driverTwo.leftBumper().whileTrue(new RunCubert(this.cubert, () -> -0.8, () -> -0.8));
     this.driverTwo.rightBumper().whileTrue(new RunCubert(this.cubert, () -> 0.8, () -> 0.8));
@@ -115,11 +130,6 @@ public class RobotContainer {
     */
   }
 
-  private void configurePneumatics () {
-
-    this.compressor.enableAnalog(Constants.ElectronicConstants.PNEUMATICS_MINIMUM_PRESSURE, Constants.ElectronicConstants.PNEUMATICS_MAXIMUM_PRESSURE);
-   // this.compressor.enableDigital();
-  }
   private void configureAutonomousChooser () {
 
     this.autonomousChooser.addOption("Do Nothing", () -> new WaitCommand(1.0));
@@ -128,7 +138,19 @@ public class RobotContainer {
     this.autonomousChooser.addOption("Balance", () -> new BalanceChargingStation(this.westCoastDrive, this.navX));
     this.autonomousChooser.addOption("1 GP + Balance", () -> new Auto1GP_Balance(this.westCoastDrive, this.manipulator, this.navX, this.leds));
     
-    SmartDashboard.putData("Autonomous Chooser", this.autonomousChooser);
+    Shuffleboard.getTab("Competition")
+      .add("Autonomous Chooser", this.autonomousChooser)
+      .withWidget(BuiltInWidgets.kComboBoxChooser)
+      .withPosition(0, 0)
+      .withSize(2, 1);
+
+    this.autonomousWaitTimeEntry = Shuffleboard.getTab("Competition")
+      .add("Autonomous Wait Time", 0.0)
+      .withWidget(BuiltInWidgets.kNumberSlider)
+      .withProperties(Map.of("MIN", 0.0, "MAX", 10.0, "BLOCK INCREMENT", 0.25))
+      .withPosition(0, 1)
+      .withSize(2, 1)
+      .getEntry();
   }
   
   /**
@@ -137,4 +159,5 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand () { return this.autonomousChooser.getSelected().get(); }
+  public double getAutonomousWaitTime () { return this.autonomousWaitTimeEntry.getDouble(0.0); }
 }
