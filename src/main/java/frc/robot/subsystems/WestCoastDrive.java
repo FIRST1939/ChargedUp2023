@@ -21,14 +21,13 @@ import frc.robot.Constants;
 public class WestCoastDrive extends SubsystemBase {
     
   private final AHRS navX;
+  private final GenericEntry navXPitchEntry;
+
   private final MotorGroup lefMotorGroup;
   private final MotorGroup rightMotorGroup;
   private final DifferentialDrive differentialDrive;
   private final RelativeEncoder leftNeoEncoder;
   private final RelativeEncoder rightNeoEncoder;
-
-  private final GenericEntry navXAngleEntry;
-  private final GenericEntry navXPitchEntry;
 
   public final DifferentialDriveKinematics differentialDriveKinematics;
   public final DifferentialDriveOdometry differentialDriveOdometry;
@@ -36,6 +35,21 @@ public class WestCoastDrive extends SubsystemBase {
   public WestCoastDrive (AHRS navX) {
     
     this.navX = navX;
+
+    Shuffleboard.getTab("Competition")
+      .add("NavX Angle", this.navX)
+      .withWidget(BuiltInWidgets.kGyro)
+      .withProperties(Map.of("MAJOR TICK SPACING", 30.0, "STARTING ANGLE", 0.0, "SHOW TICK MARK RING", true))
+      .withPosition(2, 0)
+      .withSize(2, 2);
+
+    this.navXPitchEntry = Shuffleboard.getTab("Competition")
+      .add("NavX Pitch", 0.0)
+      .withWidget(BuiltInWidgets.kNumberBar)
+      .withProperties(Map.of("MIN", 0.0, "MAX", 30.0, "CENTER", 0.0))
+      .withPosition(2, 2)
+      .withSize(2, 1)
+      .getEntry();
 
     this.lefMotorGroup = new MotorGroup(
       Constants.WestCoastConstants.BACK_LEFT_MOTOR, 
@@ -53,22 +67,6 @@ public class WestCoastDrive extends SubsystemBase {
     this.leftNeoEncoder = this.lefMotorGroup.backMotor.getEncoder();
     this.rightNeoEncoder = this.rightMotorGroup.backMotor.getEncoder();
 
-    this.navXAngleEntry = Shuffleboard.getTab("Competition")
-      .add("NavX Angle", 0.0)
-      .withWidget(BuiltInWidgets.kGyro)
-      .withProperties(Map.of("MAJOR TICK SPACING", 30.0, "STARTING ANGLE", 0.0, "SHOW TICK MARK RING", true))
-      .withPosition(2, 0)
-      .withSize(2, 2)
-      .getEntry();
-
-    this.navXPitchEntry = Shuffleboard.getTab("Competition")
-      .add("NavX Pitch", 0.0)
-      .withWidget(BuiltInWidgets.kNumberBar)
-      .withProperties(Map.of("MIN", 0.0, "MAX", 30.0, "CENTER", 0.0))
-      .withPosition(2, 2)
-      .withSize(2, 1)
-      .getEntry();
-
     this.differentialDriveKinematics = new DifferentialDriveKinematics(Constants.WestCoastConstants.TRACK_WIDTH);
     this.differentialDriveOdometry = new DifferentialDriveOdometry(this.navX.getRotation2d(), this.getLeftDistance(), this.getRightDistance());
     this.differentialDriveOdometry.resetPosition(this.navX.getRotation2d(), this.getLeftDistance(), this.getRightDistance(), new Pose2d());
@@ -76,9 +74,7 @@ public class WestCoastDrive extends SubsystemBase {
 
   public void periodic () {
 
-    this.navXAngleEntry.setDouble(this.getHeading());
     this.navXPitchEntry.setDouble(this.navX.getPitch());
-
     this.differentialDriveOdometry.update(this.navX.getRotation2d(), this.leftNeoEncoder.getPosition(), this.rightNeoEncoder.getPosition());
     }
 
