@@ -82,9 +82,9 @@ public class Constants {
 
         public enum SHOTS {
             LEFT(0),
-            RIGHT(7000),
+            RIGHT(5000),
             UP(7000),
-            DOWN(7000);
+            DOWN(3000);
 
             public final int velocity;
             private SHOTS (int velocity) { this.velocity = velocity; }

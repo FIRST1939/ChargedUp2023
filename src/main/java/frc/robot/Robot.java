@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.Map;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -31,9 +33,17 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     Shuffleboard.getTab("Competition")
-      .add("Manipulator Camera", CameraServer.startAutomaticCapture(0))
+      .add("Intake Camera", CameraServer.startAutomaticCapture(0))
       .withWidget(BuiltInWidgets.kCameraStream)
+      .withProperties(Map.of("SHOW CROSSHAIR", false, "CROSSHAIR COLOR", "white", "SHOW CONTROLS", false, "ROTATION", "NONE"))
       .withPosition(4, 0)
+      .withSize(3, 4);
+
+    Shuffleboard.getTab("Competition")
+      .add("Manipulator Camera", CameraServer.startAutomaticCapture(1))
+      .withWidget(BuiltInWidgets.kCameraStream)
+      .withProperties(Map.of("SHOW CROSSHAIR", false, "CROSSHAIR COLOR", "white", "SHOW CONTROLS", false, "ROTATION", "NONE"))
+      .withPosition(7, 0)
       .withSize(3, 4);
   }
 

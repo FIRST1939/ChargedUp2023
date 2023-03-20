@@ -9,9 +9,12 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -25,6 +28,10 @@ public class Cubert extends SubsystemBase {
 
     private final CANSparkMax indexerMotor;
     private final WPI_TalonFX shooterMotor;
+
+    // TODO Beam Break Entry
+    private final GenericEntry intakePistonsEntry;
+    private final GenericEntry shooterRPMEntry;
 
     public Cubert () {
 
@@ -52,6 +59,20 @@ public class Cubert extends SubsystemBase {
 
         this.shooterMotor.config_kF(0, 0.10792);
         this.shooterMotor.config_kP(0, 0.0164);
+
+        this.intakePistonsEntry = Shuffleboard.getTab("Competition")
+            .add("Intake Pistons", false)
+            .withWidget(BuiltInWidgets.kBooleanBox)
+            .withPosition(0, 4)
+            .withSize(1, 1)
+            .getEntry();
+
+        this.shooterRPMEntry = Shuffleboard.getTab("Competition")
+            .add("Shooter Velocity", 0.0)
+            .withWidget(BuiltInWidgets.kTextView)
+            .withPosition(3, 4)
+            .withSize(1, 1)
+            .getEntry();
     }
 
     public static Cubert getInstance () {
@@ -60,14 +81,26 @@ public class Cubert extends SubsystemBase {
         return shooterInstance;
     }
 
+    public void periodic () { this.shooterRPMEntry.setDouble(this.shooterMotor.getSelectedSensorVelocity()); }
+
     public void setIntakePistons (Boolean intake) {
        
         DoubleSolenoid.Value pistonValue;
         
         if (intake != null) {
-            if (intake.equals(true)) { pistonValue = DoubleSolenoid.Value.kForward; }
-            else { pistonValue = DoubleSolenoid.Value.kReverse; }
-        } else { pistonValue = DoubleSolenoid.Value.kOff; }
+            if (intake.equals(true)) { 
+                
+                pistonValue = DoubleSolenoid.Value.kForward;
+                this.intakePistonsEntry.setBoolean(true);
+            } else { 
+                
+                pistonValue = DoubleSolenoid.Value.kReverse; 
+                this.intakePistonsEntry.setBoolean(false);
+            }
+        } else { 
+            
+            pistonValue = DoubleSolenoid.Value.kOff; 
+        }
      
         this.leftIntakePiston.set(pistonValue);
         this.rightIntakePiston.set(pistonValue);
