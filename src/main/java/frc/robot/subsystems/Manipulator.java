@@ -26,16 +26,16 @@ public class Manipulator extends SubsystemBase {
 
     private final WPI_TalonFX armMotor;
     private final CANSparkMax rollerMotor;
-    public final DigitalInput armLimitSwitch;
+    
+    private final GenericEntry armPositionEntry;
+    private final GenericEntry armLimitSwitchEntry;
 
+    public final DigitalInput armLimitSwitch;
     private final DoubleSolenoid airLockPiston;
     private boolean isAirLockPistonExtended = false;
 
     private boolean usedPID = false;
     private int gamePiece = 0;
-    private double armPower = 0;
-
-    //private GenericEntry armPositionEntry;
 
     public Manipulator () {
 
@@ -54,16 +54,21 @@ public class Manipulator extends SubsystemBase {
 
         this.rollerMotor.restoreFactoryDefaults();
         this.rollerMotor.setIdleMode(IdleMode.kBrake);
-        
-        /**
-        this.armPositionEntry = Shuffleboard.getTab("Arm Tuning")
-            .add("Arm Position", this.getArmPosition())
-            .withWidget(BuiltInWidgets.kGraph)
-            .withPosition(0, 0)
-            .withSize(3, 3)
-            .withProperties(Map.of("visible time", 30, "lower bound", -10000, "upper bound", 164000, "automatic bounds", false, "unit", "Encoder Clicks"))
+
+        this.armPositionEntry = Shuffleboard.getTab("Competition")
+            .add("Arm Position", 0.0)
+            .withWidget(BuiltInWidgets.kTextView)
+            .withPosition(8, 4)
+            .withSize(2, 1)
             .getEntry();
-        */
+
+        this.armLimitSwitchEntry = Shuffleboard.getTab("Competition")
+            .add("Arm Limit Switch", false)
+            .withWidget(BuiltInWidgets.kBooleanBox)
+            .withProperties(Map.of("COLOR WHEN TRUE", "lime", "COLOR WHEN FALSE", "dark red"))
+            .withPosition(6, 4)
+            .withSize(2, 1)
+            .getEntry();
     }
 
     public static Manipulator getInstance () {
@@ -71,12 +76,11 @@ public class Manipulator extends SubsystemBase {
         if (manipulatorInstance == null) { manipulatorInstance = new Manipulator(); }
         return manipulatorInstance;
     }
-
+ 
     public void periodic () { 
         
-        SmartDashboard.putNumber("Arm Position", this.getArmPosition());
-        SmartDashboard.putBoolean("Arm Limit Switch", this.armLimitSwitch.get());
-        //this.armPositionEntry.setDouble(this.getArmPosition());
+        this.armPositionEntry.setDouble(this.getArmPosition());
+        this.armLimitSwitchEntry.setBoolean(this.armLimitSwitch.get());
 
         if (this.armLimitSwitch.get()) { 
             

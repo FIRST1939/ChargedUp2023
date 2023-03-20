@@ -18,6 +18,7 @@ public class Manipulate extends CommandBase {
         this.addRequirements(this.manipulator);
     }
 
+    /** 
     @Override
     public void execute () { this.manipulator.setArm(this.deadband(this.armSupplier.getAsDouble())); }
 
@@ -34,4 +35,5 @@ public class Manipulate extends CommandBase {
 
     @Override
     public void end (boolean interrupted) { this.manipulator.setArm(0.0); }
+    */
 }

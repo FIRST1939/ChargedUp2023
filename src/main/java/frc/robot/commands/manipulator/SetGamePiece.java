@@ -23,6 +23,7 @@ public class SetGamePiece extends InstantCommand {
         this.addRequirements(this.manipulator);
     }
 
+    /** 
     @Override
     public void initialize () { 
         
@@ -46,4 +47,5 @@ public class SetGamePiece extends InstantCommand {
 
         new SetLEDs(this.leds, ledColor).schedule();
     }
+    */
 }
