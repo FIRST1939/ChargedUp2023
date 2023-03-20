@@ -17,6 +17,7 @@ public class ResetArmPosition extends CommandBase {
         this.addRequirements(this.manipulator);
     }
 
+    /**
     @Override
     public void initialize () { this.direction = -Math.signum(this.manipulator.getArmPosition()); }
 
@@ -24,12 +25,14 @@ public class ResetArmPosition extends CommandBase {
     public void execute () { this.manipulator.setArm(this.direction * this.power); }
 
     @Override
-    public boolean isFinished () { return this.manipulator.getArmPosition() <= 0; }
+    public boolean isFinished () { return this.manipulator.armLimitSwitch.get(); }
 
     @Override
     public void end (boolean interrupted) { 
         
         this.manipulator.setArm(0.0); 
+        this.manipulator.setAirLock(true);
         if (!interrupted) { this.manipulator.setUsedPID(false); }
     }
+    */
 }

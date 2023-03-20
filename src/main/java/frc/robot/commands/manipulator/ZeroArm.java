@@ -13,6 +13,8 @@ public class ZeroArm extends InstantCommand {
         this.addRequirements(this.manipulator);
     }
 
+    /** 
     @Override
     public void initialize () { this.manipulator.zeroArm(); }
+    */
 }
