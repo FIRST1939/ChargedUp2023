@@ -46,31 +46,38 @@ public class Constants {
     public static final class ManipulatorConstants {
 
         public enum ARM_POSITIONS {
-            MIDDLE(39000, false),
-            STATION(52000, true),
-            TOP(56000, true);
+            PLATFORM(121500, 350),
+            MIDDLE(82000, 350),
+            HIGH(132000, 350);
 
             public final int position;
-            public final boolean useIntegral;
+            public final double tolerance;
 
-            private ARM_POSITIONS (int position, boolean useIntegral) { 
-                
+            private ARM_POSITIONS (int position, double tolerance) { 
+
                 this.position = position; 
-                this.useIntegral = useIntegral;
+                this.tolerance = tolerance;
             }
         }
 
-        public static final double ARM_KP = 0.00006;
-        public static final double ARM_KI = 0.00008;
-        public static final double ARM_KD = 0.0;
+        public static final double ARM_KP = 0.00030;
+        public static final double ARM_KI = 0.000120;
+        public static final double ARM_KD = 0.000001;
 
         public static final int ARM_MOTOR = 12;
         public static final int ROLLER_MOTOR = 21;
         public static final int ARM_LIMIT_SWITCH = 9;
+
+        public static final int AIR_LOCK_PISTON_FORWARD = 2; // TODO
+        public static final int AIR_LOCK_PISTON_REVERSE = 3; // TODO
     }
     
     // Electronic Constants.
     public static final class ElectronicConstants {
+
+        public static final int PNEUMATICS_HUB =8; // TODO
+        public static final int PNEUMATICS_MINIMUM_PRESSURE = 100;
+        public static final int PNEUMATICS_MAXIMUM_PRESSURE = 120;
 
         public static final int LED_PWM = 0;
         public static final List<Integer> LED_LENGTHS = Arrays.asList(22, 64, 65, 14);
