@@ -3,6 +3,7 @@ package frc.robot.commands.manipulator;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Manipulator;
 
 public class Manipulate extends CommandBase {
@@ -19,7 +20,18 @@ public class Manipulate extends CommandBase {
 
     /** 
     @Override
-    public void execute () { this.manipulator.setArm(this.armSupplier.getAsDouble()); }
+    public void execute () { this.manipulator.setArm(this.deadband(this.armSupplier.getAsDouble())); }
+
+    private double deadband (double value) {
+
+        if (Math.abs(value) >= Constants.ControllerConstants.JOYSTICK_DEADBAND) {
+    
+            if (value > 0.0) { return (value - Constants.ControllerConstants.JOYSTICK_DEADBAND) / (1.0 - Constants.ControllerConstants.JOYSTICK_DEADBAND); }
+            else { return (value + Constants.ControllerConstants.JOYSTICK_DEADBAND) / (1.0 - Constants.ControllerConstants.JOYSTICK_DEADBAND); }
+        }
+    
+        return 0.0;
+    }
 
     @Override
     public void end (boolean interrupted) { this.manipulator.setArm(0.0); }

@@ -42,32 +42,6 @@ public class Constants {
         public static final int FRONT_RIGHT_MOTOR = 6;
     }
 
-    // Intaker Constants.
-    public static final class IntakerConstants {
-
-        public static final int SLIDER_MOTOR = 10;
-        public static final int ROLLER_MOTOR = 20;
-
-        public enum SLIDER_POSITIONS {
-            TEST(30000);
-
-            public final int position;
-            private SLIDER_POSITIONS (int position) { this.position = position; }
-        }
-
-        public static final double SLIDER_KP = 0.00001;
-        public static final double SLIDER_KI = 0.0;
-        public static final double SLIDER_KD = 0.0;
-
-        public static final int SLIDER_LIMIT_SWITCH = 7;
-    }
-    
-    // Indexer Constants.
-    public static final class IndexerConstants {
-
-        public static final int INDEXER_MOTOR = 11;
-    }
-
     // Shooter Constants.
     public static final class CubertConstants {
 
@@ -95,36 +69,36 @@ public class Constants {
     public static final class ManipulatorConstants {
 
         public enum ARM_POSITIONS {
-            MIDDLE(39000, false),
-            STATION(52000, true),
-            TOP(56000, true);
+            PLATFORM(121500, 350),
+            MIDDLE(82000, 350),
+            HIGH(132000, 350);
 
             public final int position;
-            public final boolean useIntegral;
+            public final double tolerance;
 
-            private ARM_POSITIONS (int position, boolean useIntegral) { 
-                
+            private ARM_POSITIONS (int position, double tolerance) { 
+
                 this.position = position; 
-                this.useIntegral = useIntegral;
+                this.tolerance = tolerance;
             }
         }
 
-        public static final double ARM_KP = 0.00006;
-        public static final double ARM_KI = 0.00008;
-        public static final double ARM_KD = 0.0;
+        public static final double ARM_KP = 0.00030;
+        public static final double ARM_KI = 0.000120;
+        public static final double ARM_KD = 0.000001;
 
         public static final int ARM_MOTOR = 12;
         public static final int ROLLER_MOTOR = 21;
-
         public static final int ARM_LIMIT_SWITCH = 9;
-        public static final int CONE_BEAM_BREAK = 0; // TODO
-        public static final int CUBE_BEAM_BREAK = 0; // TODO
+
+        public static final int AIR_LOCK_PISTON_FORWARD = 2; // TODO
+        public static final int AIR_LOCK_PISTON_REVERSE = 3; // TODO
     }
     
     // Electronic Constants.
     public static final class ElectronicConstants {
 
-        public static final int PNEUMATICS_HUB = 8; 
+        public static final int PNEUMATICS_HUB = 8;
         public static final int PNEUMATICS_MINIMUM_PRESSURE = 100;
         public static final int PNEUMATICS_MAXIMUM_PRESSURE = 120;
 
