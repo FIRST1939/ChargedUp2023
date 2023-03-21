@@ -94,10 +94,11 @@ public class Constants {
 
         public static final int ARM_MOTOR = 12;
         public static final int ROLLER_MOTOR = 21;
-        public static final int ARM_LIMIT_SWITCH = 9;
+        public static final int STARTING_ARM_LIMIT_SWITCH = 9;
+        public static final int ENDING_ARM_LIMIT_SWITCH = 0; // TODO
 
-        public static final int AIR_LOCK_PISTON_FORWARD = 2; // TODO
-        public static final int AIR_LOCK_PISTON_REVERSE = 3; // TODO
+        public static final int AIR_LOCK_PISTON_FORWARD = 2;
+        public static final int AIR_LOCK_PISTON_REVERSE = 3;
     }
     
     // Electronic Constants.
