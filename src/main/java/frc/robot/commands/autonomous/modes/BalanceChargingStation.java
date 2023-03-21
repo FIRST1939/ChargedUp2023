@@ -3,7 +3,6 @@ package frc.robot.commands.autonomous.modes;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.autonomous.charging_station.ContactChargingStation;
 import frc.robot.commands.autonomous.charging_station.MaintainChargingStation;
 import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;

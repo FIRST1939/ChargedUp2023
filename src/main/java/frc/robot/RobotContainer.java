@@ -10,10 +10,8 @@ import java.util.function.Supplier;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -61,7 +59,6 @@ public class RobotContainer {
 
   private final AHRS navX = new AHRS(SPI.Port.kMXP);
   private final WestCoastDrive westCoastDrive = new WestCoastDrive(navX);
-  private final Pneumatics pneumatics = new Pneumatics();
 
   private final Cubert cubert = Cubert.getInstance();
   private final Manipulator manipulator = Manipulator.getInstance();
@@ -83,6 +80,7 @@ public class RobotContainer {
     this.cubert.setDefaultCommand(new Cuber(this.cubert, () -> this.driverTwo.getRightX()));
     this.manipulator.setDefaultCommand(new Manipulate(this.manipulator, () -> (-this.driverTwo.getLeftY() * 0.7)));
 
+    new Pneumatics();
     this.leds.setHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW);
 
     configureTriggers();

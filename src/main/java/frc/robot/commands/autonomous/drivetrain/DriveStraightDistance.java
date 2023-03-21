@@ -9,16 +9,10 @@ public class DriveStraightDistance extends CommandBase {
     final private WestCoastDrive westCoastDrive;
     final private double meters;
 
-    final private double trapezoidalTime;
-    final private double trapezoidalMeters;
-
     public DriveStraightDistance (WestCoastDrive westCoastDrive, double meters) {
 
         this.westCoastDrive = westCoastDrive;
         this.meters = meters;
-
-        this.trapezoidalTime = Constants.AutonomousConstants.MAX_VELOCITY / Constants.AutonomousConstants.MAX_ACCELERATION;
-        this.trapezoidalMeters = (Constants.AutonomousConstants.MAX_ACCELERATION * Math.pow(this.trapezoidalTime, 2)) / 2.0;
 
         this.addRequirements(this.westCoastDrive);
     }
@@ -53,7 +47,7 @@ public class DriveStraightDistance extends CommandBase {
         powerValue = Math.signum(this.meters) * Math.abs(powerValue);
         if (Math.abs(powerValue) > 0.78) { powerValue = Math.signum(this.meters) * 0.78; }
 
-        double turningValue = Math.signum(this.meters) * this.westCoastDrive.getHeading() * Constants.AutonomousConstants.GYRO_STRAIGHT_KP;
+        //double turningValue = Math.signum(this.meters) * this.westCoastDrive.getHeading() * Constants.AutonomousConstants.GYRO_STRAIGHT_KP;
         this.westCoastDrive.drive(powerValue, 0.0);
     }
 
