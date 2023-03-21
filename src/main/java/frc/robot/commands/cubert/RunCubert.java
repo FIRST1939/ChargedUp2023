@@ -21,7 +21,7 @@ public class RunCubert extends CommandBase {
     }
 
     @Override
-    public void initialize () { this.cubert.setIntakePistons((Boolean) true); }
+    public void initialize () { if (this.intakeSupplier.getAsDouble() != 0.0) { this.cubert.setIntakePistons((Boolean) true); } }
 
     @Override
     public void execute () {
