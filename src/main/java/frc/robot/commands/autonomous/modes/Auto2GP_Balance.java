@@ -17,7 +17,7 @@ public class Auto2GP_Balance extends SequentialCommandGroup{
     public Auto2GP_Balance (WestCoastDrive westCoastDrive, Cubert cubert, Manipulator manipulator, LEDs leds) {
 
         this.addCommands(
-            //new Auto1GP(westCoastDrive, manipulator, leds),
+            new Auto1GP(westCoastDrive, manipulator, leds),
 
             new ParallelCommandGroup(
                 new DriveStraightDistance(westCoastDrive, -4.3688).andThen(new TurnToRelativeAngle(westCoastDrive, 8.0, 0.45)),

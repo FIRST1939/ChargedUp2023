@@ -28,7 +28,7 @@ import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
 import frc.robot.commands.autonomous.modes.Auto1GP;
 import frc.robot.commands.autonomous.modes.Auto1GP_Balance;
 import frc.robot.commands.autonomous.modes.Auto2GP_Balance;
-import frc.robot.commands.autonomous.modes.Auto3GP_Far_Balance;
+import frc.robot.commands.autonomous.modes.Auto3GP_Far;
 import frc.robot.commands.autonomous.modes.BalanceChargingStation;
 import frc.robot.commands.cubert.Cuber;
 import frc.robot.commands.cubert.RunCubert;
@@ -137,7 +137,7 @@ public class RobotContainer {
     this.autonomousChooser.addOption("Balance", () -> new BalanceChargingStation(this.westCoastDrive, this.navX));
     this.autonomousChooser.addOption("1 GP + Balance", () -> new Auto1GP_Balance(this.westCoastDrive, this.manipulator, this.navX, this.leds));
     this.autonomousChooser.addOption("2 GP + Balance", () -> new Auto2GP_Balance(this.westCoastDrive, this.cubert, this.manipulator, this.leds));
-    this.autonomousChooser.addOption("3 GP Far + Balance", () -> new Auto3GP_Far_Balance(this.westCoastDrive, this.cubert));
+    this.autonomousChooser.addOption("3 GP Far", () -> new Auto3GP_Far(this.westCoastDrive, this.cubert));
     
     Shuffleboard.getTab("Competition")
       .add("Autonomous Chooser", this.autonomousChooser)
