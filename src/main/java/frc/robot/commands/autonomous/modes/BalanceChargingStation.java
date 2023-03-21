@@ -15,7 +15,7 @@ public class BalanceChargingStation extends SequentialCommandGroup {
 
         this.addCommands(
             new ContactChargingStation(westCoastDrive, navX),
-            new DriveStraightDistance(westCoastDrive, 0.955, 0.35),
+            new DriveStraightDistance(westCoastDrive, 0.955),
             new MaintainChargingStation(westCoastDrive, navX)
         );
     }

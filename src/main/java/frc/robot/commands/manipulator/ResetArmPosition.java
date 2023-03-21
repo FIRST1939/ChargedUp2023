@@ -17,7 +17,6 @@ public class ResetArmPosition extends CommandBase {
         this.addRequirements(this.manipulator);
     }
 
-    /**
     @Override
     public void initialize () { this.direction = -Math.signum(this.manipulator.getArmPosition()); }
 
@@ -32,7 +31,5 @@ public class ResetArmPosition extends CommandBase {
         
         this.manipulator.setArm(0.0); 
         this.manipulator.setAirLock(true);
-        if (!interrupted) { this.manipulator.setUsedPID(false); }
     }
-    */
 }

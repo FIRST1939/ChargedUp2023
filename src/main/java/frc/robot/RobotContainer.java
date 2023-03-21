@@ -29,11 +29,14 @@ import frc.robot.commands.ZeroGyro;
 import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
 import frc.robot.commands.autonomous.modes.Auto1GP;
 import frc.robot.commands.autonomous.modes.Auto1GP_Balance;
+import frc.robot.commands.autonomous.modes.Auto2GP_Balance;
+import frc.robot.commands.autonomous.modes.Auto3GP_Far_Balance;
 import frc.robot.commands.autonomous.modes.BalanceChargingStation;
 import frc.robot.commands.cubert.Cuber;
 import frc.robot.commands.cubert.RunCubert;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
+import frc.robot.commands.manipulator.ObtainPlatform;
 import frc.robot.commands.manipulator.ResetArmPosition;
 import frc.robot.commands.manipulator.RunManipulator;
 import frc.robot.commands.manipulator.SetGamePiece;
@@ -78,7 +81,7 @@ public class RobotContainer {
     );
 
     this.cubert.setDefaultCommand(new Cuber(this.cubert, () -> this.driverTwo.getRightX()));
-    this.manipulator.setDefaultCommand(new Manipulate(this.manipulator, () -> (-this.driverTwo.getLeftY())));
+    this.manipulator.setDefaultCommand(new Manipulate(this.manipulator, () -> (-this.driverTwo.getLeftY() * 0.7)));
 
     this.leds.setHue(Constants.ElectronicConstants.LED_COLORS.RAINBOW);
 
@@ -117,8 +120,8 @@ public class RobotContainer {
     this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()));
     this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()));
 
-    this.driverTwo.x().onTrue(new ResetArmPosition(this.manipulator, 0.75));
-    this.driverTwo.a().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.PLATFORM));
+    this.driverTwo.x().whileTrue(new ResetArmPosition(this.manipulator, 0.7));
+    this.driverTwo.a().whileTrue(new ObtainPlatform(this.manipulator));
     this.driverTwo.b().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.MIDDLE));
     this.driverTwo.y().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.HIGH));
 
@@ -131,10 +134,12 @@ public class RobotContainer {
   private void configureAutonomousChooser () {
 
     this.autonomousChooser.addOption("Do Nothing", () -> new WaitCommand(1.0));
-    this.autonomousChooser.setDefaultOption("Taxi", () -> new DriveStraightDistance(this.westCoastDrive, -4.1, 0.55));
+    this.autonomousChooser.setDefaultOption("Taxi", () -> new DriveStraightDistance(this.westCoastDrive, -4.0));
     this.autonomousChooser.addOption("1 GP", () -> new Auto1GP(this.westCoastDrive, this.manipulator, this.leds));
     this.autonomousChooser.addOption("Balance", () -> new BalanceChargingStation(this.westCoastDrive, this.navX));
     this.autonomousChooser.addOption("1 GP + Balance", () -> new Auto1GP_Balance(this.westCoastDrive, this.manipulator, this.navX, this.leds));
+    this.autonomousChooser.addOption("2 GP + Balance", () -> new Auto2GP_Balance(this.westCoastDrive, this.cubert, this.manipulator, this.leds));
+    this.autonomousChooser.addOption("3 GP Far + Balance", () -> new Auto3GP_Far_Balance(this.westCoastDrive, this.cubert));
     
     Shuffleboard.getTab("Competition")
       .add("Autonomous Chooser", this.autonomousChooser)

@@ -115,9 +115,9 @@ public class Cubert extends SubsystemBase {
 
     /**
      * Sets the indexer motor to the given velocity, based upon input from the XBox Controller.
-     * All inputs are capped at 75% power for safety reasons.
+     * All inputs are capped at 85% power for safety reasons.
      */
-    public void setIndexer (double velocity) { this.indexerMotor.set(velocity  * 0.75); }
+    public void setIndexer (double velocity) { this.indexerMotor.set(velocity  * 0.85); }
 
     /**
      * Sets the shooter motor to the given velocity, based upon input from the XBox Controller.

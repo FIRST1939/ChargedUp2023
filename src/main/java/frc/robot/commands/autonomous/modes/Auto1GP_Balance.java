@@ -18,7 +18,7 @@ public class Auto1GP_Balance extends SequentialCommandGroup {
             new Auto1GP(westCoastDrive, manipulator, leds),
 
             // Balance Charging Station
-            new DriveStraightDistance(westCoastDrive, 0.3, 0.35),
+            new DriveStraightDistance(westCoastDrive, 0.3),
             new TurnToRelativeAngle(westCoastDrive, 180, 0.35),
             new BalanceChargingStation(westCoastDrive, navX)
         );

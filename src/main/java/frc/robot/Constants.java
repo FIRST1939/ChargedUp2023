@@ -18,6 +18,9 @@ public class Constants {
     // Autonomous Constants.
     public static final class AutonomousConstants {
 
+        public static final double MAX_VELOCITY = 4.0;
+        public static final double MAX_ACCELERATION = 3.0;
+
         public static final double GYRO_STRAIGHT_KP = 0.005;
         public static final double GYRO_TURNING_KP = 0.02;
 
@@ -69,7 +72,7 @@ public class Constants {
     public static final class ManipulatorConstants {
 
         public enum ARM_POSITIONS {
-            PLATFORM(121500, 350),
+            PLATFORM(123000, 350),
             MIDDLE(82000, 350),
             HIGH(132000, 350);
 
@@ -82,6 +85,8 @@ public class Constants {
                 this.tolerance = tolerance;
             }
         }
+
+        public static final int HARD_STOP = 135000;
 
         public static final double ARM_KP = 0.00030;
         public static final double ARM_KI = 0.000120;
@@ -102,7 +107,7 @@ public class Constants {
         public static final int PNEUMATICS_MINIMUM_PRESSURE = 100;
         public static final int PNEUMATICS_MAXIMUM_PRESSURE = 120;
 
-        public static final int LED_PWM = 0;
+        public static final int LED_PWM = 6;
         public static final List<Integer> LED_LENGTHS = Arrays.asList(22, 64, 65, 14);
         public static final List<Integer> LED_DIRECTIONS = Arrays.asList(-1, 1, -1, 1);
 

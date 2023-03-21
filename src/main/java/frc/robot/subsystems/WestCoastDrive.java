@@ -97,13 +97,13 @@ public class WestCoastDrive extends SubsystemBase {
    * 
    * @return the current robot oriented heading.
    */
-  public double getHeading () { return this.navX.getRotation2d().getDegrees(); }
+  public double getHeading () { return this.navX.getAngle(); }
 
   /**
    * Configures the getHeading method to return 0. For time limited robot oriented
    * movements, prefer this method over resetYaw.
    */
-  public void resetHeading () { this.navX.setAngleAdjustment(-this.getYaw()); }
+  public void resetHeading () { this.navX.zeroYaw(); }
 
   /**
    * This should rarely be used. For time limited robot oriented movements, prefer

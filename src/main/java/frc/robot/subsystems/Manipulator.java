@@ -12,11 +12,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -26,16 +24,15 @@ public class Manipulator extends SubsystemBase {
 
     private final WPI_TalonFX armMotor;
     private final CANSparkMax rollerMotor;
-    
-    private final GenericEntry armPositionEntry;
-    private final GenericEntry armLimitSwitchEntry;
 
     public final DigitalInput armLimitSwitch;
     private final DoubleSolenoid airLockPiston;
     private boolean isAirLockPistonExtended = false;
-
-    private boolean usedPID = false;
     private int gamePiece = 0;
+
+    private final GenericEntry armPositionEntry;
+    private final GenericEntry armLimitSwitchEntry;
+    private final GenericEntry armAirLockEntry;
 
     public Manipulator () {
 
@@ -58,17 +55,27 @@ public class Manipulator extends SubsystemBase {
         this.armPositionEntry = Shuffleboard.getTab("Competition")
             .add("Arm Position", 0.0)
             .withWidget(BuiltInWidgets.kTextView)
-            .withPosition(8, 4)
-            .withSize(2, 1)
+            .withPosition(5, 4)
+            .withSize(1, 1)
             .getEntry();
 
         this.armLimitSwitchEntry = Shuffleboard.getTab("Competition")
             .add("Arm Limit Switch", false)
             .withWidget(BuiltInWidgets.kBooleanBox)
             .withProperties(Map.of("COLOR WHEN TRUE", "lime", "COLOR WHEN FALSE", "dark red"))
-            .withPosition(6, 4)
-            .withSize(2, 1)
+            .withPosition(4, 4)
+            .withSize(1, 1)
             .getEntry();
+
+        this.armAirLockEntry = Shuffleboard.getTab("Competition")
+            .add("Arm Air Lock", false)
+            .withWidget(BuiltInWidgets.kBooleanBox)
+            .withProperties(Map.of("COLOR WHEN TRUE", "lime", "COLOR WHEN FALSE", "dark red"))
+            .withPosition(6, 4)
+            .withSize(1, 1)
+            .getEntry();
+
+        this.setAirLock(false);
     }
 
     public static Manipulator getInstance () {
@@ -82,25 +89,21 @@ public class Manipulator extends SubsystemBase {
         this.armPositionEntry.setDouble(this.getArmPosition());
         this.armLimitSwitchEntry.setBoolean(this.armLimitSwitch.get());
 
-        if (this.armLimitSwitch.get()) { 
-            
-            this.zeroArm(); 
-            this.setUsedPID(false);
-        }
+        if (this.armLimitSwitch.get()) { this.zeroArm(); }
     }
 
     /**
      * Sets the arm motor to the given velocity, based upon input from the XBox Controller.
-     * All inputs are capped at ~60% power for safety reasons.
+     * All inputs are capped at 60% power for safety reasons.
      */
     public void setArm (double velocity) { 
 
         if (Math.abs(velocity) > 1.0) { velocity = Math.signum(velocity) * 1.0; }
 
-        if ((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) { 
+        if (((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) && this.getArmPosition() < Constants.ManipulatorConstants.HARD_STOP) { 
             
             if (this.getAirLock()) { this.setAirLock(false); }
-            else { this.armMotor.set(velocity / 1.75); }
+            else { this.armMotor.set(velocity * 0.6); }
         } 
         else { 
             
@@ -110,9 +113,9 @@ public class Manipulator extends SubsystemBase {
 
     /**
      * Sets the roller motor to the given velocity, based upon input from the XBox Controller.
-     * All inputs are capped at ~70% power for safety reasons.
+     * All inputs are capped at 80% power for safety reasons.
      */
-    public void setRollers (double velocity) { this.rollerMotor.set(velocity / 1.4); }
+    public void setRollers (double velocity) { this.rollerMotor.set(velocity * 0.8); }
 
     public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
     public void zeroArm () { this.armMotor.setSelectedSensorPosition(0.0); }
@@ -125,20 +128,22 @@ public class Manipulator extends SubsystemBase {
 
             if (airLock.equals(true)) { 
                 
-                pistonValue = DoubleSolenoid.Value.kForward; 
+                pistonValue = DoubleSolenoid.Value.kForward;
+                this.armAirLockEntry.setBoolean(true);
                 this.isAirLockPistonExtended = true;
             }
 
             else { 
                 
                 pistonValue = DoubleSolenoid.Value.kReverse; 
+                this.armAirLockEntry.setBoolean(false);
                 this.isAirLockPistonExtended = false;
             }
         } else { 
             
             pistonValue = DoubleSolenoid.Value.kOff; 
         }
-        SmartDashboard.putString("airLock", pistonValue.toString());
+
         this.airLockPiston.set(pistonValue);
     }
 
@@ -146,7 +151,4 @@ public class Manipulator extends SubsystemBase {
     
     public void setGamePiece (int gamePiece) { this.gamePiece = gamePiece; }
     public int getGamePiece () { return this.gamePiece; }
-
-    public void setUsedPID (boolean usedPID) { this.usedPID = usedPID; }
-    public boolean getUsedPID () { return this.usedPID; }
 }
