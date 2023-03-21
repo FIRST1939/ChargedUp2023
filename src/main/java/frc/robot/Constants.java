@@ -54,7 +54,8 @@ public class Constants {
         public static final int RIGHT_INTAKE_PISTON_REVERSE = 6; 
 
         public static final int INTAKE_ROLLER_MOTOR = 20; 
-        public static final int INDEXER_MOTOR = 17; 
+        public static final int CUBE_BEAM_BREAK = 2; 
+        public static final int INDEXER_MOTOR = 17;
         public static final int SHOOTER_MOTOR = 10;
 
         public enum SHOTS {

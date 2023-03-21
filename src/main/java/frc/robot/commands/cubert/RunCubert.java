@@ -31,7 +31,7 @@ public class RunCubert extends CommandBase {
     }
 
     @Override
-    public boolean isFinished () { return false; }
+    public boolean isFinished () { return this.cubert.isCubeLoaded(); }
 
     @Override
     public void end (boolean interrupted) {
