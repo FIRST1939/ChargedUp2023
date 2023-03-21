@@ -113,7 +113,7 @@ public class Constants {
 
         public enum LED_COLORS {
             CONE(27, 20),
-            CUBE(154, 20),
+            CUBE(139, 20),
             ERROR(0, 10),
             RAINBOW(90, 90);
 

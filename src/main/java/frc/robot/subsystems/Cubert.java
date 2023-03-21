@@ -67,9 +67,9 @@ public class Cubert extends SubsystemBase {
             .getEntry();
 
         this.shooterRPMEntry = Shuffleboard.getTab("Competition")
-            .add("Shooter Velocity", 0.0)
+            .add("Shooter RPM", 0.0)
             .withWidget(BuiltInWidgets.kTextView)
-            .withPosition(3, 4)
+            .withPosition(4, 4)
             .withSize(1, 1)
             .getEntry();
     }

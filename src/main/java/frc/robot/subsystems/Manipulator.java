@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -28,11 +29,14 @@ public class Manipulator extends SubsystemBase {
     public final DigitalInput armLimitSwitch;
     private final DoubleSolenoid airLockPiston;
     private boolean isAirLockPistonExtended = false;
-    private int gamePiece = 0;
 
     private final GenericEntry armPositionEntry;
     private final GenericEntry armLimitSwitchEntry;
     private final GenericEntry armAirLockEntry;
+
+    private final SimpleWidget gamePieceWidget;
+    private final GenericEntry gamePieceEntry;
+    private int gamePiece = 0;
 
     public Manipulator () {
 
@@ -63,7 +67,7 @@ public class Manipulator extends SubsystemBase {
             .add("Arm Limit Switch", false)
             .withWidget(BuiltInWidgets.kBooleanBox)
             .withProperties(Map.of("COLOR WHEN TRUE", "lime", "COLOR WHEN FALSE", "dark red"))
-            .withPosition(4, 4)
+            .withPosition(2, 4)
             .withSize(1, 1)
             .getEntry();
 
@@ -71,9 +75,18 @@ public class Manipulator extends SubsystemBase {
             .add("Arm Air Lock", false)
             .withWidget(BuiltInWidgets.kBooleanBox)
             .withProperties(Map.of("COLOR WHEN TRUE", "lime", "COLOR WHEN FALSE", "dark red"))
-            .withPosition(6, 4)
+            .withPosition(3, 4)
             .withSize(1, 1)
             .getEntry();
+
+        this.gamePieceWidget = Shuffleboard.getTab("Competition")
+            .add("Selected GP", false)
+            .withWidget(BuiltInWidgets.kBooleanBox)
+            .withProperties(Map.of("COLOR WHEN TRUE", "black", "COLOR WHEN FALSE", "black"))
+            .withPosition(6, 4)
+            .withSize(1, 1);
+
+        this.gamePieceEntry = this.gamePieceWidget.getEntry();
 
         this.setAirLock(false);
     }
@@ -149,6 +162,24 @@ public class Manipulator extends SubsystemBase {
 
     public boolean getAirLock () { return this.isAirLockPistonExtended; }
     
-    public void setGamePiece (int gamePiece) { this.gamePiece = gamePiece; }
+    public void setGamePiece (int gamePiece) { 
+        
+        this.gamePiece = gamePiece; 
+
+        if (this.gamePiece == -1) {
+
+            this.gamePieceWidget.withProperties(Map.of("COLOR WHEN TRUE", "#ffe600", "COLOR WHEN FALSE", "black"));
+            this.gamePieceEntry.setBoolean(true);
+        } else if (this.gamePiece == 1) {
+
+            this.gamePieceWidget.withProperties(Map.of("COLOR WHEN TRUE", "#a200ff", "COLOR WHEN FALSE", "black"));
+            this.gamePieceEntry.setBoolean(true);
+        } else {
+
+            this.gamePieceWidget.withProperties(Map.of("COLOR WHEN TRUE", "black", "COLOR WHEN FALSE", "black"));
+            this.gamePieceEntry.setBoolean(false);
+        }
+    }
+
     public int getGamePiece () { return this.gamePiece; }
 }
