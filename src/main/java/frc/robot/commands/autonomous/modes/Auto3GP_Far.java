@@ -10,9 +10,9 @@ import frc.robot.commands.cubert.RunCubert;
 import frc.robot.subsystems.Cubert;
 import frc.robot.subsystems.WestCoastDrive;
 
-public class Auto3GP_Far_Balance extends SequentialCommandGroup {
+public class Auto3GP_Far extends SequentialCommandGroup {
     
-    public Auto3GP_Far_Balance (WestCoastDrive westCoastDrive, Cubert cubert) {
+    public Auto3GP_Far (WestCoastDrive westCoastDrive, Cubert cubert) {
 
         this.addCommands(
             new SetShot(cubert, Constants.CubertConstants.SHOTS.UP),

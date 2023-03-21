@@ -18,7 +18,7 @@ public class Constants {
     // Autonomous Constants.
     public static final class AutonomousConstants {
 
-        public static final double MAX_VELOCITY = 4.0;
+        public static final double MAX_VELOCITY = 3.81;
         public static final double MAX_ACCELERATION = 3.0;
 
         public static final double GYRO_STRAIGHT_KP = 0.005;
