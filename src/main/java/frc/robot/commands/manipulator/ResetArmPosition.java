@@ -30,6 +30,6 @@ public class ResetArmPosition extends CommandBase {
     public void end (boolean interrupted) { 
         
         this.manipulator.setArm(0.0); 
-        this.manipulator.setAirLock(true);
+        if (!interrupted) { this.manipulator.setAirLock(true); }
     }
 }

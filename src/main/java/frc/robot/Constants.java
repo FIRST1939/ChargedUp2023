@@ -19,7 +19,7 @@ public class Constants {
     public static final class AutonomousConstants {
 
         public static final double MAX_VELOCITY = 3.81;
-        public static final double MAX_ACCELERATION = 3.0;
+        public static final double MAX_ACCELERATION = 4.2;
 
         public static final double GYRO_STRAIGHT_KP = 0.005;
         public static final double GYRO_TURNING_KP = 0.02;
@@ -73,7 +73,7 @@ public class Constants {
     public static final class ManipulatorConstants {
 
         public enum ARM_POSITIONS {
-            PLATFORM(123000, 350),
+            PLATFORM(122000, 350),
             MIDDLE(82000, 350),
             HIGH(132000, 350);
 
@@ -95,7 +95,7 @@ public class Constants {
 
         public static final int ARM_MOTOR = 12;
         public static final int ROLLER_MOTOR = 21;
-        public static final int ARM_LIMIT_SWITCH = 9;
+        public static final int ARM_LIMIT_SWITCH = 8;
 
         public static final int AIR_LOCK_PISTON_FORWARD = 2; // TODO
         public static final int AIR_LOCK_PISTON_REVERSE = 3; // TODO
