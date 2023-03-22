@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -107,8 +108,8 @@ public class RobotContainer {
       .withPosition(2, 3)
       .withSize(2, 1);
 
-    this.driverTwo.leftBumper().whileTrue(new RunCubert(this.cubert, () -> -0.8, () -> -0.8));
-    this.driverTwo.rightBumper().whileTrue(new RunCubert(this.cubert, () -> 0.8, () -> 0.8));
+    this.driverTwo.leftBumper().whileTrue(new RunCubert(this.cubert, () -> -1.0, () -> -1.0));
+    this.driverTwo.rightBumper().whileTrue(new RunCubert(this.cubert, () -> 1.0, () -> 1.0));
     
     this.driverTwo.povLeft().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.LEFT));
     this.driverTwo.povRight().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.RIGHT));
@@ -116,7 +117,7 @@ public class RobotContainer {
     this.driverTwo.povDown().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.DOWN));
 
     this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()));
-    this.driverTwo.rightTrigger().whileTrue(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()));
+    this.driverTwo.rightTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()), new RunCubert(this.cubert, () -> 0.0, () -> -1.0)));
 
     this.driverTwo.x().whileTrue(new ResetArmPosition(this.manipulator, 0.7));
     this.driverTwo.a().whileTrue(new ObtainPlatform(this.manipulator));

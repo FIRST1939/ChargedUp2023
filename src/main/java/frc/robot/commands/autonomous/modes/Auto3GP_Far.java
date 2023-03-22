@@ -2,6 +2,7 @@ package frc.robot.commands.autonomous.modes;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
 import frc.robot.commands.SetShot;
 import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
@@ -21,7 +22,11 @@ public class Auto3GP_Far extends SequentialCommandGroup {
 
             new ParallelCommandGroup(
                 new DriveStraightDistance(westCoastDrive, -2.16),
-                new RunCubert(cubert, () -> 1.0, () -> 0.0).withTimeout(2.8)
+
+                new SequentialCommandGroup(
+                    new WaitUntilCommand(() -> westCoastDrive.getAverageDistance() <= -1.62),
+                    new RunCubert(cubert, () -> 1.0, () -> 0.0).withTimeout(1.0)
+                )
             ),
 
             new DriveStraightDistance(westCoastDrive, 1.68),
@@ -36,7 +41,11 @@ public class Auto3GP_Far extends SequentialCommandGroup {
 
             new ParallelCommandGroup(
                 new DriveStraightDistance(westCoastDrive, -2.07),
-                new RunCubert(cubert, () -> 1.0, () -> 0.0).withTimeout(3.0)
+                
+                new SequentialCommandGroup(
+                    new WaitUntilCommand(() -> westCoastDrive.getAverageDistance() <= -1.55),
+                    new RunCubert(cubert, () -> 1.0, () -> 0.0).withTimeout(0.95)
+                )
             ),
 
             new TurnToRelativeAngle(westCoastDrive, 29.38, 0.45),
