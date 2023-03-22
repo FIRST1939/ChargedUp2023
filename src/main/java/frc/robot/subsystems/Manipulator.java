@@ -115,7 +115,7 @@ public class Manipulator extends SubsystemBase {
 
         if (Math.abs(velocity) > 1.0) { velocity = Math.signum(velocity) * 1.0; }
 
-        if (((velocity < 0 && !this.startingArmLimitSwitch.get()) || (velocity > 0 && !this.endingArmLimitSwitch.get())) && this.getArmPosition() < Constants.ManipulatorConstants.HARD_STOP) { 
+        if (((velocity < 0 && !this.startingArmLimitSwitch.get()) || (velocity > 0 && !this.endingArmLimitSwitch.get())) && this.getArmPosition() < Constants.ManipulatorConstants.ARM_HARD_STOP) { 
             
             if (this.getAirLock()) { this.setAirLock(false); }
             else { this.armMotor.set(velocity * 0.6); }
