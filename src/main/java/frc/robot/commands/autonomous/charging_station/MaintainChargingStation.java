@@ -21,7 +21,7 @@ public class MaintainChargingStation extends CommandBase {
     @Override
     public void execute () {
 
-        if (Math.abs(this.navX.getPitch()) >= 2.0) { this.westCoastDrive.drive(Math.signum(this.navX.getPitch()) * 0.18, 0.0); }
+        if (Math.abs(this.navX.getPitch()) >= 10.0) { this.westCoastDrive.drive(Math.signum(this.navX.getPitch()) * 0.28, 0.0); }
         else { this.westCoastDrive.drive(0.0, 0.0); }
     }
 

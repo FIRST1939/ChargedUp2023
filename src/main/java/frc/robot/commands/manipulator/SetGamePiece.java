@@ -40,7 +40,7 @@ public class SetGamePiece extends InstantCommand {
                 break;
 
             case 0: 
-                ledColor = Constants.ElectronicConstants.LED_COLORS.RAINBOW;
+                ledColor = Constants.ElectronicConstants.LED_COLORS.UNSELECTED;
                 break;
         }
 

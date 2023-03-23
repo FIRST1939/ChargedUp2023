@@ -25,15 +25,16 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     CommandScheduler.getInstance().onCommandInitialize(command -> System.out.println("<INITIALIZING " + command.getName() + ">"));
-    CommandScheduler.getInstance().onCommandExecute(command -> System.out.println("<EXECUTING " + command.getName() + ">"));
     CommandScheduler.getInstance().onCommandFinish(command -> System.out.println("<ENDING " + command.getName() + ">"));
 
+    /**
     Shuffleboard.getTab("Competition")
       .add("Intake Camera", CameraServer.startAutomaticCapture(0))
       .withWidget(BuiltInWidgets.kCameraStream)
       .withProperties(Map.of("SHOW CROSSHAIR", false, "CROSSHAIR COLOR", "white", "SHOW CONTROLS", false, "ROTATION", "NONE"))
       .withPosition(4, 0)
       .withSize(3, 4);
+    */
 
     Shuffleboard.getTab("Competition")
       .add("Manipulator Camera", CameraServer.startAutomaticCapture(1))
@@ -84,10 +85,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-
-      m_autonomousCommand.cancel();
-    }
+    if (m_autonomousCommand != null) { m_autonomousCommand.cancel(); }
+    if (m_robotContainer.getLEDs() == Constants.ElectronicConstants.LED_COLORS.RAINBOW) { m_robotContainer.setLEDs(Constants.ElectronicConstants.LED_COLORS.UNSELECTED); }
   }
 
   @Override

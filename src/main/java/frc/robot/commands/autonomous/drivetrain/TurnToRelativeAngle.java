@@ -25,7 +25,14 @@ public class TurnToRelativeAngle extends CommandBase {
     public void initialize () { this.westCoastDrive.resetHeading(); }
 
     @Override
-    public void execute () { this.westCoastDrive.drive(0.0, -this.power * Math.signum(this.relativeAngle)); }
+    public void execute () { 
+        
+        double powerValue = Math.signum(this.relativeAngle) * (Math.abs(this.relativeAngle) - Math.abs(this.westCoastDrive.getHeading())) * 0.02;
+        if (powerValue < 0.45) { powerValue = 0.35; }
+
+        System.out.println(this.westCoastDrive.getHeading() + ", " + powerValue);
+        this.westCoastDrive.drive(0.0, this.power); 
+    }
 
     @Override
     public boolean isFinished () { return Math.abs(this.westCoastDrive.getHeading()) >= Math.abs(this.relativeAngle); }

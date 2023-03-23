@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -10,6 +12,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -27,9 +30,10 @@ public class Cubert extends SubsystemBase {
 
     private final CANSparkMax indexerMotor;
     private final WPI_TalonFX shooterMotor;
+    private final DigitalInput cubeBeamBreak;
 
-    // TODO Beam Break Entry
     private final GenericEntry intakePistonsEntry;
+    private final GenericEntry indexerBeamBreakEntry;
     private final GenericEntry shooterRPMEntry;
 
     public Cubert () {
@@ -40,6 +44,7 @@ public class Cubert extends SubsystemBase {
 
         this.indexerMotor = new CANSparkMax(Constants.CubertConstants.INDEXER_MOTOR, MotorType.kBrushless);
         this.shooterMotor = new WPI_TalonFX(Constants.CubertConstants.SHOOTER_MOTOR);
+        this.cubeBeamBreak = new DigitalInput(Constants.CubertConstants.CUBE_BEAM_BREAK);
 
         this.intakeRollerMotor.restoreFactoryDefaults();
         this.intakeRollerMotor.setIdleMode(IdleMode.kCoast);
@@ -62,8 +67,17 @@ public class Cubert extends SubsystemBase {
         this.intakePistonsEntry = Shuffleboard.getTab("Competition")
             .add("Intake Pistons", false)
             .withWidget(BuiltInWidgets.kBooleanBox)
+            .withProperties(Map.of("COLOR WHEN TRUE", "lime", "COLOR WHEN FALSE", "dark red"))
             .withPosition(0, 4)
             .withSize(1, 1)
+            .getEntry();
+
+        this.indexerBeamBreakEntry = Shuffleboard.getTab("Competition")
+            .add("Indexer Beam Break", true)
+            .withWidget(BuiltInWidgets.kBooleanBox)
+            .withProperties(Map.of("COLOR WHEN TRUE", "lime", "COLOR WHEN FALSE", "dark red"))
+            .withPosition(5, 1)
+            .withSize(2, 1)
             .getEntry();
 
         this.shooterRPMEntry = Shuffleboard.getTab("Competition")
@@ -80,7 +94,11 @@ public class Cubert extends SubsystemBase {
         return shooterInstance;
     }
 
-    public void periodic () { this.shooterRPMEntry.setDouble(this.shooterMotor.getSelectedSensorVelocity()); }
+    public void periodic () { 
+    
+        this.indexerBeamBreakEntry.setBoolean(this.cubeBeamBreak.get());
+        this.shooterRPMEntry.setDouble(this.shooterMotor.getSelectedSensorVelocity()); 
+    }
 
     public void setIntakePistons (Boolean intake) {
        
@@ -109,7 +127,6 @@ public class Cubert extends SubsystemBase {
      * Sets the intake roller motor to the given velocity, based upon input from the XBox Controller.
      * All inputs are capped at 70% power for safety reasons.
      */
-    // TODO Beam Breaks
     public void setIntakeRollers (double velocity) { this.intakeRollerMotor.set(velocity * 0.7); }
 
     /**
@@ -117,6 +134,7 @@ public class Cubert extends SubsystemBase {
      * All inputs are capped at 85% power for safety reasons.
      */
     public void setIndexer (double velocity) { this.indexerMotor.set(velocity  * 0.85); }
+    public boolean isCubeLoaded () { return !this.cubeBeamBreak.get(); }
 
     /**
      * Sets the shooter motor to the given velocity, based upon input from the XBox Controller.

@@ -3,7 +3,7 @@ package frc.robot.commands.autonomous.modes;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.autonomous.drivetrain.DriveStraightDistance;
+import frc.robot.commands.autonomous.drivetrain.DriveRampedDistance;
 import frc.robot.commands.autonomous.drivetrain.TurnToRelativeAngle;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Manipulator;
@@ -17,8 +17,9 @@ public class Auto1GP_Balance extends SequentialCommandGroup {
             new Auto1GP(westCoastDrive, manipulator, leds),
 
             // Balance Charging Station
-            new DriveStraightDistance(westCoastDrive, 0.3),
-            new TurnToRelativeAngle(westCoastDrive, 180, 0.35),
+            new DriveRampedDistance(westCoastDrive, -0.3),
+            new TurnToRelativeAngle(westCoastDrive, 150, 0.6),
+            new TurnToRelativeAngle(westCoastDrive, 30, 0.45),
             new BalanceChargingStation(westCoastDrive, navX)
         );
     }

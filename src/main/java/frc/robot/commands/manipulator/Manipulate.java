@@ -23,10 +23,10 @@ public class Manipulate extends CommandBase {
 
     private double deadband (double value) {
 
-        if (Math.abs(value) >= Constants.ControllerConstants.JOYSTICK_DEADBAND) {
+        if (Math.abs(value) >= Constants.ControllerConstants.CONTROLLER_DEADBAND) {
     
-            if (value > 0.0) { return (value - Constants.ControllerConstants.JOYSTICK_DEADBAND) / (1.0 - Constants.ControllerConstants.JOYSTICK_DEADBAND); }
-            else { return (value + Constants.ControllerConstants.JOYSTICK_DEADBAND) / (1.0 - Constants.ControllerConstants.JOYSTICK_DEADBAND); }
+            if (value > 0.0) { return (value - Constants.ControllerConstants.CONTROLLER_DEADBAND) / (1.0 - Constants.ControllerConstants.CONTROLLER_DEADBAND); }
+            else { return (value + Constants.ControllerConstants.CONTROLLER_DEADBAND) / (1.0 - Constants.ControllerConstants.CONTROLLER_DEADBAND); }
         }
     
         return 0.0;

@@ -24,6 +24,7 @@ public class ObtainPlatform extends CommandBase {
     public void execute () {
 
         double armPower = this.armPID.calculate(this.manipulator.getArmPosition());
+
         this.manipulator.setArm(armPower);
         this.manipulator.setRollers(this.manipulator.getGamePiece() * 0.8);
     }

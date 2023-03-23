@@ -10,6 +10,7 @@ public class RunCubert extends CommandBase {
     private final Cubert cubert;
     private final DoubleSupplier intakeSupplier;
     private final DoubleSupplier indexerSupplier;
+    private boolean initialBeamBreakValue;
 
     public RunCubert (Cubert cubert, DoubleSupplier intakeSupplier, DoubleSupplier indexerSupplier) {
 
@@ -21,7 +22,11 @@ public class RunCubert extends CommandBase {
     }
 
     @Override
-    public void initialize () { this.cubert.setIntakePistons((Boolean) true); }
+    public void initialize () { 
+        
+        if (this.intakeSupplier.getAsDouble() != 0.0) { this.cubert.setIntakePistons((Boolean) true); } 
+        this.initialBeamBreakValue = !this.cubert.isCubeLoaded();
+    }
 
     @Override
     public void execute () {
@@ -31,7 +36,12 @@ public class RunCubert extends CommandBase {
     }
 
     @Override
-    public boolean isFinished () { return false; }
+    public boolean isFinished () { 
+        
+        if (this.initialBeamBreakValue && this.intakeSupplier.getAsDouble() != 0.0) { return this.cubert.isCubeLoaded(); }
+        if (!this.initialBeamBreakValue && this.indexerSupplier.getAsDouble() > 0.0) { return !this.cubert.isCubeLoaded(); }
+        return false;
+    }
 
     @Override
     public void end (boolean interrupted) {
