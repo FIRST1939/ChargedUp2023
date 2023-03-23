@@ -87,7 +87,7 @@ public class Constants {
             }
         }
 
-        public static final int HARD_STOP = 150000;
+        public static final int ARM_HARD_STOP = 150000;
 
         public static final double ARM_KP = 0.00030;
         public static final double ARM_KI = 0.000120;
@@ -95,10 +95,11 @@ public class Constants {
 
         public static final int ARM_MOTOR = 12;
         public static final int ROLLER_MOTOR = 21;
-        public static final int ARM_LIMIT_SWITCH = 8;
+        public static final int STARTING_ARM_LIMIT_SWITCH = 8;
+        public static final int ENDING_ARM_LIMIT_SWITCH = 9; // TODO
 
-        public static final int AIR_LOCK_PISTON_FORWARD = 2; // TODO
-        public static final int AIR_LOCK_PISTON_REVERSE = 3; // TODO
+        public static final int AIR_LOCK_PISTON_FORWARD = 2;
+        public static final int AIR_LOCK_PISTON_REVERSE = 3;
     }
     
     // Electronic Constants.

@@ -26,7 +26,8 @@ public class Manipulator extends SubsystemBase {
     private final WPI_TalonFX armMotor;
     private final CANSparkMax rollerMotor;
 
-    public final DigitalInput armLimitSwitch;
+    public final DigitalInput startingArmLimitSwitch;
+    public final DigitalInput endingArmLimitSwitch;
     private final DoubleSolenoid airLockPiston;
     private boolean isAirLockPistonExtended = false;
 
@@ -42,7 +43,8 @@ public class Manipulator extends SubsystemBase {
 
         this.armMotor = new WPI_TalonFX(Constants.ManipulatorConstants.ARM_MOTOR);
         this.rollerMotor = new CANSparkMax(Constants.ManipulatorConstants.ROLLER_MOTOR, MotorType.kBrushless);
-        this.armLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.ARM_LIMIT_SWITCH);
+        this.startingArmLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.STARTING_ARM_LIMIT_SWITCH);
+        this.endingArmLimitSwitch = new DigitalInput(Constants.ManipulatorConstants.ENDING_ARM_LIMIT_SWITCH);
         this.airLockPiston = new DoubleSolenoid(Constants.ElectronicConstants.PNEUMATICS_HUB, PneumaticsModuleType.REVPH, Constants.ManipulatorConstants.AIR_LOCK_PISTON_FORWARD, Constants.ManipulatorConstants.AIR_LOCK_PISTON_REVERSE);
 
         this.armMotor.configFactoryDefault();
@@ -100,9 +102,9 @@ public class Manipulator extends SubsystemBase {
     public void periodic () { 
         
         this.armPositionEntry.setDouble(this.getArmPosition());
-        this.armLimitSwitchEntry.setBoolean(this.armLimitSwitch.get());
+        this.armLimitSwitchEntry.setBoolean(this.startingArmLimitSwitch.get() || this.endingArmLimitSwitch.get());
 
-        if (this.armLimitSwitch.get()) { this.zeroArm(); }
+        if (this.startingArmLimitSwitch.get()) { this.zeroArm(); }
     }
 
     /**
@@ -113,7 +115,7 @@ public class Manipulator extends SubsystemBase {
 
         if (Math.abs(velocity) > 1.0) { velocity = Math.signum(velocity) * 1.0; }
 
-        if (((velocity < 0 && !this.armLimitSwitch.get()) || (velocity > 0)) && this.getArmPosition() < Constants.ManipulatorConstants.HARD_STOP) { 
+        if (((velocity < 0 && !this.startingArmLimitSwitch.get()) || (velocity > 0 && !this.endingArmLimitSwitch.get())) && this.getArmPosition() < Constants.ManipulatorConstants.ARM_HARD_STOP) { 
             
             if (this.getAirLock()) { this.setAirLock(false); }
             else { this.armMotor.set(velocity * 0.6); }

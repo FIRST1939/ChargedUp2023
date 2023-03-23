@@ -29,7 +29,7 @@ public class ResetArmPosition extends CommandBase {
     }
 
     @Override
-    public boolean isFinished () { return this.manipulator.armLimitSwitch.get(); }
+    public boolean isFinished () { return this.manipulator.startingArmLimitSwitch.get(); }
 
     @Override
     public void end (boolean interrupted) { 
