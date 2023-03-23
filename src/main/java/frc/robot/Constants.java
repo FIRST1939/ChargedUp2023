@@ -87,7 +87,7 @@ public class Constants {
             }
         }
 
-        public static final int HARD_STOP = 135000;
+        public static final int HARD_STOP = 150000;
 
         public static final double ARM_KP = 0.00030;
         public static final double ARM_KI = 0.000120;

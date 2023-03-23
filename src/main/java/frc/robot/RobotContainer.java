@@ -119,7 +119,7 @@ public class RobotContainer {
     this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()));
     this.driverTwo.rightTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()), new RunCubert(this.cubert, () -> 0.0, () -> -1.0)));
 
-    this.driverTwo.x().whileTrue(new ResetArmPosition(this.manipulator, 0.7));
+    this.driverTwo.x().whileTrue(new ResetArmPosition(this.manipulator));
     this.driverTwo.a().whileTrue(new ObtainPlatform(this.manipulator));
     this.driverTwo.b().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.MIDDLE));
     this.driverTwo.y().whileTrue(new HoldArmPosition(this.manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.HIGH));
