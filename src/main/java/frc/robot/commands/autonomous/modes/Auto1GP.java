@@ -18,7 +18,7 @@ public class Auto1GP extends SequentialCommandGroup {
             new SetGamePiece(manipulator, leds, -1),
             new HoldArmPosition(manipulator, Constants.ManipulatorConstants.ARM_POSITIONS.HIGH).withTimeout(2.6),
             new RunManipulator(manipulator, () -> 0.8).withTimeout(0.8),
-            new ResetArmPosition(manipulator, 0.75).withTimeout(3.0),
+            new ResetArmPosition(manipulator).withTimeout(3.0),
             new SetGamePiece(manipulator, leds, 0)
         );
     }

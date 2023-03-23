@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -27,6 +28,7 @@ public class Cubert extends SubsystemBase {
 
     private final CANSparkMax indexerMotor;
     private final WPI_TalonFX shooterMotor;
+    private final DigitalInput cubeBeamBreak;
 
     // TODO Beam Break Entry
     private final GenericEntry intakePistonsEntry;
@@ -40,6 +42,7 @@ public class Cubert extends SubsystemBase {
 
         this.indexerMotor = new CANSparkMax(Constants.CubertConstants.INDEXER_MOTOR, MotorType.kBrushless);
         this.shooterMotor = new WPI_TalonFX(Constants.CubertConstants.SHOOTER_MOTOR);
+        this.cubeBeamBreak = new DigitalInput(Constants.CubertConstants.CUBE_BEAM_BREAK);
 
         this.intakeRollerMotor.restoreFactoryDefaults();
         this.intakeRollerMotor.setIdleMode(IdleMode.kCoast);
@@ -109,7 +112,6 @@ public class Cubert extends SubsystemBase {
      * Sets the intake roller motor to the given velocity, based upon input from the XBox Controller.
      * All inputs are capped at 70% power for safety reasons.
      */
-    // TODO Beam Breaks
     public void setIntakeRollers (double velocity) { this.intakeRollerMotor.set(velocity * 0.7); }
 
     /**
@@ -117,6 +119,7 @@ public class Cubert extends SubsystemBase {
      * All inputs are capped at 85% power for safety reasons.
      */
     public void setIndexer (double velocity) { this.indexerMotor.set(velocity  * 0.85); }
+    public boolean isCubeLoaded () { return !this.cubeBeamBreak.get(); }
 
     /**
      * Sets the shooter motor to the given velocity, based upon input from the XBox Controller.

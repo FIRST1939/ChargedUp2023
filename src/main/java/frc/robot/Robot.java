@@ -25,7 +25,6 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     CommandScheduler.getInstance().onCommandInitialize(command -> System.out.println("<INITIALIZING " + command.getName() + ">"));
-    CommandScheduler.getInstance().onCommandExecute(command -> System.out.println("<EXECUTING " + command.getName() + ">"));
     CommandScheduler.getInstance().onCommandFinish(command -> System.out.println("<ENDING " + command.getName() + ">"));
 
     Shuffleboard.getTab("Competition")
