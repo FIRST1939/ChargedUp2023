@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
-import frc.robot.commands.SetShot;
 import frc.robot.commands.ZeroGyro;
 import frc.robot.commands.autonomous.drivetrain.DriveRampedDistance;
 import frc.robot.commands.autonomous.drivetrain.TurnToRelativeAngle;
@@ -35,6 +34,7 @@ import frc.robot.commands.autonomous.modes.Auto3GP_Short;
 import frc.robot.commands.autonomous.modes.BalanceChargingStation;
 import frc.robot.commands.cubert.Cuber;
 import frc.robot.commands.cubert.RunCubert;
+import frc.robot.commands.cubert.SetShot;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ObtainPlatform;
@@ -110,17 +110,17 @@ public class RobotContainer {
       .withPosition(2, 3)
       .withSize(2, 1);
 
-    this.driverTwo.leftBumper().whileTrue(new RunCubert(this.cubert, () -> -1.0, () -> -1.0));
-    this.driverTwo.rightBumper().whileTrue(new RunCubert(this.cubert, () -> 1.0, () -> 1.0));
+    this.driverTwo.leftBumper().whileTrue(new RunCubert(this.cubert, this.leds, () -> -1.0, () -> -1.0));
+    this.driverTwo.rightBumper().whileTrue(new RunCubert(this.cubert, this.leds, () -> 1.0, () -> 1.0));
     
-    this.driverTwo.povLeft().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.LEFT));
-    this.driverTwo.povRight().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.RIGHT));
-    this.driverTwo.povUp().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.UP));
-    this.driverTwo.povDown().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.DOWN));
-    new JoystickButton(this.rightJoystick, 16).onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.CRAZY));
+    this.driverTwo.povLeft().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.LEFT, this.leds));
+    this.driverTwo.povRight().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.RIGHT, this.leds));
+    this.driverTwo.povUp().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.UP, this.leds));
+    this.driverTwo.povDown().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.DOWN, this.leds));
+    new JoystickButton(this.rightJoystick, 16).onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.CRAZY, this.leds));
 
     this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()));
-    this.driverTwo.rightTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()), new RunCubert(this.cubert, () -> 0.0, () -> -1.0)));
+    this.driverTwo.rightTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()), new RunCubert(this.cubert, this.leds, () -> 0.0, () -> -1.0)));
 
     this.driverTwo.x().whileTrue(new ResetArmPosition(this.manipulator));
     this.driverTwo.a().whileTrue(new ObtainPlatform(this.manipulator));

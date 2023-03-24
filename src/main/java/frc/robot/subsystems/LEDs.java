@@ -77,4 +77,50 @@ public class LEDs extends SubsystemBase {
         this.addressableLED.setData(this.addressableLEDBuffer);
         this.ledColor = ledColor;
     }
+
+    public void restoreDisplay () { this.setHue(this.ledColor); }
+
+    public void setPercentage (double percentage) {
+
+        int ledIndex = 0;
+
+        for (int stripIndex = 0; stripIndex < Constants.ElectronicConstants.LED_LENGTHS.size(); stripIndex++) {
+
+            if (stripIndex == 3) { continue; }
+            int ledLength = Constants.ElectronicConstants.LED_LENGTHS.get(stripIndex);
+            int ledDirection = Constants.ElectronicConstants.LED_DIRECTIONS.get(stripIndex);
+
+            if (ledDirection == 1) {
+
+                for (int i = 0; i < ledLength; i++) { 
+
+                    if ((i + 1) / ledLength <= percentage) { this.addressableLEDBuffer.setHSV(ledIndex, 60, 255, 128); }
+                    else { this.addressableLEDBuffer.setHSV(ledIndex, 0, 0, 0); }
+                    ledIndex++;
+                }
+            } else if (ledDirection == -1) {
+            
+                for (int i = ledLength; i > 0; i--) { 
+                
+                    if ((ledLength - i) / ledLength <= percentage) { this.addressableLEDBuffer.setHSV(ledIndex, 60, 255, 128); }
+                    else { this.addressableLEDBuffer.setHSV(ledIndex, 0, 0, 0); }
+                    ledIndex++;
+                }
+            }
+        }
+
+        int stripIndex = 3;
+
+        if (percentage >= 1.0) {
+
+            int ledLength = Constants.ElectronicConstants.LED_LENGTHS.get(stripIndex);
+            for (int i = 0; i < ledLength; i++) { this.addressableLEDBuffer.setHSV(ledIndex, 60, 255, 128); }
+        } else {
+
+            int ledLength = Constants.ElectronicConstants.LED_LENGTHS.get(stripIndex);
+            for (int i = 0; i < ledLength; i++) { this.addressableLEDBuffer.setHSV(ledIndex, 0, 0, 0); }
+        }
+
+        this.addressableLED.setData(this.addressableLEDBuffer);
+    }
 }
