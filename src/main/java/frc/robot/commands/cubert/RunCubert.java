@@ -4,24 +4,21 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Cubert;
-import frc.robot.subsystems.LEDs;
 
 public class RunCubert extends CommandBase {
     
     private final Cubert cubert;
-    private final LEDs leds;
     private final DoubleSupplier intakeSupplier;
     private final DoubleSupplier indexerSupplier;
     private boolean initialBeamBreakValue;
 
-    public RunCubert (Cubert cubert, LEDs leds, DoubleSupplier intakeSupplier, DoubleSupplier indexerSupplier) {
+    public RunCubert (Cubert cubert, DoubleSupplier intakeSupplier, DoubleSupplier indexerSupplier) {
 
         this.cubert = cubert;
-        this.leds = leds;
         this.intakeSupplier = intakeSupplier;
         this.indexerSupplier = indexerSupplier;
 
-        this.addRequirements(this.cubert, this.leds);
+        this.addRequirements(this.cubert);
     }
 
     @Override
@@ -52,7 +49,5 @@ public class RunCubert extends CommandBase {
         this.cubert.setIntakePistons((Boolean) false);
         this.cubert.setIntakeRollers(0.0);
         this.cubert.setIndexer(0.0);
-
-        if (!this.initialBeamBreakValue) { this.leds.restoreDisplay(); }
     }
 }
