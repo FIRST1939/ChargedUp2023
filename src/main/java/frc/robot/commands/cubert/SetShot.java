@@ -31,6 +31,6 @@ public class SetShot extends CommandBase {
     public void end (boolean interrupted) { 
         
         if (interrupted) { this.cubert.setShooter(0.0); } 
-        this.leds.setHue(Constants.ElectronicConstants.LED_COLORS.READY, false);
+        this.leds.setColor(Constants.ElectronicConstants.LED_COLORS.READY, false);
     }
 }

@@ -13,11 +13,13 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants.ElectronicConstants.LED_MODES;
 
 public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
+  private LED_MODES ledMode = null;
  
   @Override
   public void robotInit () {
@@ -61,7 +63,22 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit () {}
+  public void disabledInit () {
+
+    if (ledMode == null) { 
+      
+      m_robotContainer.setLEDMode(Constants.ElectronicConstants.LED_MODES.RAINBOW); 
+      ledMode = Constants.ElectronicConstants.LED_MODES.RAINBOW;
+    } else if (ledMode == Constants.ElectronicConstants.LED_MODES.RAINBOW) { 
+      
+      m_robotContainer.setLEDMode(Constants.ElectronicConstants.LED_MODES.SPOTLIGHT); 
+      ledMode = Constants.ElectronicConstants.LED_MODES.SPOTLIGHT;
+    } else if (ledMode == Constants.ElectronicConstants.LED_MODES.SPOTLIGHT) { 
+      
+      m_robotContainer.setLEDMode(Constants.ElectronicConstants.LED_MODES.WAVES); 
+      ledMode = Constants.ElectronicConstants.LED_MODES.WAVES;
+    }
+  }
 
   @Override
   public void disabledPeriodic () {}
@@ -86,7 +103,9 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     if (m_autonomousCommand != null) { m_autonomousCommand.cancel(); }
-    if (m_robotContainer.getLEDs() == Constants.ElectronicConstants.LED_COLORS.RAINBOW) { m_robotContainer.setLEDs(Constants.ElectronicConstants.LED_COLORS.UNSELECTED); }
+
+    if (m_robotContainer.getLEDColor() == null) { m_robotContainer.setLEDColor(Constants.ElectronicConstants.LED_COLORS.UNSELECTED); }
+    else { m_robotContainer.setLEDColor(m_robotContainer.getLEDColor()); }
   }
 
   @Override

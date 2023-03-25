@@ -119,9 +119,7 @@ public class Constants {
             CONE(27, 16),
             CUBE(139, 20),
             UNSELECTED(1, 1),
-
-            READY(60, 18),
-            RAINBOW(90, 90);
+            READY(60, 18);
 
             public final int absoluteHue;
             public final int hueDeviation;
@@ -131,6 +129,12 @@ public class Constants {
                 this.absoluteHue = absoluteHue;
                 this.hueDeviation = hueDeviation;
             }
+        }
+
+        public enum LED_MODES {
+            RAINBOW(),
+            SPOTLIGHT(),
+            WAVES();
         }
     }
 }

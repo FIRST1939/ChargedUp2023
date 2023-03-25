@@ -86,8 +86,6 @@ public class RobotContainer {
     this.manipulator.setDefaultCommand(new Manipulate(this.manipulator, () -> (-this.driverTwo.getLeftY() * 0.7)));
 
     new Pneumatics();
-    this.setLEDs(Constants.ElectronicConstants.LED_COLORS.RAINBOW);
-
     configureTriggers();
     configureAutonomousChooser();
   }
@@ -172,6 +170,9 @@ public class RobotContainer {
   public Command getAutonomousCommand () { return this.autonomousChooser.getSelected().get(); }
   public double getAutonomousWaitTime () { return this.autonomousWaitTimeEntry.getDouble(0.0); }
   
-  public void setLEDs (Constants.ElectronicConstants.LED_COLORS ledColor) { this.leds.setHue(ledColor, true); }
-  public Constants.ElectronicConstants.LED_COLORS getLEDs () { return this.leds.ledColor; }
+  public void setLEDColor (Constants.ElectronicConstants.LED_COLORS ledColor) { this.leds.setColor(ledColor, true); }
+  public Constants.ElectronicConstants.LED_COLORS getLEDColor () { return this.leds.ledColor; }
+
+  public void setLEDMode (Constants.ElectronicConstants.LED_MODES ledMode) { this.leds.setMode(ledMode); }
+  public Constants.ElectronicConstants.LED_MODES getLEDMode () { return this.leds.ledMode; }
 }

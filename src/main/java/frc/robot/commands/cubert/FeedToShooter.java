@@ -42,7 +42,7 @@ public class FeedToShooter extends CommandBase {
     
         this.cubert.setIntakeRollers(0.0);
         this.cubert.setIndexer(0.0);
-        
-        this.leds.setHue(this.leds.ledColor, true); 
+
+        this.leds.setColor(this.leds.ledColor, true); 
     }
 }

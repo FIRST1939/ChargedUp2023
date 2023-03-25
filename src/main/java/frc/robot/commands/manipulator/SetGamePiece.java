@@ -43,6 +43,6 @@ public class SetGamePiece extends InstantCommand {
                 break;
         }
 
-        this.leds.setHue(ledColor, true);
+        this.leds.setColor(ledColor, true);
     }
 }
