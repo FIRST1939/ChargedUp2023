@@ -4,21 +4,24 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Cubert;
+import frc.robot.subsystems.LEDs;
 
 public class FeedToShooter extends CommandBase {
     
     private final Cubert cubert;
+    private final LEDs leds;
     private final DoubleSupplier intakeSupplier;
     private final DoubleSupplier indexerSupplier;
     private boolean initialCubeLoadedValue;
 
-    public FeedToShooter (Cubert cubert, DoubleSupplier intakeSupplier, DoubleSupplier indexerSupplier) {
+    public FeedToShooter (Cubert cubert, LEDs leds, DoubleSupplier intakeSupplier, DoubleSupplier indexerSupplier) {
 
         this.cubert = cubert;
+        this.leds = leds;
         this.intakeSupplier = intakeSupplier;
         this.indexerSupplier = indexerSupplier;
 
-        this.addRequirements(this.cubert);
+        this.addRequirements(this.cubert, this.leds);
     }
 
     @Override
@@ -38,6 +41,8 @@ public class FeedToShooter extends CommandBase {
     public void end (boolean interrupted) { 
     
         this.cubert.setIntakeRollers(0.0);
-        this.cubert.setIndexer(0.0); 
+        this.cubert.setIndexer(0.0);
+        
+        this.leds.setHue(this.leds.ledColor, true); 
     }
 }

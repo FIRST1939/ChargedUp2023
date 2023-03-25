@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.SetShot;
 import frc.robot.commands.autonomous.drivetrain.DriveRampedDistance;
 import frc.robot.commands.autonomous.drivetrain.TurnToRelativeAngle;
 import frc.robot.commands.autonomous.drivetrain.WaitDistance;
 import frc.robot.commands.cubert.FeedToBeamBreak;
 import frc.robot.commands.cubert.FeedToShooter;
+import frc.robot.commands.cubert.SetShot;
 import frc.robot.commands.manipulator.SetGamePiece;
 import frc.robot.subsystems.Cubert;
 import frc.robot.subsystems.LEDs;
@@ -23,7 +23,7 @@ public class Auto3GP_NoBump extends SequentialCommandGroup {
         this.addCommands(
             new Auto1GP(westCoastDrive, manipulator, leds),
             new SetGamePiece(manipulator, leds, 1),
-            new SetShot(cubert, Constants.CubertConstants.SHOTS.UP),
+            new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.UP),
 
             new ParallelDeadlineGroup(
                 new DriveRampedDistance(westCoastDrive, -4.3688).andThen(new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * 8.0)),
@@ -37,7 +37,7 @@ public class Auto3GP_NoBump extends SequentialCommandGroup {
                 new FeedToBeamBreak(cubert, () -> 0.0, () -> 0.8)
             ),
 
-            new FeedToShooter(cubert, () -> 0.35, () -> 1.0).withTimeout(2.0),
+            new FeedToShooter(cubert, leds, () -> 0.35, () -> 1.0).withTimeout(2.0),
             new DriveRampedDistance(westCoastDrive, -2.0),
             new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * 29.38),
 
@@ -56,8 +56,8 @@ public class Auto3GP_NoBump extends SequentialCommandGroup {
                 new FeedToBeamBreak(cubert, () -> 0.0, () -> 0.8)
             ),
 
-            new FeedToShooter(cubert, () -> 0.35, () -> 1.0).withTimeout(2.0),
-            new SetShot(cubert, Constants.CubertConstants.SHOTS.LEFT)
+            new FeedToShooter(cubert, leds, () -> 0.35, () -> 1.0).withTimeout(2.0),
+            new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.LEFT)
         );
     }
 }

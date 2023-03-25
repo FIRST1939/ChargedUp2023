@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
-import frc.robot.commands.SetShot;
 import frc.robot.commands.ZeroGyro;
 import frc.robot.commands.autonomous.drivetrain.DriveRampedDistance;
 import frc.robot.commands.autonomous.modes.Auto1GP;
@@ -37,6 +36,7 @@ import frc.robot.commands.cubert.Cuber;
 import frc.robot.commands.cubert.FeedToBeamBreak;
 import frc.robot.commands.cubert.FeedToShooter;
 import frc.robot.commands.cubert.RunCubert;
+import frc.robot.commands.cubert.SetShot;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
 import frc.robot.commands.manipulator.ObtainPlatform;
@@ -116,14 +116,14 @@ public class RobotContainer {
     this.driverTwo.rightBumper().whileTrue(new RunCubert(this.cubert, () -> 1.0, () -> 1.0));
     this.driverTwo.start().onTrue(new FeedToBeamBreak(this.cubert, () -> 0.0, () -> 0.8));
     
-    this.driverTwo.povLeft().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.LEFT));
-    this.driverTwo.povRight().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.RIGHT));
-    this.driverTwo.povUp().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.UP));
-    this.driverTwo.povDown().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.DOWN));
-    new JoystickButton(this.rightJoystick, 16).onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.CRAZY));
+    this.driverTwo.povLeft().onTrue(new SetShot(this.cubert, this.leds, Constants.CubertConstants.SHOTS.LEFT));
+    this.driverTwo.povRight().onTrue(new SetShot(this.cubert, this.leds, Constants.CubertConstants.SHOTS.RIGHT));
+    this.driverTwo.povUp().onTrue(new SetShot(this.cubert, this.leds, Constants.CubertConstants.SHOTS.UP));
+    this.driverTwo.povDown().onTrue(new SetShot(this.cubert, this.leds, Constants.CubertConstants.SHOTS.DOWN));
+    new JoystickButton(this.rightJoystick, 16).onTrue(new SetShot(this.cubert, this.leds, Constants.CubertConstants.SHOTS.CRAZY));
 
-    this.driverTwo.leftTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()), new FeedToShooter(this.cubert, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis() * 0.5, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis())));
-    this.driverTwo.rightTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()), new FeedToShooter(this.cubert, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis() * 0.5, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * -this.driverTwo.getRightTriggerAxis())));
+    this.driverTwo.leftTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()), new FeedToShooter(this.cubert, this.leds, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis() * 0.5, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis())));
+    this.driverTwo.rightTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()), new FeedToShooter(this.cubert, this.leds, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis() * 0.5, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * -this.driverTwo.getRightTriggerAxis())));
 
     this.driverTwo.x().whileTrue(new ResetArmPosition(this.manipulator));
     this.driverTwo.a().whileTrue(new ObtainPlatform(this.manipulator));
@@ -172,6 +172,6 @@ public class RobotContainer {
   public Command getAutonomousCommand () { return this.autonomousChooser.getSelected().get(); }
   public double getAutonomousWaitTime () { return this.autonomousWaitTimeEntry.getDouble(0.0); }
   
-  public void setLEDs (Constants.ElectronicConstants.LED_COLORS ledColor) { this.leds.setHue(ledColor); }
+  public void setLEDs (Constants.ElectronicConstants.LED_COLORS ledColor) { this.leds.setHue(ledColor, true); }
   public Constants.ElectronicConstants.LED_COLORS getLEDs () { return this.leds.ledColor; }
 }

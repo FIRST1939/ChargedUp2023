@@ -3,7 +3,6 @@ package frc.robot.commands.manipulator;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.ElectronicConstants.LED_COLORS;
-import frc.robot.commands.SetLEDs;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Manipulator;
 
@@ -44,6 +43,6 @@ public class SetGamePiece extends InstantCommand {
                 break;
         }
 
-        new SetLEDs(this.leds, ledColor).schedule();
+        this.leds.setHue(ledColor, true);
     }
 }

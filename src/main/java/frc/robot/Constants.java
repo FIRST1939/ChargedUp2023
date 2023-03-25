@@ -119,6 +119,8 @@ public class Constants {
             CONE(27, 16),
             CUBE(139, 20),
             UNSELECTED(1, 1),
+
+            READY(60, 18),
             RAINBOW(90, 90);
 
             public final int absoluteHue;

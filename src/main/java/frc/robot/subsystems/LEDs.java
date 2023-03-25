@@ -34,12 +34,12 @@ public class LEDs extends SubsystemBase {
         if (this.timer.get() >= 0.02) {
 
             this.animatedRainbowStartingHue += 2;
-            this.setHue(this.ledColor);
+            this.setHue(this.ledColor, true);
             this.timer.reset();
         }
     }
 
-    public void setHue (Constants.ElectronicConstants.LED_COLORS ledColor) { 
+    public void setHue (Constants.ElectronicConstants.LED_COLORS ledColor, boolean persist) { 
 
         int ledIndex = 0;
         int hueLeadup = 0;
@@ -75,6 +75,6 @@ public class LEDs extends SubsystemBase {
         }
 
         this.addressableLED.setData(this.addressableLEDBuffer);
-        this.ledColor = ledColor;
+        if (persist) { this.ledColor = ledColor; }
     }
 }

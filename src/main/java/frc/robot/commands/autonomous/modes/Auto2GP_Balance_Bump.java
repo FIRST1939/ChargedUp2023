@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.SetShot;
 import frc.robot.commands.autonomous.charging_station.ContactChargingStation;
 import frc.robot.commands.autonomous.drivetrain.DriveRampedDistance;
 import frc.robot.commands.autonomous.drivetrain.TurnToRelativeAngle;
 import frc.robot.commands.cubert.FeedToBeamBreak;
 import frc.robot.commands.cubert.FeedToShooter;
+import frc.robot.commands.cubert.SetShot;
 import frc.robot.commands.manipulator.SetGamePiece;
 import frc.robot.subsystems.Cubert;
 import frc.robot.subsystems.LEDs;
@@ -25,10 +25,10 @@ public class Auto2GP_Balance_Bump extends SequentialCommandGroup{
 
         this.addCommands(
             new SetGamePiece(manipulator, leds, 1),
-            new SetShot(cubert, Constants.CubertConstants.SHOTS.UP),
+            new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.UP),
 
-            new FeedToShooter(cubert, () -> 0.35, () -> 1.0).withTimeout(1.0),
-            new SetShot(cubert, Constants.CubertConstants.SHOTS.DOWN),
+            new FeedToShooter(cubert, leds, () -> 0.35, () -> 1.0).withTimeout(1.0),
+            new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.DOWN),
 
             new ParallelDeadlineGroup(
                 new DriveRampedDistance(westCoastDrive, -2.16),
@@ -54,9 +54,9 @@ public class Auto2GP_Balance_Bump extends SequentialCommandGroup{
                     new BalanceChargingStation(westCoastDrive, navX),
 
                     new SequentialCommandGroup(
-                        new SetShot(cubert, Constants.CubertConstants.SHOTS.UP),
-                        new FeedToShooter(cubert, () -> 0.35, () -> 1.0).withTimeout(2.0),
-                        new SetShot(cubert, Constants.CubertConstants.SHOTS.LEFT)
+                        new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.UP),
+                        new FeedToShooter(cubert, leds, () -> 0.35, () -> 1.0).withTimeout(2.0),
+                        new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.LEFT)
                     )
                 )
             )

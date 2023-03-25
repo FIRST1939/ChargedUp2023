@@ -1,20 +1,24 @@
-package frc.robot.commands;
+package frc.robot.commands.cubert;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Constants.CubertConstants.SHOTS;
 import frc.robot.subsystems.Cubert;
+import frc.robot.subsystems.LEDs;
 
 public class SetShot extends CommandBase {
     
     private final Cubert cubert;
+    private final LEDs leds;
     private final int velocity;
 
-    public SetShot (Cubert cubert, SHOTS shot) {
+    public SetShot (Cubert cubert, LEDs leds, SHOTS shot) {
 
         this.cubert = cubert;
+        this.leds = leds;
         this.velocity = shot.velocity;
 
-        this.addRequirements(this.cubert);
+        this.addRequirements(this.cubert, this.leds);
     }
 
     @Override
@@ -24,5 +28,9 @@ public class SetShot extends CommandBase {
     public boolean isFinished () { return Math.abs(this.cubert.getShooter() - this.velocity) <= 350; }
 
     @Override
-    public void end (boolean interrupted) { if (interrupted) { this.cubert.setShooter(0.0); } }
+    public void end (boolean interrupted) { 
+        
+        if (interrupted) { this.cubert.setShooter(0.0); } 
+        this.leds.setHue(Constants.ElectronicConstants.LED_COLORS.READY, false);
+    }
 }
