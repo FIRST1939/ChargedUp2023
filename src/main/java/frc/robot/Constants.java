@@ -61,8 +61,8 @@ public class Constants {
 
         public enum SHOTS {
             LEFT(0),
-            RIGHT(5000),
-            UP(7000),
+            RIGHT(6300),
+            UP(8500),
             DOWN(3000),
             CRAZY(10000);
 
@@ -118,7 +118,7 @@ public class Constants {
         public enum LED_COLORS {
             CONE(27, 16),
             CUBE(139, 20),
-            UNSELECTED(0, 10),
+            UNSELECTED(1, 1),
             RAINBOW(90, 90);
 
             public final int absoluteHue;

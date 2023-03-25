@@ -24,7 +24,7 @@ public class ResetArmPosition extends CommandBase {
         double position = Math.abs(this.manipulator.getArmPosition());
         double power = (-0.00214471 * Math.sqrt(position)) + ((-3.2873 * Math.pow(10, -17)) * Math.pow(position, 3));
 
-        if (power > -0.5) { power = -0.5; }
+        if (power > -0.7) { power = -0.7; }
         this.manipulator.setArm(power); 
     }
 

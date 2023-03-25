@@ -26,14 +26,16 @@ import frc.robot.commands.Drive;
 import frc.robot.commands.SetShot;
 import frc.robot.commands.ZeroGyro;
 import frc.robot.commands.autonomous.drivetrain.DriveRampedDistance;
-import frc.robot.commands.autonomous.drivetrain.TurnToRelativeAngle;
 import frc.robot.commands.autonomous.modes.Auto1GP;
 import frc.robot.commands.autonomous.modes.Auto1GP_Balance;
-import frc.robot.commands.autonomous.modes.Auto2GP_Balance;
-import frc.robot.commands.autonomous.modes.Auto3GP_Far;
-import frc.robot.commands.autonomous.modes.Auto3GP_Short;
+import frc.robot.commands.autonomous.modes.Auto2GP_Balance_NoBump;
+import frc.robot.commands.autonomous.modes.Auto3GP_Bump;
+import frc.robot.commands.autonomous.modes.Auto3GP_NoBump;
+import frc.robot.commands.autonomous.modes.AutoLow_Balance;
 import frc.robot.commands.autonomous.modes.BalanceChargingStation;
 import frc.robot.commands.cubert.Cuber;
+import frc.robot.commands.cubert.FeedToBeamBreak;
+import frc.robot.commands.cubert.FeedToShooter;
 import frc.robot.commands.cubert.RunCubert;
 import frc.robot.commands.manipulator.HoldArmPosition;
 import frc.robot.commands.manipulator.Manipulate;
@@ -110,8 +112,9 @@ public class RobotContainer {
       .withPosition(2, 3)
       .withSize(2, 1);
 
-    this.driverTwo.leftBumper().whileTrue(new RunCubert(this.cubert, () -> -0.8, () -> -0.8));
-    this.driverTwo.rightBumper().whileTrue(new RunCubert(this.cubert, () -> 0.8, () -> 0.8));
+    this.driverTwo.leftBumper().whileTrue(new RunCubert(this.cubert, () -> -1.0, () -> -1.0));
+    this.driverTwo.rightBumper().whileTrue(new RunCubert(this.cubert, () -> 1.0, () -> 1.0));
+    this.driverTwo.start().onTrue(new FeedToBeamBreak(this.cubert, () -> 0.0, () -> 0.8));
     
     this.driverTwo.povLeft().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.LEFT));
     this.driverTwo.povRight().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.RIGHT));
@@ -119,8 +122,8 @@ public class RobotContainer {
     this.driverTwo.povDown().onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.DOWN));
     new JoystickButton(this.rightJoystick, 16).onTrue(new SetShot(this.cubert, Constants.CubertConstants.SHOTS.CRAZY));
 
-    this.driverTwo.leftTrigger().whileTrue(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()));
-    this.driverTwo.rightTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()), new RunCubert(this.cubert, () -> 0.0, () -> -1.0)));
+    this.driverTwo.leftTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()), new FeedToShooter(this.cubert, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis() * 0.5, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis())));
+    this.driverTwo.rightTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()), new FeedToShooter(this.cubert, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis() * 0.5, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * -this.driverTwo.getRightTriggerAxis())));
 
     this.driverTwo.x().whileTrue(new ResetArmPosition(this.manipulator));
     this.driverTwo.a().whileTrue(new ObtainPlatform(this.manipulator));
@@ -140,13 +143,11 @@ public class RobotContainer {
     this.autonomousChooser.setDefaultOption("Taxi", () -> new DriveRampedDistance(this.westCoastDrive, -4.0));
     this.autonomousChooser.addOption("1 GP", () -> new Auto1GP(this.westCoastDrive, this.manipulator, this.leds));
     this.autonomousChooser.addOption("Balance", () -> new BalanceChargingStation(this.westCoastDrive, this.navX));
+    this.autonomousChooser.addOption("Low + Balance", () -> new AutoLow_Balance(this.westCoastDrive, this.cubert, this.manipulator, this.navX, this.leds));
     this.autonomousChooser.addOption("1 GP + Balance", () -> new Auto1GP_Balance(this.westCoastDrive, this.manipulator, this.navX, this.leds));
-    this.autonomousChooser.addOption("2 GP + Balance", () -> new Auto2GP_Balance(this.westCoastDrive, this.navX, this.cubert, this.manipulator, this.leds));
-    this.autonomousChooser.addOption("3 GP Far", () -> new Auto3GP_Far(this.westCoastDrive, this.cubert, this.manipulator, this.leds));
-    this.autonomousChooser.addOption("3 GP Short", () -> new Auto3GP_Short(this.westCoastDrive, this.cubert, this.manipulator, this.leds));
-    this.autonomousChooser.addOption("Test 45", () -> new TurnToRelativeAngle(westCoastDrive, 45, 0.2));
-    this.autonomousChooser.addOption("Test 90", () -> new TurnToRelativeAngle(westCoastDrive, 90, 0.2));
-    this.autonomousChooser.addOption("Test 180", () -> new TurnToRelativeAngle(westCoastDrive, 180, 0.2));
+    this.autonomousChooser.addOption("2 GP + Balance (No Bump)", () -> new Auto2GP_Balance_NoBump(this.westCoastDrive, this.navX, this.cubert, this.manipulator, this.leds));
+    this.autonomousChooser.addOption("3 GP (Bump)", () -> new Auto3GP_Bump(this.westCoastDrive, this.cubert, this.manipulator, this.leds));
+    this.autonomousChooser.addOption("3 GP (No Bump)", () -> new Auto3GP_NoBump(this.westCoastDrive, this.cubert, this.manipulator, this.leds));
     
     Shuffleboard.getTab("Competition")
       .add("Autonomous Chooser", this.autonomousChooser)

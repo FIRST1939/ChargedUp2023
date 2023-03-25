@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
     */
 
     Shuffleboard.getTab("Competition")
-      .add("Manipulator Camera", CameraServer.startAutomaticCapture(1))
+      .add("Manipulator Camera", CameraServer.startAutomaticCapture(0))
       .withWidget(BuiltInWidgets.kCameraStream)
       .withProperties(Map.of("SHOW CROSSHAIR", false, "CROSSHAIR COLOR", "white", "SHOW CONTROLS", false, "ROTATION", "NONE"))
       .withPosition(7, 0)

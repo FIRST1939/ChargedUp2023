@@ -18,7 +18,7 @@ public class RunManipulator extends CommandBase {
     }
     
     @Override
-    public void execute () { this.manipulator.setRollers(this.powerSupplier.getAsDouble() * 0.8); }
+    public void execute () { this.manipulator.setRollers(this.powerSupplier.getAsDouble()); }
 
     @Override
     public boolean isFinished () { return false; }
