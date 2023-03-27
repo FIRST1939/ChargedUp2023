@@ -12,3 +12,9 @@
 </ul>
 
 <image src="https://i.imgur.com/F1Nl8tN.jpeg" width=500px alt="Black Knight">
+
+<p><strong>Central Missouri Regional</strong></p>
+<ul>
+  <li><p>Rank 4 with a record of 11-7-0</p></li>
+  <li><p>Imagery Award in honor of Jack Kamen</p></li>
+</ul>
