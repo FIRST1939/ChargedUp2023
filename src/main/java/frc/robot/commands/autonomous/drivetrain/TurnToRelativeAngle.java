@@ -25,7 +25,6 @@ public class TurnToRelativeAngle extends CommandBase {
     @Override
     public void execute () { 
         
-        System.out.println(this.westCoastDrive.getHeading());
         double distance = (Math.abs(this.relativeAngle) - Math.abs(this.westCoastDrive.getHeading()));
         double powerValue;
 

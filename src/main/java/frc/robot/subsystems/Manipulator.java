@@ -131,7 +131,7 @@ public class Manipulator extends SubsystemBase {
      * Sets the roller motor to the given velocity, based upon input from the XBox Controller.
      * All inputs are capped at 80% power for safety reasons.
      */
-    public void setRollers (double velocity) { this.rollerMotor.set(velocity * 0.8); }
+    public void setRollers (double velocity) { this.rollerMotor.set(velocity * 1.0); }
 
     public double getArmPosition () { return this.armMotor.getSelectedSensorPosition(); }
     public void zeroArm () { this.armMotor.setSelectedSensorPosition(0.0); }

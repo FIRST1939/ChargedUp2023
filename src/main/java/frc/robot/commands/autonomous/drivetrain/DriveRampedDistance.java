@@ -46,7 +46,7 @@ public class DriveRampedDistance extends CommandBase {
         }
 
         powerValue = Math.signum(this.meters) * Math.abs(powerValue);
-        if (DriverStation.getMatchTime() <= 2.0) { powerValue *= 0.75; }
+        if (DriverStation.getMatchTime() <= 1.0) { powerValue *= 0.75; }
 
         //double turningValue = Math.signum(this.meters) * this.westCoastDrive.getHeading() * Constants.AutonomousConstants.GYRO_STRAIGHT_KP;
         this.westCoastDrive.drive(powerValue, 0.0);

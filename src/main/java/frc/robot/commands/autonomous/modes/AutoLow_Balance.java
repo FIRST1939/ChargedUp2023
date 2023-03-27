@@ -16,7 +16,7 @@ public class AutoLow_Balance extends SequentialCommandGroup {
 
         this.addCommands(
             new SetGamePiece(manipulator, leds, 1),
-            new RunCubert(cubert, () -> -1.0, () -> -1.0).withTimeout(2.0),
+            new RunCubert(cubert, () -> -1.0, () -> -1.0).withTimeout(1.4),
             new BalanceChargingStation(westCoastDrive, navX)
         );
     }

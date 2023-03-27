@@ -25,38 +25,51 @@ public class Auto3GP_NoBump extends SequentialCommandGroup {
             new SetGamePiece(manipulator, leds, 1),
             new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.UP),
 
+            new DriveRampedDistance(westCoastDrive, -3.8477),
+
             new ParallelDeadlineGroup(
-                new DriveRampedDistance(westCoastDrive, -4.3688).andThen(new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * 8.0)),
+                new SequentialCommandGroup(
+                    new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * 28.07),
+                    new DriveRampedDistance(westCoastDrive, -0.8636)
+                ),
+
                 new FeedToBeamBreak(cubert, () -> 0.8, () -> 0.8)
             ),
 
             new FeedToBeamBreak(cubert, () -> 0.8, () -> 0.8).withTimeout(0.5),
 
             new ParallelDeadlineGroup(
-                new DriveRampedDistance(westCoastDrive, 3.68).beforeStarting(new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * -8.0)),
-                new FeedToBeamBreak(cubert, () -> 0.0, () -> 0.8)
-            ),
-
-            new FeedToShooter(cubert, leds, () -> 0.35, () -> 1.0).withTimeout(2.0),
-            new DriveRampedDistance(westCoastDrive, -2.0),
-            new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * 29.38),
-
-            new ParallelDeadlineGroup(
-                new DriveRampedDistance(westCoastDrive, -2.07),
-                new FeedToBeamBreak(cubert, () -> 0.8, () -> 0.8).beforeStarting(new WaitDistance(westCoastDrive, -0.5))
-            ),
-
-            new ParallelDeadlineGroup(
                 new SequentialCommandGroup(
-                    new DriveRampedDistance(westCoastDrive, 2.07),
-                    new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * -29.38),
-                    new DriveRampedDistance(westCoastDrive, 2.0)
+                    new DriveRampedDistance(westCoastDrive, 0.8636),
+                    new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * -28.07),
+                    new DriveRampedDistance(westCoastDrive, 2.6)
                 ),
 
                 new FeedToBeamBreak(cubert, () -> 0.0, () -> 0.8)
             ),
 
             new FeedToShooter(cubert, leds, () -> 0.35, () -> 1.0).withTimeout(2.0),
+            new DriveRampedDistance(westCoastDrive, -2.6),
+
+            new ParallelDeadlineGroup(
+                new SequentialCommandGroup(
+                    new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * 64.88),
+                    new DriveRampedDistance(westCoastDrive, -1.795272)
+                ),
+
+                new FeedToBeamBreak(cubert, () -> 0.8, () -> 0.8).beforeStarting(new WaitDistance(westCoastDrive, -0.5))
+            ),
+
+            new ParallelDeadlineGroup(
+                new SequentialCommandGroup(
+                    new DriveRampedDistance(westCoastDrive, 1.795272),
+                    new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * -64.88),
+                    new DriveRampedDistance(westCoastDrive, 2.5527)
+                ),
+
+                new FeedToBeamBreak(cubert, () -> 0.0, () -> 0.8)
+            ),
+
             new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.LEFT)
         );
     }

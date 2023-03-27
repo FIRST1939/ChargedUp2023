@@ -28,4 +28,7 @@ public class ObtainPlatform extends CommandBase {
         this.manipulator.setArm(armPower);
         this.manipulator.setRollers(this.manipulator.getGamePiece() * 0.8);
     }
+
+    @Override
+    public void end (boolean interrupted) { this.manipulator.setRollers(0.0); }
 }

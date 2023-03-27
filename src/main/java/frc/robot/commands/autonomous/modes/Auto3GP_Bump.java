@@ -23,7 +23,9 @@ public class Auto3GP_Bump extends SequentialCommandGroup {
         this.addCommands(
             new SetGamePiece(manipulator, leds, 1),
             new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.UP),
-            new FeedToShooter(cubert, leds, () -> 0.35, () -> 1.0).withTimeout(1.0),
+
+            new FeedToBeamBreak(cubert, () -> 0.0, () -> 0.8),
+            new FeedToShooter(cubert, leds, () -> 0.35, () -> 1.0).withTimeout(3.0),
 
             new ParallelDeadlineGroup(
                 new DriveRampedDistance(westCoastDrive, -2.16),
@@ -37,7 +39,7 @@ public class Auto3GP_Bump extends SequentialCommandGroup {
                 new FeedToBeamBreak(cubert, () -> 0.0, () -> 0.8)
             ),
 
-            new FeedToShooter(cubert, leds, () -> 0.35, () -> 1.0).withTimeout(2.0),
+            new FeedToShooter(cubert, leds, () -> 0.35, () -> 1.0).withTimeout(3.0),
             new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * -29.38),
 
             new ParallelDeadlineGroup(
@@ -56,9 +58,12 @@ public class Auto3GP_Bump extends SequentialCommandGroup {
                 new FeedToBeamBreak(cubert, () -> 0.0, () -> 0.8)
             ),
 
-            new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.CRAZY),
-            new FeedToShooter(cubert, leds, () -> 0.35, () -> 1.0).withTimeout(2.0),
-            new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.LEFT)
+            new FeedToShooter(cubert, leds, () -> 0.35, () -> 3.0),
+            new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.LEFT),
+
+            new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * -54.38),
+            new DriveRampedDistance(westCoastDrive, -2.07),
+            new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * -60.62)
         );
     }
 }

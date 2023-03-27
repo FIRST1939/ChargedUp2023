@@ -120,8 +120,8 @@ public class RobotContainer {
     this.driverTwo.povDown().onTrue(new SetShot(this.cubert, this.leds, Constants.CubertConstants.SHOTS.DOWN));
     new JoystickButton(this.rightJoystick, 16).onTrue(new SetShot(this.cubert, this.leds, Constants.CubertConstants.SHOTS.CRAZY));
 
-    this.driverTwo.leftTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis()), new FeedToShooter(this.cubert, this.leds, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis() * 0.5, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis())));
-    this.driverTwo.rightTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()), new FeedToShooter(this.cubert, this.leds, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis() * 0.5, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * -this.driverTwo.getRightTriggerAxis())));
+    this.driverTwo.leftTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> -this.manipulator.getGamePiece() * this.driverTwo.getLeftTriggerAxis() * 0.75), new FeedToShooter(this.cubert, this.leds, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis() * 0.5, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getLeftTriggerAxis())));
+    this.driverTwo.rightTrigger().whileTrue(Commands.parallel(new RunManipulator(this.manipulator, () -> this.manipulator.getGamePiece() * this.driverTwo.getRightTriggerAxis()), new FeedToShooter(this.cubert, this.leds, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * this.driverTwo.getRightTriggerAxis() * 0.5, () -> (this.manipulator.getGamePiece() == 1 ? 1.0 : 0.0) * -this.driverTwo.getRightTriggerAxis())));
 
     this.driverTwo.x().whileTrue(new ResetArmPosition(this.manipulator));
     this.driverTwo.a().whileTrue(new ObtainPlatform(this.manipulator));
@@ -138,13 +138,13 @@ public class RobotContainer {
   private void configureAutonomousChooser () {
 
     this.autonomousChooser.addOption("Do Nothing", () -> new WaitCommand(1.0));
-    this.autonomousChooser.setDefaultOption("Taxi", () -> new DriveRampedDistance(this.westCoastDrive, -4.0));
+    this.autonomousChooser.addOption("Taxi", () -> new DriveRampedDistance(this.westCoastDrive, -4.0));
     this.autonomousChooser.addOption("1 GP", () -> new Auto1GP(this.westCoastDrive, this.manipulator, this.leds));
     this.autonomousChooser.addOption("Balance", () -> new BalanceChargingStation(this.westCoastDrive, this.navX));
     this.autonomousChooser.addOption("Low + Balance", () -> new AutoLow_Balance(this.westCoastDrive, this.cubert, this.manipulator, this.navX, this.leds));
     this.autonomousChooser.addOption("1 GP + Balance", () -> new Auto1GP_Balance(this.westCoastDrive, this.manipulator, this.navX, this.leds));
     this.autonomousChooser.addOption("2 GP + Balance (No Bump)", () -> new Auto2GP_Balance_NoBump(this.westCoastDrive, this.navX, this.cubert, this.manipulator, this.leds));
-    this.autonomousChooser.addOption("3 GP (Bump)", () -> new Auto3GP_Bump(this.westCoastDrive, this.cubert, this.manipulator, this.leds));
+    this.autonomousChooser.setDefaultOption("3 GP (Bump)", () -> new Auto3GP_Bump(this.westCoastDrive, this.cubert, this.manipulator, this.leds));
     this.autonomousChooser.addOption("3 GP (No Bump)", () -> new Auto3GP_NoBump(this.westCoastDrive, this.cubert, this.manipulator, this.leds));
     
     Shuffleboard.getTab("Competition")
