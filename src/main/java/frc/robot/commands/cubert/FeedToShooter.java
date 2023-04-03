@@ -10,14 +10,16 @@ public class FeedToShooter extends CommandBase {
     
     private final Cubert cubert;
     private final LEDs leds;
+
     private final DoubleSupplier intakeSupplier;
     private final DoubleSupplier indexerSupplier;
-    private boolean initialCubeLoadedValue;
+    private boolean hitBeamBreak = false;
 
     public FeedToShooter (Cubert cubert, LEDs leds, DoubleSupplier intakeSupplier, DoubleSupplier indexerSupplier) {
 
         this.cubert = cubert;
         this.leds = leds;
+        
         this.intakeSupplier = intakeSupplier;
         this.indexerSupplier = indexerSupplier;
 
@@ -25,17 +27,15 @@ public class FeedToShooter extends CommandBase {
     }
 
     @Override
-    public void initialize () { this.initialCubeLoadedValue = this.cubert.isCubeLoaded(); }
-
-    @Override
     public void execute () { 
     
         this.cubert.setIntakeRollers(this.intakeSupplier.getAsDouble());
         this.cubert.setIndexer(this.indexerSupplier.getAsDouble()); 
+        this.hitBeamBreak = this.hitBeamBreak || this.cubert.isCubeLoaded();
     }
 
     @Override
-    public boolean isFinished () { return this.cubert.isCubeLoaded() != this.initialCubeLoadedValue; }
+    public boolean isFinished () { return this.hitBeamBreak && !this.cubert.isCubeLoaded(); }
 
     @Override
     public void end (boolean interrupted) { 

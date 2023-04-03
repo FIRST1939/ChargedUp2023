@@ -3,6 +3,7 @@ package frc.robot.commands.autonomous.modes;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.commands.autonomous.drivetrain.DriveRampedDistance;
 import frc.robot.commands.autonomous.drivetrain.TurnToRelativeAngle;
@@ -23,19 +24,20 @@ public class Auto3GP_Bump extends SequentialCommandGroup {
         this.addCommands(
             new SetGamePiece(manipulator, leds, 1),
             new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.UP),
-
-            new FeedToBeamBreak(cubert, () -> 0.0, () -> 0.8),
-            new FeedToShooter(cubert, leds, () -> 0.35, () -> 1.0).withTimeout(3.0),
+            new FeedToShooter(cubert, leds, () -> 0.35, () -> 1.0),
 
             new ParallelDeadlineGroup(
-                new DriveRampedDistance(westCoastDrive, -2.16),
+                new DriveRampedDistance(westCoastDrive, -2.318),
                 new FeedToBeamBreak(cubert, () -> 0.8, () -> 0.8)
             ),
             
-            new FeedToBeamBreak(cubert, () -> 0.8, () -> 0.8).withTimeout(0.5),
+            new ParallelDeadlineGroup(
+                new WaitCommand(0.5),
+                new FeedToBeamBreak(cubert, () -> 0.8, () -> 0.8)
+            ),
 
             new ParallelDeadlineGroup(
-                new DriveRampedDistance(westCoastDrive, 1.68),
+                new DriveRampedDistance(westCoastDrive, 1.6),
                 new FeedToBeamBreak(cubert, () -> 0.0, () -> 0.8)
             ),
 
@@ -47,7 +49,10 @@ public class Auto3GP_Bump extends SequentialCommandGroup {
                 new FeedToBeamBreak(cubert, () -> 0.8, () -> 0.8).beforeStarting(new WaitDistance(westCoastDrive, -0.5))
             ),
 
-            new FeedToBeamBreak(cubert, () -> 0.8, () -> 0.8).withTimeout(0.5),
+            new ParallelDeadlineGroup(
+                new WaitCommand(0.5),
+                new FeedToBeamBreak(cubert, () -> 0.8, () -> 0.8)
+            ),
 
             new ParallelDeadlineGroup(
                 new SequentialCommandGroup(
@@ -62,7 +67,9 @@ public class Auto3GP_Bump extends SequentialCommandGroup {
             new SetShot(cubert, leds, Constants.CubertConstants.SHOTS.LEFT),
 
             new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * -54.38),
+
             new DriveRampedDistance(westCoastDrive, -2.07),
+            
             new TurnToRelativeAngle(westCoastDrive, (DriverStation.getAlliance() == DriverStation.Alliance.Red ? 1.0 : -1.0) * -60.62)
         );
     }
