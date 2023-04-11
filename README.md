@@ -19,4 +19,4 @@
   <li><p>Imagery Award in honor of Jack Kamen</p></li>
 </ul>
 
-<image src="https://i.imgur.com/a/fj4eH6P.jpeg" width=500px alt="Black Knight 1.2">
+<image src="https://i.imgur.com/L2oBt5d_d.webp?maxwidth=500" width=500px alt="Black Knight 1.2">
