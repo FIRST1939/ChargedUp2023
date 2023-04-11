@@ -11,10 +11,12 @@
   <li><p>Creativity Award sponsored by Rockwell Automation</p></li>
 </ul>
 
-<image src="https://i.imgur.com/F1Nl8tN.jpeg" width=500px alt="Black Knight">
+<image src="https://i.imgur.com/F1Nl8tN.jpeg" width=500px alt="Black Knight 1.1">
 
 <p><strong>Central Missouri Regional</strong></p>
 <ul>
   <li><p>Rank 4 with a record of 11-7-0</p></li>
   <li><p>Imagery Award in honor of Jack Kamen</p></li>
 </ul>
+
+<image src="https://i.imgur.com/a/fj4eH6P.jpeg" width=500px alt="Black Knight 1.2">
